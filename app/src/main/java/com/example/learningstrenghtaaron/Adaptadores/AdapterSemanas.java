@@ -28,8 +28,12 @@ public class AdapterSemanas extends RecyclerView.Adapter<AdapterSemanas.ViewHold
     }
 
     private void rellenaSemanas() {
-        for (int i = 0; i <= numeroSemanas; i++) {
-            semanas.add("Semana " + (i +1));
+        if (numeroSemanas == 0) {
+            semanas.add("Rutina vacia");
+        } else {
+            for (int i = 0; i < numeroSemanas; i++) {
+                semanas.add("Semana " + (i + 1));
+            }
         }
     }
 

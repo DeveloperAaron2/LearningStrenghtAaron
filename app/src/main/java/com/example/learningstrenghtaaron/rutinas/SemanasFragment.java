@@ -35,52 +35,47 @@ public class SemanasFragment extends Fragment {
 
     private FirebaseFirestore firestore;
     private long numeroSemanas;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @SuppressLint("MissingInflatedId")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_semanas, container, false);
         recyclerViewSemanas = view.findViewById(R.id.RecyclerSemanas);
         recyclerViewSemanas.setLayoutManager(new LinearLayoutManager(view.getContext()));
         Bundle args = getArguments();
 
         if (args != null) {
-            Rutina rutina = (Rutina) args.getSerializable("rutina");// Obtén el valor del argumento
-            RecogeNumeroSemanas(rutina,container.getContext());
-            AdapterSemanas adapterSemanas= new AdapterSemanas((int) numeroSemanas);
-            recyclerViewSemanas.setAdapter(adapterSemanas);
-            adapterSemanas.notifyDataSetChanged();
-
-        }else{
+            Rutina rutina = (Rutina) args.getSerializable("rutina"); // Obtén el valor del argumento
+            RecogeNumeroSemanas(rutina, container.getContext());
+        } else {
             System.out.println("Se ha enviado mal el Bundle bro");
         }
 
         return view;
 
     }
-    public void RecogeNumeroSemanas(Rutina rutina, Context context){
+
+    public void RecogeNumeroSemanas(Rutina rutina, Context context) {
         firestore = FirebaseFirestore.getInstance();
         numeroSemanas = 0;
         CollectionReference ejercicioRutina = firestore.collection("EjercicioRutina");
         ejercicioRutina.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot ejercicioRutina : queryDocumentSnapshots){
-                    if(ejercicioRutina.getString("NombreRutina").equals(rutina.getNombreRutina())){
-                        System.out.println("vas bien bro");
-                        System.out.println(ejercicioRutina.getLong("NumeroSemana"));
-                        if (ejercicioRutina.getLong("NumeroSemana")>numeroSemanas){
-                            numeroSemanas= ejercicioRutina.getLong("NumeroSemana");
+                for (QueryDocumentSnapshot ejercicioRutina : queryDocumentSnapshots) {
+                    if (ejercicioRutina.getString("NombreRutina").equals(rutina.getNombreRutina())) {
+                        if (ejercicioRutina.getLong("NumeroSemana") > numeroSemanas) {
+                            numeroSemanas = ejercicioRutina.getLong("NumeroSemana");
                         }
                     }
                 }
-                System.out.println("dentro de rutina: " + rutina.getNombreRutina());
-                System.out.println("numero de semanas: " + numeroSemanas);
+                AdapterSemanas adapterSemanas = new AdapterSemanas((int) numeroSemanas);
+                recyclerViewSemanas.setAdapter(adapterSemanas);
+                adapterSemanas.notifyDataSetChanged();
             }
         });
     }
