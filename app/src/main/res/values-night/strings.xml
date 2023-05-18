@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="foto_de_perfil_del_usuario">Foto de perfil del usuario</string>
+    <string name="aqui_van_los_rms">Aqui van los Rms</string>
+    <string name="boton_menu">Boton menu</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
+    <string name="nombre">Nombre</string>
+    <string name="email">Email</string>
+    <string name="fecha_de_nacimiento">Fecha de nacimiento</string>
+    <string name="altura">Altura</string>
+    <string name="peso">Peso</string>
+    <string name="boton_para_ir_a_la_ventana_anterior">Boton para ir a la ventana anterior</string>
+    <string name="editar_usuario">Editar usuario</string>
+    <string name="boton_para_guardar_los_cambios">Boton para guardar los cambios</string>
+    <string name="cambiar_foto_de_perfil">Cambiar foto de perfil</string>
+</resources>

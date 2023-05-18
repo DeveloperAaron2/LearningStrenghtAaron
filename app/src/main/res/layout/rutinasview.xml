@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/iconoR"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iconoRutina"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        app:srcCompat="@drawable/iconofuerza" />
+
+    <TextView
+        android:id="@+id/nombreRutina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/TipoRutina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
