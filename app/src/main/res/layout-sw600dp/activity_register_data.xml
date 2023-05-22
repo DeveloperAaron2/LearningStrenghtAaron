@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
+    app:layout_anchorGravity="center"
     tools:context=".login.RegisterDataActivity">
 
     <TextView
@@ -65,11 +68,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtEdadRegisterData"
+            android:id="@+id/txtFechaNacRegisterData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -84,8 +88,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:suffixText="kg"
-        app:placeholderText="peso">
+        app:placeholderText="peso"
+        app:suffixText="kg">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtPesoRegisterData"
             android:layout_width="match_parent"
@@ -106,8 +111,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:suffixText="cm"
-        app:placeholderText="altura">
+        app:placeholderText="altura"
+        app:suffixText="cm">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtAlturaRegisterData"
             android:layout_width="match_parent"

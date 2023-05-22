@@ -10,4 +10,7 @@
     <item android:id="@+id/Ajustes"
         android:title="Ajustes"/>
 
+    <item android:id="@+id/LogOut"
+        android:title="Cerrar sesion"/>
+
 </menu>

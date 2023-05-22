@@ -32,16 +32,12 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        user.getDisplayName();
-        user.getEmail();
-        user.getPhoneNumber();
-        user.getPhotoUrl();
-        user.getMetadata().getCreationTimestamp();
+        //Usar el Uid para buscar al usuario en firestore y recoger los datos
 
         inicializarComponentes();
 
         listeners();
-
+        rellenarDatosUsuario(user.getUid());
 
     }
 
@@ -85,6 +81,10 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         txtFecha.setOnFocusChangeListener((view, b) -> {
             if (b) showDatePickerDialog();
         });
+    }
+
+    private void rellenarDatosUsuario(String uid) {
+
     }
 
     private void modificarDatosUsuario() {

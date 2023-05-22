@@ -37,8 +37,6 @@ public class PantallaPrincipal extends AppCompatActivity {
     FirebaseAuth mAuth;
     ActivityPantallaPrincipalBinding binding;
 
-    private FirebaseFirestore firestore;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +69,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finishAffinity();
         }
+
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -87,7 +86,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         if (currentUser == null) {
             signInAnonymous();
         }
-
     }
 
     private void signInAnonymous() {
@@ -108,11 +106,5 @@ public class PantallaPrincipal extends AppCompatActivity {
                 Log.w(TAG, "MainActivity. " + e.getMessage());
             }
         });
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
     }
 }
