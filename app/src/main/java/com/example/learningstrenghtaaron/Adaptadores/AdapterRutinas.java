@@ -42,6 +42,7 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Rutina model) {
         holder.nombreRutina.setText(model.getNombreRutina());
         holder.tipoRutina.setText(model.getTipoRutina());
+        holder.creador.setText(model.getCreador());
         if(model.getTipoRutina().equals("Fuerza")) {
             holder.icono.setImageResource(R.drawable.iconofuerza);
         } else if (model.getTipoRutina().equals("Hipertrofia")) {
@@ -81,12 +82,14 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
         private TextView nombreRutina;
         private TextView tipoRutina;
         private ImageView icono;
+
+        private TextView creador;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nombreRutina = (TextView) itemView.findViewById(R.id.nombreRutina);
             tipoRutina = (TextView) itemView.findViewById(R.id.TipoRutina);
             icono =(ImageView) itemView.findViewById(R.id.iconoRutina);
-            System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaa");
+            creador = (TextView) itemView.findViewById(R.id.CreadorRutina);
         }
     }
 

@@ -58,6 +58,8 @@ public class EjercicioRutina {
         SeriesXReps = seriesXReps;
     }
 
+
+
     @Override
     public String toString() {
         return "EjercicioRutina{" +

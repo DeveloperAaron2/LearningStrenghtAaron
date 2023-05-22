@@ -1,5 +1,7 @@
 package com.example.learningstrenghtaaron.Entidades;
 
+import java.util.ArrayList;
+
 public class Usuario {
     private String idUsuario;
     private String fotoUsuario;
@@ -9,13 +11,16 @@ public class Usuario {
     private double peso;
     private int altura;
 
-    public Usuario(String fotoUsuario, String nombreUsuario, String tipoUsuario, int edad, double peso, int altura) {
+    private ArrayList<String> rutinasDelUsuario;
+
+    public Usuario(String fotoUsuario, String nombreUsuario, String tipoUsuario, int edad, double peso, int altura, ArrayList<String> rutinasDelUsuario) {
         this.fotoUsuario = fotoUsuario;
         this.nombreUsuario = nombreUsuario;
         this.tipoUsuario = tipoUsuario;
         this.edad = edad;
         this.peso = peso;
         this.altura = altura;
+        this.rutinasDelUsuario = rutinasDelUsuario;
     }
 
     public String getIdUsuario() {
