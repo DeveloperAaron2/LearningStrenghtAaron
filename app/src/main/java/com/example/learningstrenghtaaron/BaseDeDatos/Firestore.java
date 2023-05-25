@@ -71,7 +71,7 @@ public class Firestore {
             ejercicios.put("NombreRutina",ejercicioRutina1.getNombreRutina());
             ejercicios.put("NumeroDia",ejercicioRutina1.getNumeroDia());
             ejercicios.put("NumeroSemana",ejercicioRutina1.getNumeroSemana());
-            ejercicios.put("SeriesReps",ejercicioRutina1.getSeriesXReps());
+            ejercicios.put("SeriesReps",ejercicioRutina1.getSeriesReps());
             firestore.collection("EjerciciosRutina").add(ejercicios).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {

@@ -35,6 +35,8 @@ public class EjerciciosFragment extends Fragment {
 
     private ArrayList<EjercicioRutina> ejercicios;
 
+    private AdapterEjercicios adapterEjercicios;
+
     public EjerciciosFragment() {
 
     }
@@ -50,8 +52,7 @@ public class EjerciciosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ejercicios, container, false);
-        recyclerViewEjercicios = (RecyclerView) view.findViewById(R.id.RecyclerViewEjercicios);
-        recyclerViewEjercicios.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
         firestore = FirebaseFirestore.getInstance();
         Bundle bundle = getArguments();
         Rutina rutina = (Rutina) bundle.getSerializable("rutina");
@@ -61,17 +62,32 @@ public class EjerciciosFragment extends Fragment {
 
             System.out.println("semana " + semana + "dia " + dia);
             //RecyclerView
-            Query query = firestore.collection("EjercicioRutina").whereEqualTo("NombreRutina", rutina.getNombreRutina()).whereEqualTo("NumeroSemana", semana).whereEqualTo("NumeroDia", dia).limit(1000);
-            FirestoreRecyclerOptions<EjercicioRutina> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<EjercicioRutina>().setQuery(query, EjercicioRutina.class).build();
-            AdapterEjercicios adapterEjercicios = new AdapterEjercicios(firestoreRecyclerOptions);
+            Query query = firestore.collection("EjercicioRutina").whereEqualTo("NombreRutina", rutina.getNombreRutina()).whereEqualTo("NumeroSemana", semana).whereEqualTo("NumeroDia", dia);
+            FirestoreRecyclerOptions<EjercicioRutina> options = new FirestoreRecyclerOptions.Builder<EjercicioRutina>()
+                    .setQuery(query, EjercicioRutina.class)
+                    .build();
+            adapterEjercicios = new AdapterEjercicios(options);
             adapterEjercicios.notifyDataSetChanged();
+            System.out.println(adapterEjercicios.getEjercicios().size());
+            recyclerViewEjercicios = view.findViewById(R.id.RecyclerViewEjercicios);
             recyclerViewEjercicios.setAdapter(adapterEjercicios);
-            System.out.println("adapter puesto, en teoría");
-            ejercicios = adapterEjercicios.getEjercicios();
+            recyclerViewEjercicios.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         } catch (NumberFormatException e) {
             Log.d("JODIDO","esta esta vacía");
         }
         return view;
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapterEjercicios.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapterEjercicios.stopListening();
+    }
+
 }

@@ -55,6 +55,7 @@ public class RutinasFragment extends Fragment {
         adapterRutinas.notifyDataSetChanged();
         recyclerViewRutinas.setAdapter(adapterRutinas);
         rutinas = adapterRutinas.getRutinas();
+        System.out.println("tamaño rutinas: "+ rutinas.size());
         mp= MediaPlayer.create(requireContext(), R.raw.kyriakosgrizzly);
 
         recyclerViewRutinas.addOnItemTouchListener(new RecyclerItemClickListener(view.getContext(), recyclerViewRutinas, new RecyclerItemClickListener.OnItemClickListener() {

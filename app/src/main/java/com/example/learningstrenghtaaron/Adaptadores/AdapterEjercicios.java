@@ -1,13 +1,10 @@
 package com.example.learningstrenghtaaron.Adaptadores;
 
-import android.graphics.Color;
-import android.util.Log;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina, AdapterEjercicios.ViewHolder> {
+public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina, AdapterEjercicios.ViewHolder>{
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -34,8 +31,7 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
     private ArrayList<EjercicioRutina> ejercicios;
     public AdapterEjercicios(@NonNull FirestoreRecyclerOptions<EjercicioRutina> options) {
         super(options);
-        this.ejercicios = new ArrayList<>();
-        System.out.println("seguro que esto si lo veo");
+        ejercicios = new ArrayList<>();
     }
 
     /**
@@ -45,10 +41,16 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
      */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull EjercicioRutina model) {
-        System.out.println(model.toString());
-        Log.d("AdapterEjercicios", "onBindViewHolder: position = " + position);
-        for(Map.Entry<String, Integer> entry : model.getSeriesXReps().entrySet()){
-            InsertaFilas(holder, model,entry);
+
+        for(Map.Entry<String, Integer> entry : model.getSeriesReps().entrySet()){
+            View registro = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.tablerow, null, false);
+            TextView nombreEjercicio = (TextView) registro.findViewById(R.id.nombreEjercicioRow);
+            TextView seriesReps = (TextView) registro.findViewById(R.id.seriesRepsRow);
+            TextView intensidad = (TextView) registro.findViewById(R.id.intensidadRow);
+            nombreEjercicio.setText(model.getNombreEjercicio());
+            seriesReps.setText(entry.getKey());
+            intensidad.setText(entry.getValue() + "%");
+            holder.tablaEjercicios.addView(registro);
         }
         ejercicios.add(model);
     }
@@ -79,58 +81,15 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ejerciciosview, parent, false);
         return new ViewHolder(v);
     }
-    private void InsertaFilas(@NonNull ViewHolder holder, @NonNull EjercicioRutina model, Map.Entry<String, Integer> entry) {
-        TableRow newRow = new TableRow(holder.itemView.getContext());
-        InsertaColumnas(holder, model, newRow, entry);
-        holder.tablaEjercicios.addView(newRow);
-    }
-    private void InsertaColumnas(@NonNull ViewHolder holder, @NonNull EjercicioRutina model, TableRow newRow,Map.Entry<String, Integer> entry) {
-        newRow.setBackgroundColor(Color.WHITE);
-        newRow.setLayoutParams(new TableRow.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT
-        ));
-        TextView nombreEjercicio = new TextView(holder.itemView.getContext());
-        nombreEjercicio.setText(model.getNombreEjercicio());
-        nombreEjercicio.setLayoutParams(new TableRow.LayoutParams(
-                TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT
-        ));
-        newRow.addView(nombreEjercicio);
-
-        TextView seriesxreps= new TextView(holder.itemView.getContext());
-        seriesxreps.setText(entry.getKey());
-        seriesxreps.setLayoutParams(new TableRow.LayoutParams(
-                TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT
-        ));
-        newRow.addView(seriesxreps);
-        TextView intensidad= new TextView(holder.itemView.getContext());
-        intensidad.setText(entry.getValue());
-        intensidad.setLayoutParams(new TableRow.LayoutParams(
-                TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT
-        ));
-        newRow.addView(intensidad);
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TableLayout tablaEjercicios;
+       private TableLayout tablaEjercicios;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tablaEjercicios = (TableLayout) itemView.findViewById(R.id.TableLayoutEjercicios);
-            System.out.println("esto deberia verse");
+            this.tablaEjercicios = (TableLayout) itemView.findViewById(R.id.TableLayoutEjercicios);
         }
-    }
-    @Override
-    public int getItemCount() {
-        return ejercicios.size();
-    }
-
-    @Override
-    public EjercicioRutina getItem(int position) {
-        return ejercicios.get(position);
     }
 
     public ArrayList<EjercicioRutina> getEjercicios() {

@@ -162,7 +162,7 @@ public class SemanasDiasFragment extends Fragment {
         bundle.putString("Dia",adapterSemanas.getElementos().get(posicion));
         nuevoFragment.setArguments(bundle);
         FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-        fm.add(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
+        fm.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
         fm.addToBackStack(null);
         fm.commit();
     }
