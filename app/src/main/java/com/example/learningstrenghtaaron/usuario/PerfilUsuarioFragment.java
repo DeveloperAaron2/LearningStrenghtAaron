@@ -68,6 +68,9 @@ public class PerfilUsuarioFragment extends Fragment {
                     case R.id.EditarRms:
                         Toast.makeText(getContext(), "No estas listo para eso", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.MisRutinas:
+                        //
+                        break;
                     case R.id.Ajustes:
                         Toast.makeText(getContext(), "Aqui no se puede entrar", Toast.LENGTH_SHORT).show();
                         break;

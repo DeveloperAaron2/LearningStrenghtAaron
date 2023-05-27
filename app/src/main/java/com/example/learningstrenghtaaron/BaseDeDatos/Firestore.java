@@ -1,5 +1,9 @@
 package com.example.learningstrenghtaaron.BaseDeDatos;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.learningstrenghtaaron.Entidades.Ejercicio;
@@ -22,6 +26,7 @@ import java.util.Map;
 
 
 public class Firestore {
+    private Usuario usuario;
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
 
@@ -86,26 +91,65 @@ public class Firestore {
         }
     }
 
-    public void InsertarUsuario(Usuario usuario) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("nombreUsuario", usuario.getNombreUsuario());
-        map.put("fotoUsuario", usuario.getFotoUsuario());
-        map.put("tipoUsuario", usuario.getTipoUsuario());
-        map.put("altura", usuario.getAltura());
-        map.put("peso", usuario.getPeso());
-        map.put("edad", usuario.getEdad());
-        firestore.collection("Usuario").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                System.out.println(usuario.toString() + " añdido");
-                usuario.setIdUsuario(documentReference.getId());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println("error al insertar " + usuario.toString());
-            }
-        });
+    public void actualizarUsuario(Usuario usuario) {
+        insertarUsuario(usuario);
+    }
+
+    public void actualizarUsuario(Map<String, Object> mapUsuario) {
+        insertarUsuario(mapUsuario);
+    }
+
+    public void insertarUsuario(Usuario usuario) {
+        firestore.collection("Usuario")
+                .document(usuario.getId())
+                .set(usuario.toMap())
+                .addOnSuccessListener(documentReference -> {
+                    System.out.println(usuario + " añadido");
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("error al insertar " + usuario);
+                    Log.w(TAG, "Error al registrar los datos del usuario: " + e.getMessage());
+                });
+    }
+
+    public void insertarUsuario(Map<String, Object> mapUsuario) {
+        firestore.collection("Usuario")
+                .document((String) mapUsuario.get("Id"))
+                .set(mapUsuario)
+                .addOnSuccessListener(documentReference -> {
+                    System.out.println(usuario + " añadido");
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("error al insertar " + usuario);
+                    Log.w(TAG, "Error al registrar los datos del usuario: " + e.getMessage());
+                });
+    }
+
+    public void borrarUsuario(String uid) {
+        firestore.collection("Usuario")
+                .document(uid)
+                .delete()
+                .addOnSuccessListener(documentReference -> {
+                    System.out.println("Usuario " + uid + " eliminado");
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("Error al eliminar usuario");
+                    Log.w(TAG, "Error al eliminar los datos del usuario: " + e.getMessage());
+                });
+    }
+
+    public Usuario getUsuario(String uid) {
+        firestore.collection("Usuario")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(documentReference -> {
+                    usuario = new Usuario(documentReference.getData());
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("Error al coger al usuario con id " + uid);
+                    Log.w(TAG, "Error al coger los datos del usuario con id " + uid + ": " + e.getMessage());
+                });
+        return usuario;
     }
 
     public void InsertarEjerciciosDeUsuario(String idUsuario, String nombreUsuario, Map<String, Double> ejerciciosyrm) {

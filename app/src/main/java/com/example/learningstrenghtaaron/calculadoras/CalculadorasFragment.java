@@ -20,8 +20,7 @@ import java.util.ArrayList;
 
 public class CalculadorasFragment extends Fragment {
 
-    private Button button3, button4, button5, button6, button7, button8, button9, button10, button11,
-            button12, button13, button14, button15, button16, button17, button18, btnRm, btnMacros;
+    private Button btnRm, btnMacros;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,8 +30,6 @@ public class CalculadorasFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculadoras, container, false);
-
-        inicializarComponentes(view);
         inicializarCalculadoras(view);
 
         return view;
@@ -44,132 +41,6 @@ public class CalculadorasFragment extends Fragment {
 
         btnRm.setOnClickListener(view1 -> startActivity(new Intent(getContext(), CalculadoraRmActivity.class)));
         btnMacros.setOnClickListener(view1 -> startActivity(new Intent(getContext(), CalculadoraMacrosActivity.class)));
-    }
-
-    private void inicializarComponentes(View v) {
-        ArrayList<Integer> botones = rellenarNumeros();
-        button3 = v.findViewById(R.id.button3);
-        button4 = v.findViewById(R.id.button4);
-        button5 = v.findViewById(R.id.button5);
-        button6 = v.findViewById(R.id.button6);
-        button7 = v.findViewById(R.id.button7);
-        button8 = v.findViewById(R.id.button8);
-        button9 = v.findViewById(R.id.button9);
-        button10 = v.findViewById(R.id.button10);
-        button11 = v.findViewById(R.id.button11);
-        button12 = v.findViewById(R.id.button12);
-        button13 = v.findViewById(R.id.button13);
-        button14 = v.findViewById(R.id.button14);
-        button15 = v.findViewById(R.id.button15);
-        button16 = v.findViewById(R.id.button16);
-        button17 = v.findViewById(R.id.button17);
-        button18 = v.findViewById(R.id.button18);
-
-        button3.setOnClickListener(view -> {
-            if (botones.contains(3))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button4.setOnClickListener(view -> {
-            if (botones.contains(4))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button5.setOnClickListener(view -> {
-            if (botones.contains(5))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button6.setOnClickListener(view -> {
-            if (botones.contains(6))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button7.setOnClickListener(view -> {
-            if (botones.contains(7))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button8.setOnClickListener(view -> {
-            if (botones.contains(8))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button9.setOnClickListener(view -> {
-            if (botones.contains(9))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button10.setOnClickListener(view -> {
-            if (botones.contains(10))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button11.setOnClickListener(view -> {
-            if (botones.contains(11))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button12.setOnClickListener(view -> {
-            if (botones.contains(12))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button13.setOnClickListener(view -> {
-            if (botones.contains(13))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button14.setOnClickListener(view -> {
-            if (botones.contains(14))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button15.setOnClickListener(view -> {
-            if (botones.contains(15))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button16.setOnClickListener(view -> {
-            if (botones.contains(16))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button17.setOnClickListener(view -> {
-            if (botones.contains(17))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-        button18.setOnClickListener(view -> {
-            if (botones.contains(18))
-                cerrarAplicacion();
-            else
-                Toast.makeText(getContext(), "Ese no es pringao.", Toast.LENGTH_SHORT).show();
-        });
-    }
-
-    private ArrayList<Integer> rellenarNumeros() {
-        ArrayList<Integer> botones = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            botones.add((int) (Math.random() * (18 + 1 - 3)) + 3);
-        }
-
-        return botones;
     }
 
     private void cerrarAplicacion(){
