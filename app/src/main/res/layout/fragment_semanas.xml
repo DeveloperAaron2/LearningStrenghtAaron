@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/FragmentRutina"
-    tools:context=".rutinas.SemanasFragment"
+    tools:context=".rutinas.SemanasDiasFragment"
     android:background="@drawable/cbumperro2">
 
     <!-- TODO: Update blank fragment layout -->

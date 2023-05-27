@@ -44,7 +44,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new RutinasFragment());
         mAuth = FirebaseAuth.getInstance();
-
         //Botones de navegación
         binding.bottomNavigationViewPantallaPrincipal.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -69,7 +68,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finishAffinity();
         }
-
     }
 
     public void replaceFragment(Fragment fragment) {

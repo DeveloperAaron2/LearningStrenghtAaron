@@ -6,6 +6,8 @@
 
     <item android:id="@+id/EditarRms"
         android:title="Editar Rm"/>
+    <item android:id="@+id/MisRutinas"
+        android:title="Mis Rutinas"/>
 
     <item android:id="@+id/Ajustes"
         android:title="Ajustes"/>

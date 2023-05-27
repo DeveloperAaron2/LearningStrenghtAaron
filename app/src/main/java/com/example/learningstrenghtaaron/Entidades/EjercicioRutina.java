@@ -8,14 +8,14 @@ public class EjercicioRutina {
     private String NombreRutina;
     private int NumeroDia;
     private int NumeroSemana;
-    private HashMap<String,Integer> SeriesXReps;
-
+    private HashMap<String,Integer> SeriesReps;
+    public EjercicioRutina(){}
     public EjercicioRutina(String nombreEjercicio, String nombreRutina, int numeroDia, int numeroSemana, HashMap<String, Integer> seriesXReps) {
         NombreEjercicio = nombreEjercicio;
         NombreRutina = nombreRutina;
         NumeroDia = numeroDia;
         NumeroSemana = numeroSemana;
-        SeriesXReps = seriesXReps;
+        SeriesReps = seriesXReps;
     }
 
     public String getNombreEjercicio() {
@@ -50,13 +50,15 @@ public class EjercicioRutina {
         NumeroSemana = numeroSemana;
     }
 
-    public HashMap<String, Integer> getSeriesXReps() {
-        return SeriesXReps;
+    public HashMap<String, Integer> getSeriesReps() {
+        return SeriesReps;
     }
 
-    public void setSeriesXReps(HashMap<String, Integer> seriesXReps) {
-        SeriesXReps = seriesXReps;
+    public void setSeriesReps(HashMap<String, Integer> seriesReps) {
+        SeriesReps = seriesReps;
     }
+
+
 
     @Override
     public String toString() {
@@ -65,7 +67,7 @@ public class EjercicioRutina {
                 ", NombreRutina='" + NombreRutina + '\'' +
                 ", NumeroDia=" + NumeroDia +
                 ", NumeroSemana=" + NumeroSemana +
-                ", SeriesXReps=" + SeriesXReps +
+                ", SeriesXReps=" + SeriesReps +
                 '}';
     }
 
