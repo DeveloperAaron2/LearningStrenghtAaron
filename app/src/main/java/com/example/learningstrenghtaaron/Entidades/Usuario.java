@@ -1,60 +1,98 @@
 package com.example.learningstrenghtaaron.Entidades;
 
-public class Usuario {
-    private String idUsuario;
-    private String fotoUsuario;
-    private String nombreUsuario;
-    private String tipoUsuario;
-    private int edad;
-    private double peso;
-    private int altura;
+import com.google.firebase.auth.FirebaseAuth;
 
-    public Usuario(String fotoUsuario, String nombreUsuario, String tipoUsuario, int edad, double peso, int altura) {
-        this.fotoUsuario = fotoUsuario;
-        this.nombreUsuario = nombreUsuario;
-        this.tipoUsuario = tipoUsuario;
-        this.edad = edad;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Usuario implements Serializable {
+    private String id, usuario, correo, foto, fechaNac, deporte;
+    private double peso, altura;
+    private Map<String, String> mapaRms;
+
+    public Usuario() {
+    }
+
+    public Usuario(String id, String usuario, String correo, String fechaNac) {
+        this.id = id;
+        this.usuario = usuario;
+        this.correo = correo;
+        this.fechaNac = fechaNac;
+    }
+
+    public Usuario(String id, String usuario, String correo, String foto, String fechaNac, String deporte, double peso, double altura, Map<String, String> mapaRms) {
+        this.id = id;
+        this.usuario = usuario;
+        this.correo = correo;
+        this.foto = foto;
+        this.fechaNac = fechaNac;
+        this.deporte = deporte;
         this.peso = peso;
         this.altura = altura;
+        this.mapaRms = mapaRms;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getFotoUsuario() {
-        return fotoUsuario;
-    }
-
-    public void setFotoUsuario(String fotoUsuario) {
-        this.fotoUsuario = fotoUsuario;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public Usuario(Map<String, Object> datosUsuario) {
+        if (datosUsuario != null) {
+            this.id = (String) datosUsuario.getOrDefault("Id", "");
+            this.usuario = (String) datosUsuario.getOrDefault("Usuario", "");
+            this.correo = (String) datosUsuario.getOrDefault("Correo", "");
+            this.foto = (String) datosUsuario.getOrDefault("Foto", "");
+            this.fechaNac = (String) datosUsuario.getOrDefault("FechaNac", "");
+            this.deporte = (String) datosUsuario.getOrDefault("Deporte", "");
+            this.peso = Double.parseDouble((String) datosUsuario.getOrDefault("Peso", 0));
+            this.altura = Double.parseDouble((String) datosUsuario.getOrDefault("Altura", 0));
+            this.mapaRms = (Map<String, String>) datosUsuario.getOrDefault("MapaRms", new HashMap<String, String>());
+        }
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public String getId() {
+        return id;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public int getEdad() {
-        return edad;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getFechaNac() {
+        return fechaNac;
+    }
+
+    public void setFechaNac(String fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
+    public String getDeporte() {
+        return deporte;
+    }
+
+    public void setDeporte(String deporte) {
+        this.deporte = deporte;
     }
 
     public double getPeso() {
@@ -65,25 +103,50 @@ public class Usuario {
         this.peso = peso;
     }
 
-    public int getAltura() {
+    public double getAltura() {
         return altura;
     }
 
-    public void setAltura(int altura) {
+    public void setAltura(double altura) {
         this.altura = altura;
+    }
+
+    public Map<String, String> getMapaRms() {
+        return mapaRms;
+    }
+
+    public void setMapaRms(Map<String, String> mapaRms) {
+        this.mapaRms = mapaRms;
     }
 
     @Override
     public String toString() {
         return "Usuario{" +
-                "idUsuario='" + idUsuario + '\'' +
-                ", fotoUsuario='" + fotoUsuario + '\'' +
-                ", nombreUsuario='" + nombreUsuario + '\'' +
-                ", tipoUsuario='" + tipoUsuario + '\'' +
-                ", edad=" + edad +
+                "id='" + id + '\'' +
+                ", usuario='" + usuario + '\'' +
+                ", correo='" + correo + '\'' +
+                ", foto='" + foto + '\'' +
+                ", fechaNac='" + fechaNac + '\'' +
+                ", deporte='" + deporte + '\'' +
                 ", peso=" + peso +
                 ", altura=" + altura +
+                ", MapaRms=" + mapaRms.toString() +
                 '}';
     }
 
+    public Map<String, Object> toMap() {
+        Map<String, Object> mapUsuario = new HashMap<>();
+
+        mapUsuario.put("Id", id);
+        mapUsuario.put("Usuario", usuario);
+        mapUsuario.put("Correo", correo);
+        mapUsuario.put("Foto", foto);
+        mapUsuario.put("FechaNac", fechaNac);
+        mapUsuario.put("Deporte", deporte);
+        mapUsuario.put("Peso", peso);
+        mapUsuario.put("Altura", altura);
+        mapUsuario.put("MapaRms", mapaRms);
+
+        return mapUsuario;
+    }
 }

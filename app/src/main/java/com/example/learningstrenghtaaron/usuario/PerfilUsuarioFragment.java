@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
+import com.example.learningstrenghtaaron.Entidades.Usuario;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.login.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,11 +22,13 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 public class PerfilUsuarioFragment extends Fragment {
     private LinearLayout layoutPrincipal;
     private ShapeableImageView fotoPerfil;
     private FloatingActionButton btnMenu;
-    private MaterialTextView txtUsuario, txtNombre, txtCorreo, txtFechaNac, txtPeso, txtAltura;
+    private MaterialTextView txtUsuario, txtDeporte, txtCorreo, txtFechaNac, txtPeso, txtAltura, txtRms;
+    private Firestore firestore;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class PerfilUsuarioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil_usuario, container, false);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        firestore = Firestore.getInstance();
 
         inicializarComponentes(view);
 
@@ -45,7 +50,7 @@ public class PerfilUsuarioFragment extends Fragment {
         return view;
     }
 
-    private void ponerDatos(FirebaseUser user) {
+/*    private void ponerDatos(FirebaseUser user) {
         if (user.getDisplayName().isBlank()) txtUsuario.setText("Pancho");
         else txtUsuario.setText(user.getDisplayName());
         txtNombre.setText("RevientaAbuelas69");
@@ -53,6 +58,21 @@ public class PerfilUsuarioFragment extends Fragment {
         txtFechaNac.setText(user.getMetadata().toString());
         txtPeso.setText("Curvado");
         txtAltura.setText("Enano");
+    }*/
+
+    private void ponerDatos(FirebaseUser user) {
+        Usuario usuario = firestore.getUsuario(user.getUid());
+
+        if (usuario != null) {
+            String s = "";
+            txtUsuario.setText(usuario.getUsuario() == null ? "" : usuario.getUsuario());
+            txtDeporte.setText(usuario.getDeporte() == null ? "" : usuario.getDeporte());
+            txtCorreo.setText(usuario.getCorreo() == null ? "" : usuario.getCorreo());
+            txtFechaNac.setText(usuario.getFechaNac() == null ? "" : usuario.getFechaNac());
+            txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : usuario.getPeso()));
+            txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : usuario.getAltura()));
+            usuario.getMapaRms().forEach((k, v) -> txtRms.setText(String.format("%s %s: %s\n", txtRms.getText(), k, v)));
+        }
     }
 
     private void showMenu(View view, int fragment_perfil_usuario_menu) {
@@ -62,7 +82,7 @@ public class PerfilUsuarioFragment extends Fragment {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.EditarUsuario:
                         startActivity(new Intent(getContext(), PerfilUsuarioActivity.class));
                         break;
@@ -79,7 +99,8 @@ public class PerfilUsuarioFragment extends Fragment {
                 return false;
             }
         });
-        popup.setOnDismissListener(popupMenu -> {});
+        popup.setOnDismissListener(popupMenu -> {
+        });
         popup.show();
     }
 
@@ -88,10 +109,11 @@ public class PerfilUsuarioFragment extends Fragment {
         fotoPerfil = view.findViewById(R.id.fotoFragmentPerfilUsuario);
         btnMenu = view.findViewById(R.id.btnMenuFragmentPerfilUsuario);
         txtUsuario = view.findViewById(R.id.tilNombreUsuarioFragmentPerfilUsuario);
-        txtNombre = view.findViewById(R.id.tilNombreFragmentPerfilUsuario);
+        txtDeporte = view.findViewById(R.id.tilNombreFragmentPerfilUsuario);
         txtCorreo = view.findViewById(R.id.tilEmailFragmentPerfilUsuario);
         txtFechaNac = view.findViewById(R.id.tilFechaNacFragmentPerfilusuario);
         txtPeso = view.findViewById(R.id.tilPesoFragmentPerfilusuario);
         txtAltura = view.findViewById(R.id.tilAlturaFragmentPerfilusuario);
+        txtRms = view.findViewById(R.id.txtRmsFragmentPerfilUsuario);
     }
 }

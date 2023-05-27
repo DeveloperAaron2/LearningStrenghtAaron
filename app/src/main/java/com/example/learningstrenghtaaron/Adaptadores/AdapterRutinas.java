@@ -86,7 +86,6 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
             nombreRutina = (TextView) itemView.findViewById(R.id.nombreRutina);
             tipoRutina = (TextView) itemView.findViewById(R.id.TipoRutina);
             icono =(ImageView) itemView.findViewById(R.id.iconoRutina);
-            System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaa");
         }
     }
 

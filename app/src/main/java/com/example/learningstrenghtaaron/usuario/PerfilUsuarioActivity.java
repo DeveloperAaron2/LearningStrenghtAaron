@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
+import com.example.learningstrenghtaaron.Entidades.Usuario;
 import com.example.learningstrenghtaaron.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -17,11 +19,12 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.HashMap;
 
 public class PerfilUsuarioActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private TextInputLayout tilUsuario, tilNombre, tilEmail, tilFecha, tilPeso, tilAltura;
     private TextInputEditText txtUsuario, txtNombre, txtEmail, txtFecha, txtPeso, txtAltura;
     private FloatingActionButton btnAtras, btnAceptar;
     private MaterialButton btnCambiarFoto;
+    private Usuario usuario;
+    private Firestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +32,9 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_usuario);
 
         // TODO: recoger datos del usuario de la bd
-        mAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser user = mAuth.getCurrentUser();
-        //Usar el Uid para buscar al usuario en firestore y recoger los datos
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        firestore = Firestore.getInstance();
 
         inicializarComponentes();
 
@@ -84,13 +86,20 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     }
 
     private void rellenarDatosUsuario(String uid) {
+        usuario = firestore.getUsuario(uid);
 
+        txtUsuario.setText(usuario.getUsuario() == null ? "" : usuario.getUsuario());
+        txtNombre.setText(usuario.getDeporte() == null ? "" : usuario.getDeporte());
+        txtFecha.setText(usuario.getFechaNac() == null ? "" : usuario.getFechaNac());
+        txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : usuario.getUsuario()));
+        txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : usuario.getUsuario()));
     }
 
     private void modificarDatosUsuario() {
         if (chequearDatos()) {
-            HashMap<String, String> mapUsuario = recogerDatosUsuario();
+            recogerDatosUsuario();
             // TODO: actualizar datos usuario en la bd, los campos peso y altura pueden ser nulos
+            firestore.insertarUsuario(usuario);
 
         } else {
             Toast.makeText(this, "Los campos marcados con * son obligatorios.", Toast.LENGTH_SHORT).show();
@@ -105,17 +114,13 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         return false;
     }
 
-    private HashMap<String, String> recogerDatosUsuario() {
-        HashMap<String, String> mapDatosUsuario = new HashMap<>();
-
-        mapDatosUsuario.put("Usuario", txtUsuario.getText().toString().trim());
-        mapDatosUsuario.put("Nombre", txtNombre.getText().toString().trim());
-        mapDatosUsuario.put("Email", txtEmail.getText().toString().trim());
-        mapDatosUsuario.put("Fecha", txtFecha.getText().toString().trim());
-        if (!txtPeso.getText().toString().isBlank())        mapDatosUsuario.put("Peso", txtPeso.getText().toString().trim());
-        if (!txtAltura.getText().toString().trim().isBlank())        mapDatosUsuario.put("Altura", txtAltura.getText().toString().trim());
-
-        return mapDatosUsuario;
+    private void recogerDatosUsuario() {
+        // TODO: los getText pueden ser nulos
+        usuario.setUsuario(txtUsuario.getText().toString().trim());
+        usuario.setCorreo(txtEmail.getText().toString().trim());
+        usuario.setFechaNac(txtFecha.getText().toString().trim());
+        usuario.setPeso(Double.parseDouble(txtPeso.getText().toString().trim()));
+        usuario.setAltura(Double.parseDouble(txtAltura.getText().toString().trim()));
     }
 
     private void cambiarfoto() {

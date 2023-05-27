@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,9 +23,12 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegisterDataActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -34,14 +38,16 @@ public class RegisterDataActivity extends AppCompatActivity implements AdapterVi
     private Spinner spinnerDeporte;
     private LinearLayout layoutRm;
     private Button btnEntrar;
-    private FirebaseFirestore mFirestore;
+    private List<String> listaRms;
+    private Firestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_data);
 
-        mFirestore = FirebaseFirestore.getInstance();
+        listaRms = new ArrayList<>();
+        firestore = Firestore.getInstance();
 
         inicializarTxt();
 
@@ -81,20 +87,14 @@ public class RegisterDataActivity extends AppCompatActivity implements AdapterVi
     }
 
     private void subirABd(Map<String, Object> mapDatosUsuario) {
-        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mapDatosUsuario.put("id", id);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String id = user.getUid();
+        mapDatosUsuario.put("Id", id);
+        mapDatosUsuario.put("Correo", user.getEmail());
+        mapDatosUsuario.put("Foto", "");
 
-        mFirestore.collection("Usuario")
-                .document(id)
-                .set(mapDatosUsuario)
-                .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(RegisterDataActivity.this, "Datos del usuario registrados correctamente", Toast.LENGTH_SHORT).show();
-                    irALogin();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(RegisterDataActivity.this, "Warning: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    Log.w(TAG, "Error al registrar los datos del usuario en RegisterDataActivity: " + e.getMessage());
-                });
+        firestore.insertarUsuario(mapDatosUsuario);
+        irALogin();
     }
 
     private void irALogin() {
@@ -119,15 +119,22 @@ public class RegisterDataActivity extends AppCompatActivity implements AdapterVi
 
     private Map<String, Object> recogerDatosTv() {
         Map<String, Object> mapDatosUsuario = new HashMap<>();
+        Map<String, Object> mapaRms = new HashMap<>();
         mapDatosUsuario.put("Usuario", txtUsuario.getText().toString().trim());
         mapDatosUsuario.put("FechaNac", txtFecha.getText().toString().trim());
-        mapDatosUsuario.put("Peso", txtPeso.getText().toString().trim());
-        mapDatosUsuario.put("Altura", txtAltura.getText().toString().trim());
+        mapDatosUsuario.put("Peso", txtPeso.getText() != null ? txtPeso.getText().toString().trim() : "");
+        mapDatosUsuario.put("Altura", txtAltura.getText() != null ? txtAltura.getText().toString().trim() : "");
         if (!spinnerDeporte.getSelectedItem().toString().equals("Selecciona tu deporte")) {
             mapDatosUsuario.put("Deporte", spinnerDeporte.getSelectedItem().toString());
-            mapDatosUsuario.put("Rm1", txtRm1.getText().toString().trim());
-            mapDatosUsuario.put("Rm2", txtRm2.getText().toString().trim());
-            mapDatosUsuario.put("Rm3", txtRm3.getText().toString().trim());
+            if (txtRm1.getText() != null || txtRm2.getText() != null || txtRm3.getText() != null) {
+                mapaRms.put(listaRms.get(0), txtRm1.getText().toString().trim() + " " + listaRms.get(3));
+                mapaRms.put(listaRms.get(1), txtRm2.getText().toString().trim() + " " + listaRms.get(3));
+                mapaRms.put(listaRms.get(2), txtRm3.getText().toString().trim() + " " + listaRms.get(3));
+                mapDatosUsuario.put("MapaRms", mapaRms);
+            } else {
+                mapDatosUsuario.put("Deporte", "");
+                mapDatosUsuario.put("MapaRms", mapaRms);
+            }
         }
         return mapDatosUsuario;
     }
@@ -156,6 +163,10 @@ public class RegisterDataActivity extends AppCompatActivity implements AdapterVi
         spinnerDeporte.requestFocus();
         switch (spinnerDeporte.getSelectedItem().toString()) {
             case "Calistenia":
+                listaRms.add("Dominadas");
+                listaRms.add("Fondos");
+                listaRms.add("Flexiones");
+                listaRms.add("repes");
                 setRm("Dominadas", "Fondos", "Flexiones", "repes");
                 layoutRm.setVisibility(View.VISIBLE);
                 break;
@@ -172,10 +183,18 @@ public class RegisterDataActivity extends AppCompatActivity implements AdapterVi
                 layoutRm.setVisibility(View.GONE);
                 break;
             case "Powerlifting":
+                listaRms.add("Press banca");
+                listaRms.add("Peso muerto");
+                listaRms.add("Sentadilla");
+                listaRms.add("kg");
                 setRm("Press banca", "Peso muerto", "Sentadilla", "kg");
                 layoutRm.setVisibility(View.VISIBLE);
                 break;
             case "Streetlifting":
+                listaRms.add("Dominadas");
+                listaRms.add("Fondos");
+                listaRms.add("Sentadilla");
+                listaRms.add("kg");
                 setRm("Dominadas", "Fondos", "Sentadilla", "kg");
                 layoutRm.setVisibility(View.VISIBLE);
                 break;
