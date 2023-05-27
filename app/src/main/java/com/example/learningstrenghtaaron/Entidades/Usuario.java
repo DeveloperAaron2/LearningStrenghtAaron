@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Usuario implements Serializable {
     private String id, usuario, correo, foto, fechaNac, deporte;
-    private double peso, altura;
+    private long peso, altura;
     private Map<String, String> mapaRms;
 
     public Usuario() {
@@ -21,7 +21,7 @@ public class Usuario implements Serializable {
         this.fechaNac = fechaNac;
     }
 
-    public Usuario(String id, String usuario, String correo, String foto, String fechaNac, String deporte, double peso, double altura, Map<String, String> mapaRms) {
+    public Usuario(String id, String usuario, String correo, String foto, String fechaNac, String deporte, long peso, long altura, Map<String, String> mapaRms) {
         this.id = id;
         this.usuario = usuario;
         this.correo = correo;
@@ -41,8 +41,10 @@ public class Usuario implements Serializable {
             this.foto = (String) datosUsuario.getOrDefault("Foto", "");
             this.fechaNac = (String) datosUsuario.getOrDefault("FechaNac", "");
             this.deporte = (String) datosUsuario.getOrDefault("Deporte", "");
-            this.peso = Double.parseDouble((String) datosUsuario.getOrDefault("Peso", 0));
-            this.altura = Double.parseDouble((String) datosUsuario.getOrDefault("Altura", 0));
+/*            this.peso = Long.parseLong(String.valueOf(datosUsuario.getOrDefault("Peso", 0)));
+            this.altura = Long.parseLong(String.valueOf(datosUsuario.getOrDefault("Altura", 0)));*/
+            this.peso = (long) datosUsuario.get("Peso");
+            this.altura = (long) datosUsuario.get("Altura");
             this.mapaRms = (Map<String, String>) datosUsuario.getOrDefault("MapaRms", new HashMap<String, String>());
         }
     }
@@ -99,15 +101,15 @@ public class Usuario implements Serializable {
         return peso;
     }
 
-    public void setPeso(double peso) {
+    public void setPeso(long peso) {
         this.peso = peso;
     }
 
-    public double getAltura() {
+    public long getAltura() {
         return altura;
     }
 
-    public void setAltura(double altura) {
+    public void setAltura(long altura) {
         this.altura = altura;
     }
 

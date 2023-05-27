@@ -92,6 +92,7 @@ public class RegisterDataActivity extends AppCompatActivity implements AdapterVi
         mapDatosUsuario.put("Id", id);
         mapDatosUsuario.put("Correo", user.getEmail());
         mapDatosUsuario.put("Foto", "");
+        mapDatosUsuario.put("ListaRutinas", new ArrayList<>());
 
         firestore.insertarUsuario(mapDatosUsuario);
         irALogin();

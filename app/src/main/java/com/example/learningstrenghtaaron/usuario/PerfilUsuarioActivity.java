@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class PerfilUsuarioActivity extends AppCompatActivity {
     private TextInputLayout tilUsuario, tilNombre, tilEmail, tilFecha, tilPeso, tilAltura;
@@ -91,15 +92,17 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         txtUsuario.setText(usuario.getUsuario() == null ? "" : usuario.getUsuario());
         txtNombre.setText(usuario.getDeporte() == null ? "" : usuario.getDeporte());
         txtFecha.setText(usuario.getFechaNac() == null ? "" : usuario.getFechaNac());
-        txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : usuario.getUsuario()));
-        txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : usuario.getUsuario()));
+        txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : usuario.getPeso()));
+        txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : usuario.getAltura()));
     }
 
     private void modificarDatosUsuario() {
         if (chequearDatos()) {
             recogerDatosUsuario();
             // TODO: actualizar datos usuario en la bd, los campos peso y altura pueden ser nulos
-            firestore.insertarUsuario(usuario);
+            Map<String, Object> map = usuario.toMap();
+            map.put("sdljf", 79);
+            firestore.insertarUsuario(map);
 
         } else {
             Toast.makeText(this, "Los campos marcados con * son obligatorios.", Toast.LENGTH_SHORT).show();
@@ -107,7 +110,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     }
 
     private boolean chequearDatos() {
-        if (!txtUsuario.getText().toString().trim().isBlank() && !txtNombre.getText().toString().trim().isBlank()
+        if (!txtUsuario.getText().toString().trim().isBlank()
                 && !txtEmail.getText().toString().trim().isBlank() && !txtFecha.getText().toString().trim().isBlank()) {
             return true;
         }
@@ -119,8 +122,8 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         usuario.setUsuario(txtUsuario.getText().toString().trim());
         usuario.setCorreo(txtEmail.getText().toString().trim());
         usuario.setFechaNac(txtFecha.getText().toString().trim());
-        usuario.setPeso(Double.parseDouble(txtPeso.getText().toString().trim()));
-        usuario.setAltura(Double.parseDouble(txtAltura.getText().toString().trim()));
+        usuario.setPeso(Long.parseLong(txtPeso.getText().toString().trim()));
+        usuario.setAltura(Long.parseLong(txtAltura.getText().toString().trim()));
     }
 
     private void cambiarfoto() {
