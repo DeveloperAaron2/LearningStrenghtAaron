@@ -64,14 +64,15 @@ public class PerfilUsuarioFragment extends Fragment {
         Usuario usuario = firestore.getUsuario(user.getUid());
 
         if (usuario != null) {
-            String s = "";
-            txtUsuario.setText(usuario.getUsuario() == null ? "" : usuario.getUsuario());
-            txtDeporte.setText(usuario.getDeporte() == null ? "" : usuario.getDeporte());
-            txtCorreo.setText(usuario.getCorreo() == null ? "" : usuario.getCorreo());
-            txtFechaNac.setText(usuario.getFechaNac() == null ? "" : usuario.getFechaNac());
-            txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : usuario.getPeso()));
-            txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : usuario.getAltura()));
-            usuario.getMapaRms().forEach((k, v) -> txtRms.setText(String.format("%s %s: %s\n", txtRms.getText(), k, v)));
+            txtUsuario.setText(usuario.getUsuario() == null ? "" : "Usuario: " + usuario.getUsuario());
+            txtDeporte.setText(usuario.getDeporte() == null ? "" : "Deporte: " + usuario.getDeporte());
+            txtCorreo.setText(usuario.getCorreo() == null ? "" : "Correo: " + usuario.getCorreo());
+            txtFechaNac.setText(usuario.getFechaNac() == null ? "" : "Fecha de nacimiento: " + usuario.getFechaNac());
+            txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : "Peso: " + usuario.getPeso()));
+            txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : "Altura: " + usuario.getAltura()));
+            if (usuario.getMapaRms() != null && !usuario.getMapaRms().isEmpty()) {
+                usuario.getMapaRms().forEach((k, v) -> txtRms.setText(String.format("%s %s: %s\n", txtRms.getText(), k, v)));
+            }
         }
     }
 
@@ -112,7 +113,7 @@ public class PerfilUsuarioFragment extends Fragment {
         fotoPerfil = view.findViewById(R.id.fotoFragmentPerfilUsuario);
         btnMenu = view.findViewById(R.id.btnMenuFragmentPerfilUsuario);
         txtUsuario = view.findViewById(R.id.tilNombreUsuarioFragmentPerfilUsuario);
-        txtDeporte = view.findViewById(R.id.tilNombreFragmentPerfilUsuario);
+        txtDeporte = view.findViewById(R.id.tilDeporteFragmentPerfilUsuario);
         txtCorreo = view.findViewById(R.id.tilEmailFragmentPerfilUsuario);
         txtFechaNac = view.findViewById(R.id.tilFechaNacFragmentPerfilusuario);
         txtPeso = view.findViewById(R.id.tilPesoFragmentPerfilusuario);

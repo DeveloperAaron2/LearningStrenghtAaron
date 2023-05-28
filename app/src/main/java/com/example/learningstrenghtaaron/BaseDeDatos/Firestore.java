@@ -113,10 +113,10 @@ public class Firestore {
                 .document((String) mapUsuario.get("Id"))
                 .set(mapUsuario)
                 .addOnSuccessListener(documentReference -> {
-                    System.out.println(usuario + " añadido");
+                    System.out.println(mapUsuario.get("Id") + " añadido");
                 })
                 .addOnFailureListener(e -> {
-                    System.out.println("error al insertar " + usuario);
+                    System.out.println("Error al insertar " + mapUsuario.get("Id"));
                     Log.w(TAG, "Error al registrar los datos del usuario: " + e.getMessage());
                 });
     }
