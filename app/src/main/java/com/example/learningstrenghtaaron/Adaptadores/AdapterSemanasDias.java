@@ -39,7 +39,7 @@ public class AdapterSemanasDias extends RecyclerView.Adapter<AdapterSemanasDias.
 
     private void rellenaSemanas() {
         if (numeroElementos==0){
-            elementos.add("Semana Vacía");
+            elementos.add("Rutina Vacía");
         }
         else{
         for (int i = 0; i < numeroElementos; i++) {

@@ -1,9 +1,13 @@
 package com.example.learningstrenghtaaron.usuario;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,6 +21,7 @@ import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.Entidades.Usuario;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.login.MainActivity;
+import com.example.learningstrenghtaaron.rutinas.RutinasFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
@@ -30,15 +35,18 @@ public class PerfilUsuarioFragment extends Fragment {
     private MaterialTextView txtUsuario, txtDeporte, txtCorreo, txtFechaNac, txtPeso, txtAltura, txtRms;
     private Firestore firestore;
 
+    private FirebaseUser user;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil_usuario, container, false);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         firestore = Firestore.getInstance();
 
         inicializarComponentes(view);
@@ -60,6 +68,7 @@ public class PerfilUsuarioFragment extends Fragment {
         txtAltura.setText("Enano");
     }*/
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void ponerDatos(FirebaseUser user) {
         Usuario usuario = firestore.getUsuario(user.getUid());
 
@@ -91,7 +100,16 @@ public class PerfilUsuarioFragment extends Fragment {
                         Toast.makeText(getContext(), "No estas listo para eso", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.MisRutinas:
-                        //
+                        Fragment nuevoFragment = new RutinasFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
+                        Bundle bundle = new Bundle();
+                        bundle.putString("Tipo","MisRutinas");
+                        bundle.putString("IdUsuario", user.getUid());
+                        System.out.println((String) txtUsuario.getText());
+                        nuevoFragment.setArguments(bundle);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
+                        fragmentTransaction.commit();
                         break;
                     case R.id.Ajustes:
                         Toast.makeText(getContext(), "Aqui no se puede entrar", Toast.LENGTH_SHORT).show();

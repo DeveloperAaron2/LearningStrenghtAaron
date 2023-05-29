@@ -1,22 +1,48 @@
 package com.example.learningstrenghtaaron.Adaptadores;
 
+import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.Entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
+import com.example.learningstrenghtaaron.rutinas.RutinasFragment;
+import com.example.learningstrenghtaaron.rutinas.SemanasDiasFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.SuccessContinuation;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 
 public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRutinas.ViewHolder>{
@@ -28,9 +54,15 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
      * @param options
      */
     private ArrayList<Rutina> rutinas;
-    public AdapterRutinas(@NonNull FirestoreRecyclerOptions<Rutina> options) {
+    private Firestore firestore;
+    private RutinasFragment controller;
+
+    public AdapterRutinas(@NonNull FirestoreRecyclerOptions<Rutina> options, RutinasFragment controller) {
         super(options);
         rutinas = new ArrayList<>();
+        firestore = Firestore.getInstance();
+        this.controller=controller;
+
     }
 
     /**
@@ -48,9 +80,64 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
         } else if (model.getTipoRutina().equals("Hipertrofia")) {
             holder.icono.setImageResource(R.drawable.hipertrofiaicono);
         }
+        holder.btnMenuFragmentRutinas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu(v,R.menu.fragment_rutinas_menu,model);
+                Toast.makeText(v.getContext(), "Hola soy el boton", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.icono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.abrirFragment(position);
+            }
+        });
         rutinas.add(model);
+
     }
 
+
+    public void showMenu(View view, int fragment_rutinas_menu, Rutina model) {
+        PopupMenu popup = new PopupMenu(view.getContext(), view);
+        popup.getMenuInflater().inflate(fragment_rutinas_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.Agregar_Rutina:
+                            TieneLaRutina(model,view);
+                        break;
+                    case R.id.BorrarRutina:
+
+                        break;
+                }
+                return false;
+            }
+        });
+        popup.setOnDismissListener(popupMenu -> {
+        });
+        popup.show();
+    }
+
+    private void TieneLaRutina(Rutina model, View view) {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference docRef = firestore.getFirestore().collection("Rutina").document(model.getNombreRutina());
+        Task<DocumentSnapshot> document = docRef.get();
+        if(document!=null){
+            document.addOnSuccessListener(documentSnapshot -> {
+                ArrayList<Object> objetos = (ArrayList<Object>) documentSnapshot.get("Usuarios");
+                if (objetos.contains(user.getUid())) {
+                    Toast.makeText(view.getContext(), "Ya tienes agregada esta rutina", Toast.LENGTH_SHORT).show();
+                } else
+                    objetos.add(user.getUid());
+                HashMap<String, Object> datos = new HashMap<>();
+                datos.put("Usuarios", objetos);
+                docRef.update(datos);
+            });
+            }
+    }
     /**
      * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent
      * an item.
@@ -84,12 +171,15 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
         private ImageView icono;
 
         private TextView creador;
+        private FloatingActionButton btnMenuFragmentRutinas;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nombreRutina = (TextView) itemView.findViewById(R.id.nombreRutina);
             tipoRutina = (TextView) itemView.findViewById(R.id.TipoRutina);
             icono =(ImageView) itemView.findViewById(R.id.iconoRutina);
             creador = (TextView) itemView.findViewById(R.id.CreadorRutina);
+            btnMenuFragmentRutinas = (FloatingActionButton) itemView.findViewById(R.id.btnMenuFragmentRutinas);
+
         }
     }
 

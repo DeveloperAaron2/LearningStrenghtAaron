@@ -1,5 +1,9 @@
 package com.example.learningstrenghtaaron.Entidades;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.Serializable;
@@ -33,6 +37,7 @@ public class Usuario implements Serializable {
         this.mapaRms = mapaRms;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public Usuario(Map<String, Object> datosUsuario) {
         if (datosUsuario != null) {
             this.id = (String) datosUsuario.getOrDefault("Id", "");

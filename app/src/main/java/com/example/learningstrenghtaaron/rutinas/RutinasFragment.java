@@ -29,6 +29,7 @@ public class RutinasFragment extends Fragment {
 
     private ArrayList<Rutina> rutinas;
     private MediaPlayer mp;
+    private  Query query;
 
     public RutinasFragment() {
         // Required empty public constructor
@@ -37,43 +38,52 @@ public class RutinasFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("este va primero");
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        System.out.println("este va segundo");
         View view = inflater.inflate(R.layout.fragment_rutinas, container, false);
         //Relacionado Con RecyclerView
         recyclerViewRutinas = (RecyclerView) view.findViewById(R.id.RecyclerRutinas);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2); // 2 items por columna
         recyclerViewRutinas.setLayoutManager(layoutManager);
         firestore = FirebaseFirestore.getInstance();
-        Query query = firestore.collection("Rutina").whereEqualTo("acceso","pública").limit(1000);
+        Bundle bundle = getArguments();
+        String tipo = bundle.getString("Tipo");
+        if (tipo.equals("Rutinas")) {
+             query = firestore.collection("Rutina").whereEqualTo("acceso", "pública").limit(1000);
+        }else if (tipo.equals("MisRutinas")) {
+            String nombreUsuario = (String) bundle.get("NombreUsuario");
+            query = firestore.collection("Rutina").whereEqualTo("acceso","pública").whereArrayContains("Usuarios",nombreUsuario).limit(1000);
+        }
         FirestoreRecyclerOptions<Rutina> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Rutina>().setQuery(query, Rutina.class).build();
-        adapterRutinas = new AdapterRutinas(firestoreRecyclerOptions);
+        adapterRutinas = new AdapterRutinas(firestoreRecyclerOptions,this);
         adapterRutinas.notifyDataSetChanged();
         recyclerViewRutinas.setAdapter(adapterRutinas);
         rutinas = adapterRutinas.getRutinas();
         System.out.println("tamaño rutinas: "+ rutinas.size());
         mp= MediaPlayer.create(requireContext(), R.raw.kyriakosgrizzly);
-
-        recyclerViewRutinas.addOnItemTouchListener(new RecyclerItemClickListener(view.getContext(), recyclerViewRutinas, new RecyclerItemClickListener.OnItemClickListener() {
+        return view;
+    }
+    public void añadirListener(){
+        recyclerViewRutinas.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerViewRutinas, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int posicion) {
                 mp.start();
                 abrirFragment(posicion);
             }
-
             @Override
             public void onLongItemClick(View v, int posicion) {
 
             }
         }));
-
-        return view;
     }
-    private void abrirFragment(int posicion) {
+    public void abrirFragment(int posicion) {
         Fragment nuevoFragment = new SemanasDiasFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
         Bundle bundle = new Bundle();
         bundle.putSerializable("rutina",rutinas.get(posicion));

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -143,16 +144,21 @@ public class SemanasDiasFragment extends Fragment {
 
 
     private void abrirFragment(int posicion) {
+
         Fragment nuevoFragment = new SemanasDiasFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
         Bundle bundle = new Bundle();
         bundle.putSerializable("rutina",rutina);
         bundle.putString("Semana",adapterSemanas.getElementos().get(posicion));
         bundle.putString("TipoFragemnt","Dias");
         nuevoFragment.setArguments(bundle);
+        if(adapterSemanas.getElementos().get(posicion).equals("Rutina Vacía")){
+            Toast.makeText(this.getContext(),"Rutina Vacía",Toast.LENGTH_LONG).show();
+        }else{
         FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
         fm.add(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
         fm.addToBackStack(null);
-        fm.commit();
+        fm.commit();}
+
     }
     private void abrirFragmentEjercicios(String semana,int posicion) {
         Fragment nuevoFragment = new EjerciciosFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
