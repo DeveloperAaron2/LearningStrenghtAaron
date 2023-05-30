@@ -50,4 +50,18 @@
     <string name="boton_para_guardar_los_cambios">Boton para guardar los cambios</string>
     <string name="cambiar_foto_de_perfil">Cambiar foto de perfil</string>
 
+    <!-- Ajustes -->
+    <string-array name="tamanio_letra">
+        <item>Pequeña</item>
+        <item>Mediana</item>
+        <item>Grande</item>
+    </string-array>
+
+    <string-array name="cambiar_tema">
+        <item>MaterialComponents</item>
+        <item>Material3</item>
+        <item>Verde</item>
+        <item>LearningStrenght</item>
+    </string-array>
+
 </resources>

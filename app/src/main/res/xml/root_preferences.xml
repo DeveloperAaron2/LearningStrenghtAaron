@@ -1,0 +1,54 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Aplicacion">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="switchModoOscuro"
+            android:title="Modo Oscuro" />
+
+        <ListPreference
+            android:entries="@array/cambiar_tema"
+            android:key="listaTemas"
+            android:title="Cambiar Tema"
+            app:defaultValue="reply"
+            app:entryValues="@array/cambiar_tema"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/tamanio_letra"
+            android:key="listaLetra"
+            android:title="Cambiar tamaño de letra"
+            app:entryValues="@array/tamanio_letra"
+            app:useSimpleSummaryProvider="true" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="switchSonidos"
+            android:title="Sonidos" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Cuenta">
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="etCambiarCorreo"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Cambiar correo" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="etCambiarContrasenia"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Cambiar contraseña" />
+        <Preference
+            android:dialogMessage="¿Estas seguro de que deseas eliminar tu cuenta definitivamente?"
+            android:dialogTitle="Eliminar cuenta definitivamente"
+            android:key="preferenceEliminarCuenta"
+            android:negativeButtonText="No, estoy mas fuerte que el vinagre"
+            android:positiveButtonText="Si, soy un flaco"
+            android:title="Eliminar Cuenta" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
