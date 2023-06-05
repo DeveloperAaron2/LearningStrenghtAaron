@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.Adaptadores;
+package com.example.learningstrenghtaaron.adaptadores;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.learningstrenghtaaron.Entidades.Rutina;
+import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;

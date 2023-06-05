@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
-import com.example.learningstrenghtaaron.Entidades.Usuario;
+import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
+import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.example.learningstrenghtaaron.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -16,7 +16,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class PerfilUsuarioActivity extends AppCompatActivity {

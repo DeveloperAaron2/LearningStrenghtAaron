@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.calculadoras.calorias;
+package com.example.learningstrenghtaaron.calculadoras.macros;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,7 +14,7 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculadora_calorias_info);
+        setContentView(R.layout.activity_calculadora_macros_info);
 
         layoutInfo = findViewById(R.id.layoutInfoCalculadoraCalorias);
         layoutInfo.setOnClickListener(new View.OnClickListener() {

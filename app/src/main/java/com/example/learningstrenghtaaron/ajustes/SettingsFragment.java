@@ -15,7 +15,7 @@ import com.example.learningstrenghtaaron.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     private SwitchPreference switchModoOscuro, switchSonido;
-    private ListPreference listaTemas, listaLetra;
+    private ListPreference listaTemas, listaLetra, listaCalculadoras;
     private EditTextPreference etCambiarCorreo, etCambiarContrasenia;
     private Preference dialogEliminarCuenta;
 
@@ -25,20 +25,22 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         inicializarComponentes();
 
-        listeners();
+        listenersAplicacion();
+        listenersCuenta();
     }
 
     private void inicializarComponentes() {
         switchModoOscuro = findPreference("switchModoOscuro");
-        switchSonido = findPreference("switchSonido");
+        switchSonido = findPreference("switchSonidos");
         listaTemas = findPreference("listaTemas");
         listaLetra = findPreference("listaLetra");
+        listaCalculadoras = findPreference("listaCalculadoras");
         etCambiarCorreo = findPreference("etCambiarCorreo");
         etCambiarContrasenia = findPreference("etCambiarContrasenia");
         dialogEliminarCuenta = findPreference("dialogEliminarCuenta");
     }
 
-    private void listeners() {
+    private void listenersAplicacion(){
         switchModoOscuro.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
@@ -66,11 +68,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
-
         listaTemas.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                switch (listaTemas.getValue()) {
+                switch ((String) newValue) {
                     case "MaterialComponents":
                         System.out.println("Tema MaterialComponents");
                         //setTheme();
@@ -88,14 +89,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
-
         listaLetra.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                switch (listaLetra.findIndexOfValue(listaLetra.getValue())) {
+                switch (listaLetra.findIndexOfValue((String) newValue)) {
                     case 0:
                         System.out.println("Tamaño de letra pequeña");
-                    break;
+                        break;
                     case 1:
                         System.out.println("Tamaño de letra mediana");
                         break;
@@ -106,5 +106,37 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+        listaCalculadoras.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                switch (listaCalculadoras.findIndexOfValue((String) newValue)) {
+                    case 0:
+                        System.out.println("Calculadora Macros");
+                        break;
+                    case 1:
+                        System.out.println("Calculadora Rm");
+                        break;
+                }
+                return true;
+            }
+        });
     }
+
+    private void listenersCuenta(){
+        etCambiarCorreo.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                System.out.println("Nuevo correo: " + newValue);
+                return true;
+            }
+        });
+        etCambiarContrasenia.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                System.out.println("Nueva contraseña: " + newValue);
+                return true;
+            }
+        });
+    }
+
 }

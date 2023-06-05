@@ -12,6 +12,17 @@
         <item>Streetlifting</item>
     </string-array>
 
+    <!-- Calculadoras -->
+    <string name="promptCalculadoras">Calculadoras</string>
+    <string-array name="spinnerCalculadorasCalculadoraMacros">
+        <item>Calculadora Macros</item>
+        <item>Calculadora Rm</item>
+    </string-array>
+    <string-array name="spinnerCalculadorasCalculadoraRm">
+        <item>Calculadora Rm</item>
+        <item>Calculadora Macros</item>
+    </string-array>
+
     <!-- Calculadora calorias -->
     <!-- Spinner actividad fisica -->
     <string name="promptActividad">Selecciona tu nivel de actividad fisica</string>
@@ -62,6 +73,11 @@
         <item>Material3</item>
         <item>Verde</item>
         <item>LearningStrenght</item>
+    </string-array>
+
+    <string-array name="calculadoras">
+        <item>Calculadora Macros</item>
+        <item>Calculadora Rm</item>
     </string-array>
 
 </resources>

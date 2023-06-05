@@ -26,6 +26,15 @@
             android:defaultValue="false"
             android:key="switchSonidos"
             android:title="Sonidos" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/calculadoras"
+            android:key="listaCalculadoras"
+            android:title="Calculadora por defecto"
+            app:dialogIcon="@drawable/baseline_calculate_24"
+            app:entryValues="@array/calculadoras"
+            app:icon="@drawable/baseline_calculate_24"
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 

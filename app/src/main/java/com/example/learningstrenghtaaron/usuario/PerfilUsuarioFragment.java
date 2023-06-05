@@ -13,8 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
-import com.example.learningstrenghtaaron.Entidades.Usuario;
+import com.example.learningstrenghtaaron.ajustes.SettingsActivity;
+import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
+import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.login.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,7 +91,8 @@ public class PerfilUsuarioFragment extends Fragment {
                         Toast.makeText(getContext(), "No estas listo para eso", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.Ajustes:
-                        Toast.makeText(getContext(), "Aqui no se puede entrar", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Aqui no se puede entrar", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getContext(), SettingsActivity.class));
                         break;
                     case R.id.LogOut:
                         FirebaseAuth.getInstance().signOut();

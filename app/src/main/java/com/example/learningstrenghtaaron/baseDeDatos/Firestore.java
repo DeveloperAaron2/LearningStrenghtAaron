@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.BaseDeDatos;
+package com.example.learningstrenghtaaron.baseDeDatos;
 
 import static android.content.ContentValues.TAG;
 
@@ -6,10 +6,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.learningstrenghtaaron.Entidades.Ejercicio;
-import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
-import com.example.learningstrenghtaaron.Entidades.Rutina;
-import com.example.learningstrenghtaaron.Entidades.Usuario;
+import com.example.learningstrenghtaaron.entidades.Ejercicio;
+import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
+import com.example.learningstrenghtaaron.entidades.Rutina;
+import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

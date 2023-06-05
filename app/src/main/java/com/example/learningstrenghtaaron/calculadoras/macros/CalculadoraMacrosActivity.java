@@ -1,10 +1,11 @@
-package com.example.learningstrenghtaaron.calculadoras.calorias;
+package com.example.learningstrenghtaaron.calculadoras.macros;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.learningstrenghtaaron.R;
+import com.example.learningstrenghtaaron.calculadoras.rm.CalculadoraRmActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,21 +29,34 @@ public class CalculadoraMacrosActivity extends AppCompatActivity {
     MaterialTextView volumen, definicion, mantenimiento, macrosVolumen, macrosDefinicion, macrosMantenimiento;
     RadioGroup radioGroup;
     RadioButton rbHombre, rbMujer;
-    Spinner spinnerActividad, spinnerObjetivo;
+    Spinner spinnerCalculadoras, spinnerActividad, spinnerObjetivo;
     MaterialButton btnInfo, btnCalcular;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculadora_calorias);
+        setContentView(R.layout.activity_calculadora_macros);
 
         inicializarComponentes();
-
         listeners();
 
     }
 
     private void listeners() {
+        spinnerCalculadoras.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 1){
+                    finish();
+                    startActivity(new Intent(CalculadoraMacrosActivity.this, CalculadoraRmActivity.class));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,6 +176,8 @@ public class CalculadoraMacrosActivity extends AppCompatActivity {
     }
 
     private void inicializarComponentes() {
+        spinnerCalculadoras = findViewById(R.id.spinnerCalculadorasCalculadoraMacros);
+
         btnInfo = findViewById(R.id.btnInfoCalculadoraCalorias);
         tilPeso = findViewById(R.id.tilPesoCalculadoraMacros);
         peso = findViewById(R.id.txtPesoCalculadoraMacros);

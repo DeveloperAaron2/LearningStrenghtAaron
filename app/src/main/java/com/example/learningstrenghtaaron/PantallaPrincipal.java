@@ -7,31 +7,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.learningstrenghtaaron.Adaptadores.AdapterRutinas;
-import com.example.learningstrenghtaaron.Entidades.Rutina;
-import com.example.learningstrenghtaaron.calculadoras.CalculadorasFragment;
+import com.example.learningstrenghtaaron.calculadoras.macros.CalculadoraMacrosFragment;
 import com.example.learningstrenghtaaron.databinding.ActivityPantallaPrincipalBinding;
 import com.example.learningstrenghtaaron.login.MainActivity;
 import com.example.learningstrenghtaaron.rutinas.RutinasFragment;
 import com.example.learningstrenghtaaron.usuario.PerfilUsuarioFragment;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 public class PantallaPrincipal extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -52,7 +44,8 @@ public class PantallaPrincipal extends AppCompatActivity {
                     replaceFragment(new RutinasFragment());
                     break;
                 case R.id.Calculadoras:
-                    replaceFragment(new CalculadorasFragment());
+//                    startActivity(new Intent(PantallaPrincipal.this, CalculadoraMacrosActivity.class));
+                    replaceFragment(new CalculadoraMacrosFragment());
                     break;
                 case R.id.Perfil:
                     if (mAuth.getCurrentUser().isAnonymous()) {
