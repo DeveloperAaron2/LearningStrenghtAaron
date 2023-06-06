@@ -40,8 +40,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         replaceFragment(new RutinasFragment());
         mAuth = FirebaseAuth.getInstance();
         firestore = Firestore.getInstance();
-        recogerUsuario(mAuth.getCurrentUser().getUid());
-
+        if (mAuth.getCurrentUser() != null) recogerUsuario(mAuth.getCurrentUser().getUid());
         //Botones de navegación
         binding.bottomNavigationViewPantallaPrincipal.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -60,14 +59,11 @@ public class PantallaPrincipal extends AppCompatActivity {
                     }
                     break;
             }
-
             return true;
         });
-
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finishAffinity();
         }
-
     }
 
     public void replaceFragment(Fragment fragment) {
