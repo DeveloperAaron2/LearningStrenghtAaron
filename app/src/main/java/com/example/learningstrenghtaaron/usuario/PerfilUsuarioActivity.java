@@ -48,8 +48,6 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         txtUsuario = findViewById(R.id.txtNombreUsuarioPerfilUsuario);
         tilNombre = findViewById(R.id.tilNombrePerfilUsuario);
         txtDeporte = findViewById(R.id.txtDeportePerfilUsuario);
-        tilEmail = findViewById(R.id.tilEmailPerfilUsuario);
-        tilFecha = findViewById(R.id.tilFechaNacPerfilUsuario);
         txtFechaNac = findViewById(R.id.txtFechaNacPerfilUsuario);
         tilPeso = findViewById(R.id.tilPesoPerfilUsuario);
         txtPeso = findViewById(R.id.txtPesoPerfilUsuario);

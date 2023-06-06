@@ -12,12 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         tools:targetApi="31">
-        <activity
-            android:name=".usuario.EditarRmsActivity"
-            android:exported="false" />
+
+        <!-- Ajustes -->
         <activity
             android:name=".ajustes.SettingsActivity"
-            android:exported="false"/>
+            android:label="Ajustes"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DayNight"/>
         <!-- Calculadoras -->
         <!-- Calculadora calorias -->
         <activity
@@ -25,13 +26,17 @@
             android:exported="false" />
         <activity
             android:name=".calculadoras.macros.InfoActivity"
-            android:exported="false" /> <!-- Calculadora rm -->
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Translucent"/>
+        <!-- Calculadora rm -->
         <activity
             android:name=".calculadoras.rm.CalculadoraRmActivity"
             android:exported="false" />
         <activity
             android:name=".calculadoras.rm.FormulasActivity"
-            android:exported="false" /> <!-- Login -->
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <!-- Login -->
         <activity
             android:name=".login.LoginActivity"
             android:exported="true" />
@@ -43,10 +48,15 @@
             android:exported="false" />
         <activity
             android:name=".login.RegisterDataActivity"
-            android:exported="false" /> <!-- Usuario -->
+            android:exported="false" />
+        <!-- Usuario -->
         <activity
             android:name=".usuario.PerfilUsuarioActivity"
-            android:exported="false" /> <!-- Pantalla principal -->
+            android:exported="false" />
+        <activity
+            android:name=".usuario.EditarRmsActivity"
+            android:exported="false" />
+        <!-- Pantalla principal -->
         <activity
             android:name=".PantallaPrincipal"
             android:exported="true">

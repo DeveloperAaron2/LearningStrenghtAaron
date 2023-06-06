@@ -17,11 +17,7 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calculadora_macros_info);
 
         layoutInfo = findViewById(R.id.layoutInfoCalculadoraCalorias);
-        layoutInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
+        layoutInfo.setOnClickListener(view -> {finish();overridePendingTransition(0,0);
         });
     }
 }

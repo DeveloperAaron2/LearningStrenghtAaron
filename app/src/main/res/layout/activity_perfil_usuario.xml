@@ -157,7 +157,7 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilPesoPerfilUsuario"
+                            android:id="@+id/tilAlturaPerfilUsuario"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="4dp"
@@ -166,13 +166,13 @@
                             app:suffixText=" cm">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/txtPesoPerfilUsuario"
+                                android:id="@+id/txtAlturaPerfilUsuario"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilAlturaPerfilUsuario"
+                            android:id="@+id/tilPesoPerfilUsuario"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="4dp"
@@ -181,7 +181,7 @@
                             app:suffixText=" kg">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/txtAlturaPerfilUsuario"
+                                android:id="@+id/txtPesoPerfilUsuario"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
                         </com.google.android.material.textfield.TextInputLayout>

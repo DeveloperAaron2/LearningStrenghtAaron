@@ -2,19 +2,21 @@ package com.example.learningstrenghtaaron;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
+import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.calculadoras.macros.CalculadoraMacrosFragment;
 import com.example.learningstrenghtaaron.databinding.ActivityPantallaPrincipalBinding;
+import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.example.learningstrenghtaaron.login.MainActivity;
 import com.example.learningstrenghtaaron.rutinas.RutinasFragment;
 import com.example.learningstrenghtaaron.usuario.PerfilUsuarioFragment;
@@ -28,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class PantallaPrincipal extends AppCompatActivity {
     FirebaseAuth mAuth;
     ActivityPantallaPrincipalBinding binding;
+    Firestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class PantallaPrincipal extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new RutinasFragment());
         mAuth = FirebaseAuth.getInstance();
+        firestore = Firestore.getInstance();
+        recogerUsuario(mAuth.getCurrentUser().getUid());
 
         //Botones de navegación
         binding.bottomNavigationViewPantallaPrincipal.setOnItemSelectedListener(item -> {
@@ -51,7 +56,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                     if (mAuth.getCurrentUser().isAnonymous()) {
                         startActivity(new Intent(PantallaPrincipal.this, MainActivity.class));
                     } else {
-                        replaceFragment(new PerfilUsuarioFragment());
+                        replaceFragment(new PerfilUsuarioFragment(firestore.getUsuario()));
                     }
                     break;
             }
@@ -79,6 +84,10 @@ public class PantallaPrincipal extends AppCompatActivity {
         if (currentUser == null) {
             signInAnonymous();
         }
+    }
+
+    private Usuario recogerUsuario(String uid) {
+        return firestore.getUsuario(uid);
     }
 
     private void signInAnonymous() {

@@ -60,7 +60,11 @@ public class CalculadoraMacrosActivity extends AppCompatActivity {
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CalculadoraMacrosActivity.this, InfoActivity.class));
+                Intent intent = new Intent(CalculadoraMacrosActivity.this, InfoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                startActivity(intent);
             }
         });
 

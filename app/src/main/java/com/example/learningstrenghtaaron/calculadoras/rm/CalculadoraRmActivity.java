@@ -103,7 +103,9 @@ public class CalculadoraRmActivity extends AppCompatActivity {
                 Intent intent = new Intent(CalculadoraRmActivity.this, FormulasActivity.class);
                 intent.putExtra("Formula", R.drawable.brzycki);
                 intent.putExtra("DatosUsuario", new String[]{speso, srepes});
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                overridePendingTransition(0,0);
             }
         });
         epley.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +114,9 @@ public class CalculadoraRmActivity extends AppCompatActivity {
                 Intent intent = new Intent(CalculadoraRmActivity.this, FormulasActivity.class);
                 intent.putExtra("Formula", R.drawable.epley);
                 intent.putExtra("DatosUsuario", new String[]{speso, srepes});
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                overridePendingTransition(0,0);
             }
         });
     }

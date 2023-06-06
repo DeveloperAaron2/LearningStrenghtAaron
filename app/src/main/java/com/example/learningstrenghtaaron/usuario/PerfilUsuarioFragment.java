@@ -30,6 +30,14 @@ public class PerfilUsuarioFragment extends Fragment {
     private FloatingActionButton btnMenu;
     private MaterialTextView txtUsuario, txtDeporte, txtCorreo, txtFechaNac, txtPeso, txtAltura, txtRms;
     private Firestore firestore;
+    private Usuario usuario;
+
+    public PerfilUsuarioFragment() {
+    }
+
+    public PerfilUsuarioFragment(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +52,8 @@ public class PerfilUsuarioFragment extends Fragment {
 
         inicializarComponentes(view);
 
-        ponerDatos(user);
+//        ponerDatos(user);
+        ponerDatos();
 
         btnMenu.setOnClickListener(view1 -> showMenu(view1, R.menu.fragment_perfil_usuario_menu));
 
@@ -64,6 +73,19 @@ public class PerfilUsuarioFragment extends Fragment {
     private void ponerDatos(FirebaseUser user) {
         Usuario usuario = firestore.getUsuario(user.getUid());
 
+        if (usuario != null) {
+            String s = "";
+            txtUsuario.setText(usuario.getUsuario() == null ? "" : usuario.getUsuario());
+            txtDeporte.setText(usuario.getDeporte() == null ? "" : usuario.getDeporte());
+            txtCorreo.setText(usuario.getCorreo() == null ? "" : usuario.getCorreo());
+            txtFechaNac.setText(usuario.getFechaNac() == null ? "" : usuario.getFechaNac());
+            txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : usuario.getPeso()));
+            txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : usuario.getAltura()));
+            usuario.getMapaRms().forEach((k, v) -> txtRms.setText(String.format("%s %s: %s\n", txtRms.getText(), k, v)));
+        }
+    }
+
+    private void ponerDatos() {
         if (usuario != null) {
             String s = "";
             txtUsuario.setText(usuario.getUsuario() == null ? "" : usuario.getUsuario());
