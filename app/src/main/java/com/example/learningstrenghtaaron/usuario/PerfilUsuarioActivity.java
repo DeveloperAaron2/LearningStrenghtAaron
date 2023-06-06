@@ -16,12 +16,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class PerfilUsuarioActivity extends AppCompatActivity {
     private TextInputLayout tilUsuario, tilNombre, tilEmail, tilFecha, tilPeso, tilAltura;
-    private TextInputEditText txtUsuario, txtNombre, txtEmail, txtFecha, txtPeso, txtAltura;
+    private TextInputEditText txtUsuario, txtDeporte, txtFechaNac, txtPeso, txtAltura;
     private FloatingActionButton btnAtras, btnAceptar;
     private MaterialButton btnCambiarFoto;
     private Usuario usuario;
@@ -48,11 +47,10 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         tilUsuario = findViewById(R.id.tilNombreUsuarioPerfilUsuario);
         txtUsuario = findViewById(R.id.txtNombreUsuarioPerfilUsuario);
         tilNombre = findViewById(R.id.tilNombrePerfilUsuario);
-        txtNombre = findViewById(R.id.txtNombrePerfilUsuario);
+        txtDeporte = findViewById(R.id.txtDeportePerfilUsuario);
         tilEmail = findViewById(R.id.tilEmailPerfilUsuario);
-        txtEmail = findViewById(R.id.txtEmailPerfilUsuario);
         tilFecha = findViewById(R.id.tilFechaNacPerfilUsuario);
-        txtFecha = findViewById(R.id.txtFechaNacPerfilUsuario);
+        txtFechaNac = findViewById(R.id.txtFechaNacPerfilUsuario);
         tilPeso = findViewById(R.id.tilPesoPerfilUsuario);
         txtPeso = findViewById(R.id.txtPesoPerfilUsuario);
         tilAltura = findViewById(R.id.tilAlturaPerfilUsuario);
@@ -74,14 +72,11 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         txtUsuario.setOnFocusChangeListener((view, b) -> {
             if (!b && txtUsuario.getText().toString().isBlank())txtUsuario.setError("Tienes que escribir un nombre de usuario"); else txtUsuario.setError(null);
         });
-        txtNombre.setOnFocusChangeListener((view, b) -> {
-            if (!b && txtNombre.getText().toString().isBlank())txtNombre.setError("Tienes que escribir tu nombre"); else txtNombre.setError(null);
-        });
-        txtEmail.setOnFocusChangeListener((view, b) -> {
-            if (!b && txtEmail.getText().toString().isBlank())txtEmail.setError("Tienes que escribir tu email"); else txtEmail.setError(null);
+        txtDeporte.setOnFocusChangeListener((view, b) -> {
+            if (!b && txtDeporte.getText().toString().isBlank()) txtDeporte.setError("Tienes que escribir tu nombre"); else txtDeporte.setError(null);
         });
 
-        txtFecha.setOnFocusChangeListener((view, b) -> {
+        txtFechaNac.setOnFocusChangeListener((view, b) -> {
             if (b) showDatePickerDialog();
         });
     }
@@ -90,8 +85,8 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         usuario = firestore.getUsuario(uid);
 
         txtUsuario.setText(usuario.getUsuario() == null ? "" : usuario.getUsuario());
-        txtNombre.setText(usuario.getDeporte() == null ? "" : usuario.getDeporte());
-        txtFecha.setText(usuario.getFechaNac() == null ? "" : usuario.getFechaNac());
+        txtDeporte.setText(usuario.getDeporte() == null ? "" : usuario.getDeporte());
+        txtFechaNac.setText(usuario.getFechaNac() == null ? "" : usuario.getFechaNac());
         txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : usuario.getPeso()));
         txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : usuario.getAltura()));
     }
@@ -110,8 +105,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     }
 
     private boolean chequearDatos() {
-        if (!txtUsuario.getText().toString().trim().isBlank()
-                && !txtEmail.getText().toString().trim().isBlank() && !txtFecha.getText().toString().trim().isBlank()) {
+        if (!txtUsuario.getText().toString().trim().isBlank() && !txtFechaNac.getText().toString().trim().isBlank()) {
             return true;
         }
         return false;
@@ -120,8 +114,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     private void recogerDatosUsuario() {
         // TODO: los getText pueden ser nulos
         usuario.setUsuario(txtUsuario.getText().toString().trim());
-        usuario.setCorreo(txtEmail.getText().toString().trim());
-        usuario.setFechaNac(txtFecha.getText().toString().trim());
+        usuario.setFechaNac(txtFechaNac.getText().toString().trim());
         usuario.setPeso(Long.parseLong(txtPeso.getText().toString().trim()));
         usuario.setAltura(Long.parseLong(txtAltura.getText().toString().trim()));
     }
@@ -133,9 +126,9 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     private void showDatePickerDialog() {
         MaterialDatePicker materialDatePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Fecha nacimiento").build();
 
-        materialDatePicker.addOnPositiveButtonClickListener(selection -> txtFecha.setText("" + materialDatePicker.getHeaderText()));
+        materialDatePicker.addOnPositiveButtonClickListener(selection -> txtFechaNac.setText("" + materialDatePicker.getHeaderText()));
 
-        materialDatePicker.addOnDismissListener(dialogInterface -> txtFecha.clearFocus());
+        materialDatePicker.addOnDismissListener(dialogInterface -> txtFechaNac.clearFocus());
 
         materialDatePicker.show(getSupportFragmentManager(), "TAG");
     }
