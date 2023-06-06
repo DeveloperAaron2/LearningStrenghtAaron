@@ -60,6 +60,7 @@
     <string name="editar_usuario">Editar usuario</string>
     <string name="boton_para_guardar_los_cambios">Boton para guardar los cambios</string>
     <string name="cambiar_foto_de_perfil">Cambiar foto de perfil</string>
+    <string name="boton_que_inserta_un_nuevo_rm">Boton que inserta un nuevo Rm</string>
 
     <!-- Ajustes -->
     <string-array name="tamanio_letra">

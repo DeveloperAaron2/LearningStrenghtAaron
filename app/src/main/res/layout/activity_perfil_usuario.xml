@@ -125,27 +125,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:hint="Nombre*"
+                        android:hint="Deporte"
                         app:errorEnabled="true"
-                        app:startIconDrawable="@drawable/baseline_person_outline_24">
+                        app:startIconDrawable="@drawable/baseline_fitness_center_24">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/txtNombrePerfilUsuario"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilEmailPerfilUsuario"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:hint="Email*"
-                        app:errorEnabled="true"
-                        app:startIconDrawable="@drawable/baseline_mail_outline_24">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/txtEmailPerfilUsuario"
+                            android:id="@+id/txtDeportePerfilUsuario"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -156,6 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:hint="Fecha de nacimiento*"
+                        app:errorEnabled="true"
                         app:startIconDrawable="@drawable/baseline_calendar_today_24">
 
                         <com.google.android.material.textfield.TextInputEditText
