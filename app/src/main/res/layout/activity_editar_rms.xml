@@ -36,6 +36,16 @@
             android:layout_height="match_parent"
             tools:context=".usuario.EditarRmsActivity">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -45,6 +55,7 @@
         android:layout_width="wrap_content"
         android:src="@android:drawable/ic_input_add"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp" />"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/boton_que_inserta_un_nuevo_rm" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
