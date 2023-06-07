@@ -36,7 +36,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:hint="Contraseña"
             app:boxBackgroundMode="filled"
             app:passwordToggleEnabled="true"
@@ -51,15 +50,34 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/btnResetPasswordLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/transparent"
+            android:text="¿Olvidaste tu contraseña?"
+            android:textColor="#288419" />
+
+        <Button
             android:id="@+id/btnIngresarLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ingresar" />
+            android:text="Iniciar sesión"
+            android:backgroundTint="#288419"/>
 
-        <com.google.android.gms.common.SignInButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGoogleLogin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:text="Iniciar sesión con Google"
+            android:textColor="#000000"
+            app:icon="@drawable/common_google_signin_btn_icon_light_normal"
+            app:iconGravity="textStart"
+            app:iconTintMode="multiply"
+            android:background="@drawable/boton_bordes_negros">
+
+        </com.google.android.material.button.MaterialButton>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
