@@ -64,8 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         imm.showSoftInput(email, InputMethodManager.SHOW_IMPLICIT);
 
         btnPassword.setOnClickListener(new View.OnClickListener() {
-            String correo = "";
-            boolean cambio = false;
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -73,24 +71,12 @@ public class LoginActivity extends AppCompatActivity {
                 final EditText input = new EditText(LoginActivity.this);
                 input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        correo = input.getText().toString();
-                        cambio = true;
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.show();
-                if (cambio){
-                    mAuth.sendPasswordResetEmail(email.getText().toString().trim());
+                builder.setPositiveButton("Aceptar", (dialog, which) -> {
+                    mAuth.sendPasswordResetEmail(input.getText().toString().trim());
                     Toast.makeText(LoginActivity.this, "Te hemos enviado un correo para reestablecer tu contraseña", Toast.LENGTH_SHORT).show();
-                }
+                });
+                builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.cancel());
+                builder.show();
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
