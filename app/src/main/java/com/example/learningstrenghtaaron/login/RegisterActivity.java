@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
-    Button btnRegister;
+    Button btnRegister, btnLogin;
     SignInButton btnGoogle;
     TextInputLayout tilEmail, tilPassword;
     TextInputEditText email, password;
@@ -45,17 +45,23 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         mAuth = FirebaseAuth.getInstance();
         googleRegister();
-
+        //Inicializamos los componentes
         email = findViewById(R.id.editTextCorreoRegister);
         password = findViewById(R.id.editTextContrasenaRegister);
+        btnLogin = findViewById(R.id.btnLoginRegister);
         btnRegister = findViewById(R.id.btnCrearCuentaRegister);
         btnGoogle = findViewById(R.id.btnGoogleRegister);
         tilEmail = findViewById(R.id.tilCorreoRegister);
         tilPassword = findViewById(R.id.tilContrasenaRegister);
-
+        //Listeners
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            }
+        });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

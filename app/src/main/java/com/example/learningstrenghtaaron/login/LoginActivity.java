@@ -3,16 +3,20 @@ package com.example.learningstrenghtaaron.login;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.learningstrenghtaaron.PantallaPrincipal;
@@ -38,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
-    Button btnLogin;
+    Button btnLogin, btnPassword;
     MaterialButton btnGoogle;
     TextInputEditText email, password;
 
@@ -52,12 +56,43 @@ public class LoginActivity extends AppCompatActivity {
 
         email = findViewById(R.id.editTextCorreoLogin);
         password = findViewById(R.id.editTextContrasenaLogin);
+        btnPassword = findViewById(R.id.btnResetPasswordLogin);
         btnLogin = findViewById(R.id.btnIngresarLogin);
         btnGoogle = findViewById(R.id.btnGoogleLogin);
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(email, InputMethodManager.SHOW_IMPLICIT);
 
+        btnPassword.setOnClickListener(new View.OnClickListener() {
+            String correo = "";
+            boolean cambio = false;
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle("Introduce tu correo:");
+                final EditText input = new EditText(LoginActivity.this);
+                input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        correo = input.getText().toString();
+                        cambio = true;
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+                if (cambio){
+                    mAuth.sendPasswordResetEmail(email.getText().toString().trim());
+                    Toast.makeText(LoginActivity.this, "Te hemos enviado un correo para reestablecer tu contraseña", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
