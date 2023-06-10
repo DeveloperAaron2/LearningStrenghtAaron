@@ -11,10 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.calculadoras.macros.CalculadoraMacrosFragment;
+import com.example.learningstrenghtaaron.calculadoras.rm.CalculadoraRmFragment;
 import com.example.learningstrenghtaaron.databinding.ActivityPantallaPrincipalBinding;
 import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.example.learningstrenghtaaron.login.MainActivity;
@@ -37,25 +42,32 @@ public class PantallaPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityPantallaPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new RutinasFragment());
+        //replaceFragment(new RutinasFragment());
         mAuth = FirebaseAuth.getInstance();
         firestore = Firestore.getInstance();
         if (mAuth.getCurrentUser() != null) recogerUsuario(mAuth.getCurrentUser().getUid());
+        //ViewPager2
+        PagerAdaptador pagerAdapter = new PagerAdaptador(getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.pager);
+        viewPager.setAdapter(pagerAdapter);
         //Botones de navegación
         binding.bottomNavigationViewPantallaPrincipal.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.Rutinas:
-                    replaceFragment(new RutinasFragment());
+                    //replaceFragment(new RutinasFragment());
+                    viewPager.setCurrentItem(0);
                     break;
                 case R.id.Calculadoras:
 //                    startActivity(new Intent(PantallaPrincipal.this, CalculadoraMacrosActivity.class));
-                    replaceFragment(new CalculadoraMacrosFragment());
+                    //replaceFragment(new CalculadoraMacrosFragment());
+                    viewPager.setCurrentItem(1);
                     break;
                 case R.id.Perfil:
                     if (mAuth.getCurrentUser().isAnonymous()) {
                         startActivity(new Intent(PantallaPrincipal.this, MainActivity.class));
                     } else {
-                        replaceFragment(new PerfilUsuarioFragment(firestore.getUsuario()));
+                        //replaceFragment(new PerfilUsuarioFragment(firestore.getUsuario()));
+                        viewPager.setCurrentItem(3);
                     }
                     break;
             }
@@ -104,5 +116,38 @@ public class PantallaPrincipal extends AppCompatActivity {
                 Log.w(TAG, "MainActivity. " + e.getMessage());
             }
         });
+    }
+
+    private class PagerAdaptador extends FragmentStatePagerAdapter {
+        public PagerAdaptador(FragmentManager fm) {
+            super(fm);
+        }
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment;
+            switch(position) {
+                case 0:
+                    fragment = new RutinasFragment();
+                    break;
+                case 1:
+                    fragment = new CalculadoraMacrosFragment();
+                    break;
+                case 2:
+                    fragment = new CalculadoraRmFragment();
+                    break;
+                case 3:
+                    fragment = new PerfilUsuarioFragment(firestore.getUsuario());
+                    break;
+                default:
+                    fragment = null;
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
     }
 }
