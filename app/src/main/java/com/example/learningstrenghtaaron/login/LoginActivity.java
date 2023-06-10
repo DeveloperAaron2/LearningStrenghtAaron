@@ -2,18 +2,22 @@ package com.example.learningstrenghtaaron.login;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.R;
@@ -21,11 +25,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -38,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
-    Button btnLogin;
-    SignInButton btnGoogle;
+    Button btnLogin, btnPassword;
+    MaterialButton btnGoogle;
     TextInputEditText email, password;
 
     @Override
@@ -52,12 +56,29 @@ public class LoginActivity extends AppCompatActivity {
 
         email = findViewById(R.id.editTextCorreoLogin);
         password = findViewById(R.id.editTextContrasenaLogin);
+        btnPassword = findViewById(R.id.btnResetPasswordLogin);
         btnLogin = findViewById(R.id.btnIngresarLogin);
         btnGoogle = findViewById(R.id.btnGoogleLogin);
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(email, InputMethodManager.SHOW_IMPLICIT);
 
+        btnPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle("Introduce tu correo:");
+                final EditText input = new EditText(LoginActivity.this);
+                input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                builder.setView(input);
+                builder.setPositiveButton("Aceptar", (dialog, which) -> {
+                    mAuth.sendPasswordResetEmail(input.getText().toString().trim());
+                    Toast.makeText(LoginActivity.this, "Te hemos enviado un correo para reestablecer tu contraseña", Toast.LENGTH_SHORT).show();
+                });
+                builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.cancel());
+                builder.show();
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

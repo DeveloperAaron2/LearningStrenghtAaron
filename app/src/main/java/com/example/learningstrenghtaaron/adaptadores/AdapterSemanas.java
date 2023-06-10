@@ -1,11 +1,8 @@
-package com.example.learningstrenghtaaron.Adaptadores;
+package com.example.learningstrenghtaaron.adaptadores;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.learningstrenghtaaron.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdapterSemanas extends RecyclerView.Adapter<AdapterSemanas.ViewHolder> {

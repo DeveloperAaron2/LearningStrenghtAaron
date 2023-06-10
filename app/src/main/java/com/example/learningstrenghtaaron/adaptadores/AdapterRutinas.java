@@ -1,26 +1,25 @@
-package com.example.learningstrenghtaaron.Adaptadores;
+package com.example.learningstrenghtaaron.adaptadores;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
+import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
-public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina, AdapterEjercicios.ViewHolder>{
+
+public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRutinas.ViewHolder>{
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -28,10 +27,10 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
      *
      * @param options
      */
-    private ArrayList<EjercicioRutina> ejercicios;
-    public AdapterEjercicios(@NonNull FirestoreRecyclerOptions<EjercicioRutina> options) {
+    private ArrayList<Rutina> rutinas;
+    public AdapterRutinas(@NonNull FirestoreRecyclerOptions<Rutina> options) {
         super(options);
-        ejercicios = new ArrayList<>();
+        rutinas = new ArrayList<>();
     }
 
     /**
@@ -40,19 +39,16 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
      * @param model    the model object containing the data that should be used to populate the view.
      */
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull EjercicioRutina model) {
-
-        for(Map.Entry<String, Integer> entry : model.getSeriesReps().entrySet()){
-            View registro = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.tablerow, null, false);
-            TextView nombreEjercicio = (TextView) registro.findViewById(R.id.nombreEjercicioRow);
-            TextView seriesReps = (TextView) registro.findViewById(R.id.seriesRepsRow);
-            TextView intensidad = (TextView) registro.findViewById(R.id.intensidadRow);
-            nombreEjercicio.setText(model.getNombreEjercicio());
-            seriesReps.setText(entry.getKey());
-            intensidad.setText(entry.getValue() + "%");
-            holder.tablaEjercicios.addView(registro);
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Rutina model) {
+        holder.nombreRutina.setText(model.getNombreRutina());
+        holder.tipoRutina.setText(model.getTipoRutina());
+        holder.creador.setText(model.getCreador());
+        if(model.getTipoRutina().equals("Fuerza")) {
+            holder.icono.setImageResource(R.drawable.iconofuerza);
+        } else if (model.getTipoRutina().equals("Hipertrofia")) {
+            holder.icono.setImageResource(R.drawable.hipertrofiaicono);
         }
-        ejercicios.add(model);
+        rutinas.add(model);
     }
 
     /**
@@ -78,22 +74,27 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ejerciciosview, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rutinasview, parent, false);
         return new ViewHolder(v);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-       private TableLayout tablaEjercicios;
+        private TextView nombreRutina;
+        private TextView tipoRutina;
+        private ImageView icono;
 
-
+        private TextView creador;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.tablaEjercicios = (TableLayout) itemView.findViewById(R.id.TableLayoutEjercicios);
+            nombreRutina = (TextView) itemView.findViewById(R.id.nombreRutina);
+            tipoRutina = (TextView) itemView.findViewById(R.id.TipoRutina);
+            icono =(ImageView) itemView.findViewById(R.id.iconoRutina);
+            creador = (TextView) itemView.findViewById(R.id.CreadorRutina);
         }
     }
 
-    public ArrayList<EjercicioRutina> getEjercicios() {
-        return ejercicios;
+    public ArrayList<Rutina> getRutinas() {
+        return rutinas;
     }
 
 }

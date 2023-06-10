@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.R;
-import com.example.learningstrenghtaaron.calculadoras.calorias.CalculadoraMacrosActivity;
+import com.example.learningstrenghtaaron.calculadoras.macros.CalculadoraMacrosActivity;
 import com.example.learningstrenghtaaron.calculadoras.rm.CalculadoraRmActivity;
 
 import java.util.ArrayList;

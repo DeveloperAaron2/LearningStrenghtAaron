@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.Entidades;
+package com.example.learningstrenghtaaron.entidades;
 
 import java.io.Serializable;
 

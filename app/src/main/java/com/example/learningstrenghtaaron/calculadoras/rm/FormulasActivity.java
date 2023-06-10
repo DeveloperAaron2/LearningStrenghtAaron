@@ -31,6 +31,6 @@ public class FormulasActivity extends AppCompatActivity {
         imagen.setImageResource(formula);
 
         //layout.setOnClickListener(view -> startActivity(new Intent(FormulasActivity.this, CalculadoraRmActivity.class).putExtra("DatosUsuario", datosUsuario)));
-        layout.setOnClickListener(view -> finish());
+        layout.setOnClickListener(view -> {finish();overridePendingTransition(0,0);});
     }
 }

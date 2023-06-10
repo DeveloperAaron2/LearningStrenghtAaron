@@ -1,75 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
-
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.AppCompat.Translucent"
+    android:backgroundTint="@color/transparent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:minWidth="500dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/colorPrimaryContainer"
-            android:orientation="horizontal">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAtrasPerfilUsuario"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="@string/boton_para_ir_a_la_ventana_anterior"
-                android:src="?attr/actionModeCloseDrawable"
-                app:backgroundTint="@android:color/transparent"
-                app:elevation="0dp"
-                app:fabCustomSize="40dp" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/editar_usuario"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="?attr/colorOnPrimaryContainer"
-                android:textSize="34sp" />
+                android:background="?attr/colorPrimaryContainer"
+                android:orientation="horizontal">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAceptarPerfilUsuario"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="@string/boton_para_guardar_los_cambios"
-                android:src="@drawable/outline_check_24"
-                app:backgroundTint="@android:color/transparent"
-                app:elevation="0dp"
-                app:fabCustomSize="40dp" />
-        </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnAtrasPerfilUsuario"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/boton_para_ir_a_la_ventana_anterior"
+                    android:src="?attr/actionModeCloseDrawable"
+                    app:backgroundTint="@android:color/transparent"
+                    app:elevation="0dp"
+                    app:fabCustomSize="40dp" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/editar_usuario"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    android:textSize="34sp" />
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnAceptarPerfilUsuario"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/boton_para_guardar_los_cambios"
+                    android:src="@drawable/outline_check_24"
+                    app:backgroundTint="@android:color/transparent"
+                    app:elevation="0dp"
+                    app:fabCustomSize="40dp" />
+            </LinearLayout>
 
-
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="16dp"
-            tools:context=".usuario.PerfilUsuarioActivity">
+        </com.google.android.material.appbar.AppBarLayout>
 
             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar"
+                tools:context=".usuario.PerfilUsuarioActivity">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -163,7 +164,8 @@
                             android:layout_marginEnd="4dp"
                             android:layout_weight="1"
                             android:hint="@string/altura"
-                            app:suffixText=" cm">
+                            app:suffixText=" cm"
+                            android:layout_marginBottom="16dp">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/txtAlturaPerfilUsuario"
@@ -178,7 +180,8 @@
                             android:layout_marginStart="4dp"
                             android:layout_weight="1"
                             android:hint="@string/peso"
-                            app:suffixText=" kg">
+                            app:suffixText=" kg"
+                            android:layout_marginBottom="16dp">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/txtPesoPerfilUsuario"
@@ -189,9 +192,8 @@
 
                 </LinearLayout>
             </ScrollView>
-        </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

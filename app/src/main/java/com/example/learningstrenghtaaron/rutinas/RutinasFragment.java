@@ -1,6 +1,5 @@
 package com.example.learningstrenghtaaron.rutinas;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.learningstrenghtaaron.Adaptadores.AdapterRutinas;
-import com.example.learningstrenghtaaron.Entidades.Rutina;
+import com.example.learningstrenghtaaron.adaptadores.AdapterRutinas;
+import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.RecyclerItemClickListener;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -28,7 +27,6 @@ public class RutinasFragment extends Fragment {
     private FirebaseFirestore firestore;
 
     private ArrayList<Rutina> rutinas;
-    private MediaPlayer mp;
 
     public RutinasFragment() {
         // Required empty public constructor
@@ -49,19 +47,15 @@ public class RutinasFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2); // 2 items por columna
         recyclerViewRutinas.setLayoutManager(layoutManager);
         firestore = FirebaseFirestore.getInstance();
-        Query query = firestore.collection("Rutina").whereEqualTo("acceso","pública").limit(1000);
+        Query query = firestore.collection("Rutina");
         FirestoreRecyclerOptions<Rutina> firestoreRecyclerOptions = new FirestoreRecyclerOptions.Builder<Rutina>().setQuery(query, Rutina.class).build();
         adapterRutinas = new AdapterRutinas(firestoreRecyclerOptions);
         adapterRutinas.notifyDataSetChanged();
         recyclerViewRutinas.setAdapter(adapterRutinas);
         rutinas = adapterRutinas.getRutinas();
-        System.out.println("tamaño rutinas: "+ rutinas.size());
-        mp= MediaPlayer.create(requireContext(), R.raw.kyriakosgrizzly);
-
         recyclerViewRutinas.addOnItemTouchListener(new RecyclerItemClickListener(view.getContext(), recyclerViewRutinas, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int posicion) {
-                mp.start();
                 abrirFragment(posicion);
             }
 
@@ -74,16 +68,13 @@ public class RutinasFragment extends Fragment {
         return view;
     }
     private void abrirFragment(int posicion) {
-        Fragment nuevoFragment = new SemanasDiasFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
+        Fragment nuevoFragment = new SemanasFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
         Bundle bundle = new Bundle();
         bundle.putSerializable("rutina",rutinas.get(posicion));
-        bundle.putString("TipoFragemnt","Semanas");
         nuevoFragment.setArguments(bundle);
         System.out.println(rutinas.get(posicion));
         FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-        fm.add(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
-        fm.addToBackStack(null);
-        fm.commit();
+        fm.replace(R.id.FragmentRutina,nuevoFragment).commit();
     }
     @Override
     public void onStart() {

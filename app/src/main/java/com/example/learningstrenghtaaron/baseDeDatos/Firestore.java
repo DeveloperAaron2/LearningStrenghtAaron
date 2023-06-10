@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.BaseDeDatos;
+package com.example.learningstrenghtaaron.baseDeDatos;
 
 import static android.content.ContentValues.TAG;
 
@@ -6,10 +6,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.learningstrenghtaaron.Entidades.Ejercicio;
-import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
-import com.example.learningstrenghtaaron.Entidades.Rutina;
-import com.example.learningstrenghtaaron.Entidades.Usuario;
+import com.example.learningstrenghtaaron.entidades.Ejercicio;
+import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
+import com.example.learningstrenghtaaron.entidades.Rutina;
+import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,13 +27,13 @@ import java.util.Map;
 
 public class Firestore {
     private Usuario usuario;
-    private FirebaseAuth auth;
+//    private FirebaseAuth auth;
     private FirebaseFirestore firestore;
 
     static private Firestore INSTANCIA;
 
     private Firestore() {
-        auth = FirebaseAuth.getInstance();
+//        auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
     }
 
@@ -133,6 +133,9 @@ public class Firestore {
                     Log.w(TAG, "Error al eliminar los datos del usuario: " + e.getMessage());
                 });
     }
+    public Usuario getUsuario(){
+        return usuario;
+    }
 
     public Usuario getUsuario(String uid) {
         firestore.collection("Usuario")
@@ -142,7 +145,7 @@ public class Firestore {
                     usuario = new Usuario(documentReference.getData());
                 })
                 .addOnFailureListener(e -> {
-                    System.out.println("Error al coger al usuario con id " + uid);
+                    System.out.println("Error al recoger al usuario con id " + uid);
                     Log.w(TAG, "Error al coger los datos del usuario con id " + uid + ": " + e.getMessage());
                 });
         return usuario;

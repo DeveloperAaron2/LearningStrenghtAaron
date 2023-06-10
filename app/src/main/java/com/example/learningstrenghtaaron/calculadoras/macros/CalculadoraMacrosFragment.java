@@ -1,18 +1,25 @@
-package com.example.learningstrenghtaaron.calculadoras.calorias;
+package com.example.learningstrenghtaaron.calculadoras.macros;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.R;
+import com.example.learningstrenghtaaron.calculadoras.CalculadorasFragment;
+import com.example.learningstrenghtaaron.calculadoras.rm.CalculadoraRmFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -20,39 +27,58 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Map;
 
-public class CalculadoraMacrosActivity extends AppCompatActivity {
-
+public class CalculadoraMacrosFragment extends Fragment {
     TextInputLayout tilPeso, tilAltura, tilEdad;
     TextInputEditText peso, altura, edad;
     MaterialTextView volumen, definicion, mantenimiento, macrosVolumen, macrosDefinicion, macrosMantenimiento;
     RadioGroup radioGroup;
     RadioButton rbHombre, rbMujer;
-    Spinner spinnerActividad, spinnerObjetivo;
+    Spinner spinnerCalculadoras, spinnerActividad, spinnerObjetivo;
     MaterialButton btnInfo, btnCalcular;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculadora_calorias);
-
-        inicializarComponentes();
-
-        listeners();
-
     }
 
-    private void listeners() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_calculadora_macros, container, false);
+
+        inicializarComponentes(view);
+        listeners(view);
+
+        return view;
+    }
+
+    private void listeners(View view) {
+        spinnerCalculadoras.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 1){
+                    FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                    fm.replace(R.id.frameLayoutPantallaPrincipal, new CalculadoraRmFragment()).commit();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CalculadoraMacrosActivity.this, InfoActivity.class));
+                startActivity(new Intent(getContext(), InfoActivity.class));
             }
         });
 
         btnCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideKeyboard(view);
+                // TODO: metodo hideKeyboard
+                //hideKeyboard(view);
 
                 resetearCalorias();
 
@@ -66,7 +92,7 @@ public class CalculadoraMacrosActivity extends AppCompatActivity {
 
                 if (!sPeso.isEmpty() && !sAltura.isEmpty() && !sEdad.isEmpty() && !sexo.isEmpty() && spinnerActividad.getSelectedItemPosition() >= 1) {
                     CalculadoraMacros calCal = new CalculadoraMacros(Integer.parseInt(sPeso), Integer.parseInt(sAltura), Integer.parseInt(sEdad)
-                    , sexo, Double.parseDouble(sActividad.split("->")[0]), objetivo);
+                            , sexo, Double.parseDouble(sActividad.split("->")[0]), objetivo);
                     Map<String, Macros> mapMacros = calCal.getMacros();
 
                     mostrarMacros(mapMacros);
@@ -160,30 +186,37 @@ public class CalculadoraMacrosActivity extends AppCompatActivity {
         }
     }
 
-    private void inicializarComponentes() {
-        btnInfo = findViewById(R.id.btnInfoCalculadoraCalorias);
-        tilPeso = findViewById(R.id.tilPesoCalculadoraMacros);
-        peso = findViewById(R.id.txtPesoCalculadoraMacros);
-        tilAltura = findViewById(R.id.tilAlturaCalculadoraMacros);
-        altura = findViewById(R.id.txtAlturaCalculadoraMacros);
-        tilEdad = findViewById(R.id.tilEdadCalculadoraMacros);
-        edad = findViewById(R.id.txtEdadCalculadoraMacros);
-        radioGroup = findViewById(R.id.radioGroupCalculadoraMacros);
-        rbHombre = findViewById(R.id.rbtnHombreCalculadoraMacros);
-        rbMujer = findViewById(R.id.rbtnMujerCalculadoraMacros);
-        spinnerActividad = findViewById(R.id.spinnerActividadCalculadoraMacros);
-        spinnerObjetivo = findViewById(R.id.spinnerObjetivoCalculadoraCalorias);
-        btnCalcular = findViewById(R.id.btnCalcularCalculadoraMacros);
+    private void inicializarComponentes(View view) {
+        spinnerCalculadoras = view.findViewById(R.id.spinnerCalculadorasCalculadoraMacros);
 
-        volumen = findViewById(R.id.txtVolumenCalculadoraCalorias);
-        definicion = findViewById(R.id.txtDefinicionCalculadoraCalorias);
-        mantenimiento = findViewById(R.id.txtMantenimientoCalculadoraCalorias);
-        macrosVolumen = findViewById(R.id.txtMacrosVolumenCalculadoraCalorias);
-        macrosDefinicion = findViewById(R.id.txtMacrosDefinicionCalculadoraCalorias);
-        macrosMantenimiento = findViewById(R.id.txtMacrosMantenimientoCalculadoraCalorias);
+        btnInfo = view.findViewById(R.id.btnInfoCalculadoraCalorias);
+        tilPeso = view.findViewById(R.id.tilPesoCalculadoraMacros);
+        peso = view.findViewById(R.id.txtPesoCalculadoraMacros);
+        tilAltura = view.findViewById(R.id.tilAlturaCalculadoraMacros);
+        altura = view.findViewById(R.id.txtAlturaCalculadoraMacros);
+        tilEdad = view.findViewById(R.id.tilEdadCalculadoraMacros);
+        edad = view.findViewById(R.id.txtEdadCalculadoraMacros);
+        radioGroup = view.findViewById(R.id.radioGroupCalculadoraMacros);
+        rbHombre = view.findViewById(R.id.rbtnHombreCalculadoraMacros);
+        rbMujer = view.findViewById(R.id.rbtnMujerCalculadoraMacros);
+        spinnerActividad = view.findViewById(R.id.spinnerActividadCalculadoraMacros);
+        spinnerObjetivo = view.findViewById(R.id.spinnerObjetivoCalculadoraCalorias);
+        btnCalcular = view.findViewById(R.id.btnCalcularCalculadoraMacros);
+
+        volumen = view.findViewById(R.id.txtVolumenCalculadoraCalorias);
+        definicion = view.findViewById(R.id.txtDefinicionCalculadoraCalorias);
+        mantenimiento = view.findViewById(R.id.txtMantenimientoCalculadoraCalorias);
+        macrosVolumen = view.findViewById(R.id.txtMacrosVolumenCalculadoraCalorias);
+        macrosDefinicion = view.findViewById(R.id.txtMacrosDefinicionCalculadoraCalorias);
+        macrosMantenimiento = view.findViewById(R.id.txtMacrosMantenimientoCalculadoraCalorias);
     }
+
     private void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        Intent intent = new Intent(getContext(), PantallaPrincipal.class);
+        intent.putExtra("View", view.toString());
+        startActivity(intent);
+
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

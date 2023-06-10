@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.calculadoras.calorias;
+package com.example.learningstrenghtaaron.calculadoras.macros;
 
 import java.util.HashMap;
 import java.util.Map;
