@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,7 @@ public class Vista_Anhadir_Ejercicio extends Fragment {
     private EditText editTextIntensidad;
     private Button SubmitButton;
     private LinearLayout linearLayoutSeriesReps;
+    private ArrayList<EjercicioRutina> ejercicioRutinas;
 
     public Vista_Anhadir_Ejercicio(){
 
@@ -56,6 +59,8 @@ public class Vista_Anhadir_Ejercicio extends Fragment {
         this.textViewDiaAnhadir.setText(bundle.getString("nombreDia"));
         this.editTextIntensidad = v.findViewById(R.id.IntensidadText);
         this.linearLayoutSeriesReps = v.findViewById(R.id.LinearLayoutSeriesRepsIntensidad);
+        ejercicioRutinas = (ArrayList<EjercicioRutina>) bundle.getSerializable("EjerciciosRutina");
+
         this.SubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +74,6 @@ public class Vista_Anhadir_Ejercicio extends Fragment {
                             (int)numeroDia,
                             (int)numeroSemana,
                             seriesRespIntensidad);
-                    ArrayList<EjercicioRutina> ejercicioRutinas = controller.getEjercicioRutinas();
                     if(ejercicioRutinas.size()>0){
                         boolean existe = false;
                         for (EjercicioRutina rutina : ejercicioRutinas) {
@@ -82,15 +86,25 @@ public class Vista_Anhadir_Ejercicio extends Fragment {
                             ejercicioRutinas.add(ejercicioRutina);
                     }else{
                         ejercicioRutinas.add(ejercicioRutina);}
-
-                    controller.setEjercicioRutinas(ejercicioRutinas);
                     FragmentManager fragmentManager = getParentFragmentManager(); // O getFragmentManager() si estás en una actividad
-                    // Volver al fragmento anterior y eliminar el fragmento actual
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putSerializable("Ejercicios", ejercicioRutinas);
+                    requireActivity().getSupportFragmentManager().setFragmentResult("Añadido",bundle2);
                     fragmentManager.popBackStack();
                 }
             }
         });
         return v;
+    }
+
+    private void CambiarFragment(EjercicioRutina ejercicioRutina) {
+
+        Fragment nuevoFragment = new anhadir_ejercicios_fragment();
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fm = fragmentManager.beginTransaction();
+        fm.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
+        fm.commit();
     }
 
     private boolean ComprobarEditText() {

@@ -1,12 +1,16 @@
 package com.example.learningstrenghtaaron;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,13 +47,13 @@ public class anhadir_ejercicios_fragment extends Fragment {
         recyclerViewAnhadirEjercicios = (RecyclerView) v.findViewById(R.id.recyclerviewAnhadirEjercicios);
         btnanhadirEjercicio = (FloatingActionButton) v.findViewById(R.id.btnAnhadirEjercicio);
         recyclerViewAnhadirEjercicios.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        ArrayList<EjercicioRutina> ejercicioRutinas1 = new ArrayList<>();
-        adaterAnhadirEjercicios = new AdaterAnhadirEjercicios(ejercicioRutinas1);
+        Bundle bundle = getArguments();
+
+        adaterAnhadirEjercicios = new AdaterAnhadirEjercicios();
+        ejercicioRutinas= adaterAnhadirEjercicios.getElementos();
         recyclerViewAnhadirEjercicios.setAdapter(adaterAnhadirEjercicios);
         adaterAnhadirEjercicios.notifyDataSetChanged();
         controller = this;
-        Bundle bundle = getArguments();
-        ejercicioRutinas= adaterAnhadirEjercicios.getElementos();
 
         btnanhadirEjercicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,10 +61,20 @@ public class anhadir_ejercicios_fragment extends Fragment {
                 Fragment nuevoFragment = new Vista_Anhadir_Ejercicio(controller);
                 nuevoFragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                bundle.putSerializable("EjerciciosRutina", ejercicioRutinas);
                 FragmentTransaction fm = fragmentManager.beginTransaction();
                 fm.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
                 fm.addToBackStack(null);
                 fm.commit();
+            }
+        });
+
+        requireActivity().getSupportFragmentManager().setFragmentResultListener("Añadido", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                ejercicioRutinas = (ArrayList<EjercicioRutina>) result.getSerializable("Ejercicios");
+                adaterAnhadirEjercicios.setElementos(ejercicioRutinas);
+                adaterAnhadirEjercicios.notifyDataSetChanged();
             }
         });
         return v;
@@ -70,6 +84,12 @@ public class anhadir_ejercicios_fragment extends Fragment {
         return ejercicioRutinas;
     }
 
+    public void setEjercicioRutinas(ArrayList<EjercicioRutina> ejercicioRutinas) {
+        System.out.println(ejercicioRutinas.get(0));
+        adaterAnhadirEjercicios.setElementos(ejercicioRutinas);
+        adaterAnhadirEjercicios.notifyDataSetChanged();
+    }
+
     /*public void setEjercicioRutinas(ArrayList<EjercicioRutina> ejercicioRutinas) {
         this.ejercicioRutinas = ejercicioRutinas;
         adaterAnhadirEjercicios.setElementos(ejercicioRutinas);
@@ -77,16 +97,7 @@ public class anhadir_ejercicios_fragment extends Fragment {
         System.out.println(adaterAnhadirEjercicios.getItemCount());
     }*/
 
-    public AdaterAnhadirEjercicios getAdaterAnhadirEjercicios() {
-        return adaterAnhadirEjercicios;
-    }
 
-    public void setAdaterAnhadirEjercicios(AdaterAnhadirEjercicios adaterAnhadirEjercicios) {
-        this.adaterAnhadirEjercicios = adaterAnhadirEjercicios;
-    }
 
-    public void setEjercicioRutinas(ArrayList<EjercicioRutina> ejercicioRutinas) {
-        adaterAnhadirEjercicios.setElementos(ejercicioRutinas);
-        adaterAnhadirEjercicios.notifyDataSetChanged();
-    }
+
 }
