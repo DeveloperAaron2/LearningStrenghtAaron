@@ -39,6 +39,7 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
      * @param position
      * @param model    the model object containing the data that should be used to populate the view.
      */
+
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull EjercicioRutina model) {
 
@@ -54,6 +55,7 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
         }
         ejercicios.add(model);
     }
+
 
     /**
      * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent

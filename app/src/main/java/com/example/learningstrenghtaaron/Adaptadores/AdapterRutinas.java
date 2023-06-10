@@ -72,9 +72,9 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
      */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Rutina model) {
-        holder.nombreRutina.setText(model.getNombreRutina());
-        holder.tipoRutina.setText(model.getTipoRutina());
-        holder.creador.setText(model.getCreador());
+        holder.nombreRutina.setText("Nombre Rutina:  " + model.getNombreRutina());
+        holder.tipoRutina.setText("Tipo Rutina:  " + model.getTipoRutina());
+        holder.creador.setText("Creador:  " + model.getCreador());
         if(model.getTipoRutina().equals("Fuerza")) {
             holder.icono.setImageResource(R.drawable.iconofuerza);
         } else if (model.getTipoRutina().equals("Hipertrofia")) {
@@ -84,7 +84,6 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
             @Override
             public void onClick(View v) {
                 showMenu(v,R.menu.fragment_rutinas_menu,model);
-                Toast.makeText(v.getContext(), "Hola soy el boton", Toast.LENGTH_SHORT).show();
             }
         });
         holder.icono.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +127,10 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
         if(document!=null){
             document.addOnSuccessListener(documentSnapshot -> {
                 ArrayList<Object> objetos = (ArrayList<Object>) documentSnapshot.get("Usuarios");
-                if (objetos.contains(user.getUid())) {
+                if(user.isAnonymous()){
+                    Toast.makeText(view.getContext(), "No puedes guardar rutinas si no estás registrado", Toast.LENGTH_SHORT).show();
+                }
+                else if (objetos.contains(user.getUid())) {
                     Toast.makeText(view.getContext(), "Ya tienes agregada esta rutina", Toast.LENGTH_SHORT).show();
                 } else
                     objetos.add(user.getUid());
@@ -169,7 +171,6 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
         private TextView nombreRutina;
         private TextView tipoRutina;
         private ImageView icono;
-
         private TextView creador;
         private FloatingActionButton btnMenuFragmentRutinas;
         public ViewHolder(@NonNull View itemView) {

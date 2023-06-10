@@ -1,5 +1,6 @@
 package com.example.learningstrenghtaaron.rutinas;
 
+import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -16,7 +17,9 @@ import com.example.learningstrenghtaaron.Adaptadores.AdapterRutinas;
 import com.example.learningstrenghtaaron.Entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.RecyclerItemClickListener;
+import com.example.learningstrenghtaaron.anhadir_semanas_fragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -31,25 +34,46 @@ public class RutinasFragment extends Fragment {
     private MediaPlayer mp;
     private  Query query;
 
+    private FloatingActionButton btnAñadirRutina;
+
     public RutinasFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("este va primero");
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        System.out.println("este va segundo");
         View view = inflater.inflate(R.layout.fragment_rutinas, container, false);
         //Relacionado Con RecyclerView
         recyclerViewRutinas = (RecyclerView) view.findViewById(R.id.RecyclerRutinas);
+        btnAñadirRutina = (FloatingActionButton) view.findViewById(R.id.btnAñadirRutina);
+        CreaRecyclerView(view);
+        AñadirRutina();
+        mp= MediaPlayer.create(requireContext(), R.raw.kyriakosgrizzly);
+        return view;
+    }
+
+    private void AñadirRutina() {
+        btnAñadirRutina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment nuevoFragment = new anhadir_semanas_fragment();
+                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                fm.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
+                fm.addToBackStack(null);
+                fm.commit();
+            }
+        });
+    }
+
+    private void CreaRecyclerView(View view) {
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2); // 2 items por columna
         recyclerViewRutinas.setLayoutManager(layoutManager);
         firestore = FirebaseFirestore.getInstance();
@@ -67,10 +91,9 @@ public class RutinasFragment extends Fragment {
         recyclerViewRutinas.setAdapter(adapterRutinas);
         rutinas = adapterRutinas.getRutinas();
         System.out.println("tamaño rutinas: "+ rutinas.size());
-        mp= MediaPlayer.create(requireContext(), R.raw.kyriakosgrizzly);
-        return view;
     }
-    public void añadirListener(){
+
+   /* public void añadirListener(){
         recyclerViewRutinas.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerViewRutinas, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int posicion) {
@@ -82,7 +105,8 @@ public class RutinasFragment extends Fragment {
 
             }
         }));
-    }
+    }*/
+
     public void abrirFragment(int posicion) {
         Fragment nuevoFragment = new SemanasDiasFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
         Bundle bundle = new Bundle();
@@ -106,6 +130,4 @@ public class RutinasFragment extends Fragment {
         super.onStop();
         adapterRutinas.stopListening();
     }
-
-
 }

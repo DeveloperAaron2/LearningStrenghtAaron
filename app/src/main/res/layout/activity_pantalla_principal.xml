@@ -22,11 +22,11 @@
         android:id="@+id/bottomNavigationViewPantallaPrincipal"
         android:layout_width="0dp"
         android:layout_height="200px"
+        android:background="#7A0D0D"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"
-        android:background="@drawable/cbumperro"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"/>
+        app:menu="@menu/bottom_nav_menu"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

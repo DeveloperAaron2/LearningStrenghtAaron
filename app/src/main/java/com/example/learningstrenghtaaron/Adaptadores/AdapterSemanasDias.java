@@ -66,7 +66,7 @@ public class AdapterSemanasDias extends RecyclerView.Adapter<AdapterSemanasDias.
         return elementos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nombreSemana;
 
         public ViewHolder(@NonNull View itemView) {
