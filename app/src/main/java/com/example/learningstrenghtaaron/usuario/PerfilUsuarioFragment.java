@@ -47,42 +47,15 @@ public class PerfilUsuarioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil_usuario, container, false);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         firestore = Firestore.getInstance();
 
         inicializarComponentes(view);
 
-//        ponerDatos(user);
         ponerDatos();
 
         btnMenu.setOnClickListener(view1 -> showMenu(view1, R.menu.fragment_perfil_usuario_menu));
 
         return view;
-    }
-
-/*    private void ponerDatos(FirebaseUser user) {
-        if (user.getDisplayName().isBlank()) txtUsuario.setText("Pancho");
-        else txtUsuario.setText(user.getDisplayName());
-        txtNombre.setText("RevientaAbuelas69");
-        txtCorreo.setText(user.getEmail());
-        txtFechaNac.setText(user.getMetadata().toString());
-        txtPeso.setText("Curvado");
-        txtAltura.setText("Enano");
-    }*/
-
-    private void ponerDatos(FirebaseUser user) {
-        Usuario usuario = firestore.getUsuario(user.getUid());
-
-        if (usuario != null) {
-            String s = "";
-            txtUsuario.setText(usuario.getUsuario() == null ? "" : usuario.getUsuario());
-            txtDeporte.setText(usuario.getDeporte() == null ? "" : usuario.getDeporte());
-            txtCorreo.setText(usuario.getCorreo() == null ? "" : usuario.getCorreo());
-            txtFechaNac.setText(usuario.getFechaNac() == null ? "" : usuario.getFechaNac());
-            txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : usuario.getPeso()));
-            txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : usuario.getAltura()));
-            usuario.getMapaRms().forEach((k, v) -> txtRms.setText(String.format("%s %s: %s\n", txtRms.getText(), k, v)));
-        }
     }
 
     private void ponerDatos() {
@@ -110,7 +83,8 @@ public class PerfilUsuarioFragment extends Fragment {
                         startActivity(new Intent(getContext(), PerfilUsuarioActivity.class));
                         break;
                     case R.id.EditarRms:
-                        Toast.makeText(getContext(), "No estas listo para eso", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "No estas listo para eso", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getContext(), EditarRmsActivity.class));
                         break;
                     case R.id.Ajustes:
                         //Toast.makeText(getContext(), "Aqui no se puede entrar", Toast.LENGTH_SHORT).show();
