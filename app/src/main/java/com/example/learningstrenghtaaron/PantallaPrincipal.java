@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,41 +35,42 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class PantallaPrincipal extends AppCompatActivity {
-    FirebaseAuth mAuth;
-    ActivityPantallaPrincipalBinding binding;
-    Firestore firestore;
+    private FrameLayout frameLayoutPantallaPrincipal;
+    private ViewPager viewPager;
+    private FirebaseAuth mAuth;
+    private ActivityPantallaPrincipalBinding binding;
+    private Firestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPantallaPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //replaceFragment(new RutinasFragment());
         mAuth = FirebaseAuth.getInstance();
         firestore = Firestore.getInstance();
         if (mAuth.getCurrentUser() != null) recogerUsuario(mAuth.getCurrentUser().getUid());
         //ViewPager2
         PagerAdaptador pagerAdapter = new PagerAdaptador(getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.pager);
+        viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
+        //Inicializar vista
+        frameLayoutPantallaPrincipal = findViewById(R.id.frameLayoutPantallaPrincipal);
+        replaceFragment(new RutinasFragment());
         //Botones de navegación
         binding.bottomNavigationViewPantallaPrincipal.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.Rutinas:
-                    //replaceFragment(new RutinasFragment());
-                    viewPager.setCurrentItem(0);
+                    replaceFragment(new RutinasFragment());
                     break;
                 case R.id.Calculadoras:
-//                    startActivity(new Intent(PantallaPrincipal.this, CalculadoraMacrosActivity.class));
-                    //replaceFragment(new CalculadoraMacrosFragment());
-                    viewPager.setCurrentItem(1);
+                    if(frameLayoutPantallaPrincipal.getVisibility() == View.VISIBLE) frameLayoutPantallaPrincipal.setVisibility(View.GONE);
+                    if (viewPager.getVisibility() == View.GONE) viewPager.setVisibility(View.VISIBLE);
                     break;
                 case R.id.Perfil:
                     if (mAuth.getCurrentUser().isAnonymous()) {
                         startActivity(new Intent(PantallaPrincipal.this, MainActivity.class));
                     } else {
-                        //replaceFragment(new PerfilUsuarioFragment(firestore.getUsuario()));
-                        viewPager.setCurrentItem(3);
+                        replaceFragment(new PerfilUsuarioFragment(firestore.getUsuario()));
                     }
                     break;
             }
@@ -83,6 +86,8 @@ public class PantallaPrincipal extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutPantallaPrincipal, fragment);
         fragmentTransaction.commit();
+        if(frameLayoutPantallaPrincipal.getVisibility() == View.GONE) frameLayoutPantallaPrincipal.setVisibility(View.VISIBLE);
+        if(viewPager.getVisibility() == View.VISIBLE) viewPager.setVisibility(View.GONE);
     }
 
     @Override
@@ -128,16 +133,10 @@ public class PantallaPrincipal extends AppCompatActivity {
             Fragment fragment;
             switch(position) {
                 case 0:
-                    fragment = new RutinasFragment();
-                    break;
-                case 1:
                     fragment = new CalculadoraMacrosFragment();
                     break;
-                case 2:
+                case 1:
                     fragment = new CalculadoraRmFragment();
-                    break;
-                case 3:
-                    fragment = new PerfilUsuarioFragment(firestore.getUsuario());
                     break;
                 default:
                     fragment = null;
@@ -147,7 +146,7 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
     }
 }

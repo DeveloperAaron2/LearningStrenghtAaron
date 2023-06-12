@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:text="Brzicki ->"
+                android:text="Brzycki ->"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="20sp" />
 
