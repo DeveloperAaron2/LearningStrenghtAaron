@@ -57,8 +57,10 @@ public class CalculadoraMacrosFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 1){
-                    FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-                    fm.replace(R.id.frameLayoutPantallaPrincipal, new CalculadoraRmFragment()).commit();
+/*                    FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                    fm.replace(R.id.frameLayoutPantallaPrincipal, new CalculadoraRmFragment()).commit();*/
+                    PantallaPrincipal.viewPager.setCurrentItem(1);
+                    spinnerCalculadoras.setSelection(0);
                 }
             }
 

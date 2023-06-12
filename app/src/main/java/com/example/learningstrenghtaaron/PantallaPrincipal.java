@@ -36,7 +36,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class PantallaPrincipal extends AppCompatActivity {
     private FrameLayout frameLayoutPantallaPrincipal;
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
     private FirebaseAuth mAuth;
     private ActivityPantallaPrincipalBinding binding;
     private Firestore firestore;

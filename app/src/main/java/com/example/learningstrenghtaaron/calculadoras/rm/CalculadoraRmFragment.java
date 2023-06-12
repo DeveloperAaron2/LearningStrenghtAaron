@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.calculadoras.CalculadorasFragment;
 import com.example.learningstrenghtaaron.calculadoras.macros.CalculadoraMacrosActivity;
@@ -60,8 +61,10 @@ public class CalculadoraRmFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 1){
-                    FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-                    fm.replace(R.id.frameLayoutPantallaPrincipal, new CalculadoraMacrosFragment()).commit();
+/*                    FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                    fm.replace(R.id.frameLayoutPantallaPrincipal, new CalculadoraMacrosFragment()).commit();*/
+                    PantallaPrincipal.viewPager.setCurrentItem(0);
+                    spinnerCalculadoras.setSelection(0);
                 }
             }
 
