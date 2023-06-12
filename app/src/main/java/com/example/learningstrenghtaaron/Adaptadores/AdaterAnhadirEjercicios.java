@@ -3,43 +3,55 @@ package com.example.learningstrenghtaaron.Adaptadores;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.learningstrenghtaaron.Entidades.Ejercicio;
 import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
 
+import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class AdaterAnhadirEjercicios extends RecyclerView.Adapter<AdaterAnhadirEjercicios.ViewHolder> {
 
     private ArrayList<EjercicioRutina> elementos;
 
-
     public AdaterAnhadirEjercicios() {
         this.elementos = new ArrayList<>();
+
+    }
+    public AdaterAnhadirEjercicios(ArrayList<EjercicioRutina> elementos) {
+        this.elementos = elementos;
 
     }
 
     @NonNull
     @Override
-    public AdaterAnhadirEjercicios.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.anhadir_semanas_view, parent, false);
-        return new AdaterAnhadirEjercicios.ViewHolder(v);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ejerciciosview, parent, false);
+        return new ViewHolder(v);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull AdaterAnhadirEjercicios.ViewHolder holder, int position) {
-        holder.nombreSemana.setText(elementos.get(position).getNombreEjercicio());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            for (Map.Entry<String, Integer> entry : elementos.get(position).getSeriesReps().entrySet()) {
+                View registro = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.tablerow, null, false);
+                TextView nombreEjercicio = (TextView) registro.findViewById(R.id.nombreEjercicioRow);
+                TextView seriesReps = (TextView) registro.findViewById(R.id.seriesRepsRow);
+                TextView intensidad = (TextView) registro.findViewById(R.id.intensidadRow);
+                nombreEjercicio.setText(elementos.get(position).getNombreEjercicio());
+                seriesReps.setText(entry.getKey());
+                intensidad.setText(entry.getValue() + "%");
+                holder.tablaEjercicios.addView(registro);
+            }
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -47,14 +59,12 @@ public class AdaterAnhadirEjercicios extends RecyclerView.Adapter<AdaterAnhadirE
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView nombreSemana;
-        private Spinner spinnerDias;
+
+        private TableLayout tablaEjercicios;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            nombreSemana = itemView.findViewById(R.id.AnhadirNombreSemana);
-            this.spinnerDias = itemView.findViewById(R.id.spinnerDias);
-
+            tablaEjercicios = itemView.findViewById(R.id.TableLayoutEjercicios);
         }
     }
 
@@ -62,7 +72,8 @@ public class AdaterAnhadirEjercicios extends RecyclerView.Adapter<AdaterAnhadirE
         return elementos;
     }
 
-    public void setElementos(ArrayList<EjercicioRutina> dias) {
-        this.elementos = dias;
+    public void setElementos(ArrayList<EjercicioRutina> elementos) {
+        this.elementos = elementos;
+
     }
 }

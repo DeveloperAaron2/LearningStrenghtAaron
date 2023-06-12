@@ -2,16 +2,19 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Rutinas"
-        android:icon="@drawable/baseline_assist_walker_24"
-        android:id="@+id/Rutinas"/>
+    <item
+        android:id="@+id/Rutinas"
+        android:icon="@drawable/baseline_fitness_center_24"
+        android:title="Rutinas" />
 
-    <item android:title="Calculadoras"
-        android:icon="@drawable/baseline_accessible_24"
-        android:id="@+id/Calculadoras"/>
+    <item
+        android:id="@+id/Calculadoras"
+        android:icon="@drawable/baseline_calculate_24"
+        android:title="Calculadoras" />
 
-    <item android:title="Perfil"
-        android:icon="@drawable/baseline_vaccines_24"
-        android:id="@+id/Perfil"/>
+    <item
+        android:id="@+id/Perfil"
+        android:icon="@drawable/baseline_person_outline_24"
+        android:title="Perfil" />
 
 </menu>

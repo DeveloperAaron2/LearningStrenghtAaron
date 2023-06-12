@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron;
+package com.example.learningstrenghtaaron.Anhadir;
 
 import android.os.Bundle;
 
@@ -15,9 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.learningstrenghtaaron.Adaptadores.AdapterAnhadirSemana;
+import com.example.learningstrenghtaaron.Anhadir.anhadir_ejercicios_fragment;
+import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
+import com.example.learningstrenghtaaron.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +33,8 @@ public class anhadir_semanas_fragment extends Fragment {
     private AdapterAnhadirSemana adapterAnhadirSemana;
 
     private FloatingActionButton btnAnhadirSemana;
+
+    private HashMap<String,ArrayList<EjercicioRutina>> todosLosEjercicios;
 
     public anhadir_semanas_fragment() {
         // Required empty public constructor
@@ -54,11 +60,19 @@ public class anhadir_semanas_fragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callbackmethod);
         itemTouchHelper.attachToRecyclerView(recyclerViewAnhadirSemanas);
         btnAnhadirSemana = (FloatingActionButton) v.findViewById(R.id.btnAnhadirSemana);
-
+        todosLosEjercicios = new HashMap<>();
         btnAnhadirSemana.setOnClickListener(v1 -> {
             ArrayList<String> semanas = adapterAnhadirSemana.getElementos();
             semanas.add("Semana " + (semanas.size() + 1));
             adapterAnhadirSemana.setElementos(semanas);
+            adapterAnhadirSemana.notifyDataSetChanged();
+        });
+        requireActivity().getSupportFragmentManager().setFragmentResultListener("TodosAñadidos", this, (requestKey, result) -> {
+
+            ArrayList semanasAnhadidas = (ArrayList) result.getSerializable("Semanas");
+            System.out.println(semanasAnhadidas.size());
+            adapterAnhadirSemana.setElementos(semanasAnhadidas);
+            todosLosEjercicios = (HashMap<String, ArrayList<EjercicioRutina>>) result.getSerializable("HasMapLleno");
             adapterAnhadirSemana.notifyDataSetChanged();
         });
         return v;
@@ -68,6 +82,8 @@ public class anhadir_semanas_fragment extends Fragment {
         bundle.putString("nombreDia","Dia " + position);
         System.out.println(bundle.get("nombreDia"));
         bundle.putString("nombreSemana",nombreSemana);
+        bundle.putSerializable("Semanas",adapterAnhadirSemana.getElementos());
+        bundle.putSerializable("EstructuraDeDatos",todosLosEjercicios);
         Fragment nuevoFragment = new anhadir_ejercicios_fragment();
         nuevoFragment.setArguments(bundle);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

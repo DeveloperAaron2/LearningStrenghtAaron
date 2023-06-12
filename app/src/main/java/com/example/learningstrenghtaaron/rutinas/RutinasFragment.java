@@ -1,6 +1,5 @@
 package com.example.learningstrenghtaaron.rutinas;
 
-import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -16,8 +15,7 @@ import android.view.ViewGroup;
 import com.example.learningstrenghtaaron.Adaptadores.AdapterRutinas;
 import com.example.learningstrenghtaaron.Entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
-import com.example.learningstrenghtaaron.RecyclerItemClickListener;
-import com.example.learningstrenghtaaron.anhadir_semanas_fragment;
+import com.example.learningstrenghtaaron.Anhadir.anhadir_semanas_fragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;

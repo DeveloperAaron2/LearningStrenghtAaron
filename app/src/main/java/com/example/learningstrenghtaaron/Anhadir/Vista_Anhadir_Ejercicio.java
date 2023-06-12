@@ -1,28 +1,23 @@
-package com.example.learningstrenghtaaron;
+package com.example.learningstrenghtaaron.Anhadir;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.learningstrenghtaaron.Anhadir.anhadir_ejercicios_fragment;
 import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
+import com.example.learningstrenghtaaron.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Vista_Anhadir_Ejercicio extends Fragment {
     private anhadir_ejercicios_fragment controller;
@@ -74,7 +69,7 @@ public class Vista_Anhadir_Ejercicio extends Fragment {
                             (int)numeroDia,
                             (int)numeroSemana,
                             seriesRespIntensidad);
-                    if(ejercicioRutinas.size()>0){
+
                         boolean existe = false;
                         for (EjercicioRutina rutina : ejercicioRutinas) {
                             if(rutina.getNombreEjercicio().equals(ejercicioRutina.getNombreEjercicio())){
@@ -84,8 +79,7 @@ public class Vista_Anhadir_Ejercicio extends Fragment {
                         }
                         if(!existe)
                             ejercicioRutinas.add(ejercicioRutina);
-                    }else{
-                        ejercicioRutinas.add(ejercicioRutina);}
+
                     FragmentManager fragmentManager = getParentFragmentManager(); // O getFragmentManager() si estás en una actividad
                     Bundle bundle2 = new Bundle();
                     bundle2.putSerializable("Ejercicios", ejercicioRutinas);
@@ -97,21 +91,15 @@ public class Vista_Anhadir_Ejercicio extends Fragment {
         return v;
     }
 
-    private void CambiarFragment(EjercicioRutina ejercicioRutina) {
 
-        Fragment nuevoFragment = new anhadir_ejercicios_fragment();
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fm = fragmentManager.beginTransaction();
-        fm.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
-        fm.commit();
-    }
 
     private boolean ComprobarEditText() {
         boolean isNotEmpty = true;
         if (editTextNombreEjercicio.getText().equals(""))
             isNotEmpty=false;
         else if (editTextSeriesReps.getText().equals(""))
+            isNotEmpty=false;
+        else if (editTextIntensidad.getText().equals(""))
             isNotEmpty=false;
         return isNotEmpty;
     }

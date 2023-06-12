@@ -76,7 +76,7 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
         holder.tipoRutina.setText("Tipo Rutina:  " + model.getTipoRutina());
         holder.creador.setText("Creador:  " + model.getCreador());
         if(model.getTipoRutina().equals("Fuerza")) {
-            holder.icono.setImageResource(R.drawable.iconofuerza);
+            holder.icono.setImageResource(R.drawable.rutinafuerzalogo);
         } else if (model.getTipoRutina().equals("Hipertrofia")) {
             holder.icono.setImageResource(R.drawable.hipertrofiaicono);
         }

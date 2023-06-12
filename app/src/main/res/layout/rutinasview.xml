@@ -13,26 +13,36 @@
         android:id="@+id/iconoRutina"
         android:layout_width="match_parent"
         android:layout_height="94dp"
-        app:srcCompat="@drawable/iconofuerza" />
+        android:layout_marginBottom="20px"
+        app:srcCompat="@drawable/hipertrofiaicono" />
 
     <TextView
         android:id="@+id/nombreRutina"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="@color/black"
+        android:layout_marginBottom="20px"/>
 
     <TextView
         android:id="@+id/TipoRutina"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="@color/black"
+        android:layout_marginBottom="20px"
+        />
 
     <TextView
         android:id="@+id/CreadorRutina"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="@color/black"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnMenuFragmentRutinas"

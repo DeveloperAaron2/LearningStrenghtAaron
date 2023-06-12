@@ -20,6 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/buttonTerminarEjercicios"
+            android:layout_width="14dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_weight="1"
+            android:text="Terminar" />
+
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,6 +40,7 @@
             android:clickable="true"
             android:contentDescription="@string/app_name"
             app:srcCompat="@android:drawable/ic_input_add" />
+
     </LinearLayout>
 
 </LinearLayout>

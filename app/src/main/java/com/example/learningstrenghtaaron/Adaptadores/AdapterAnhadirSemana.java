@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.learningstrenghtaaron.R;
-import com.example.learningstrenghtaaron.anhadir_semanas_fragment;
+import com.example.learningstrenghtaaron.Anhadir.anhadir_semanas_fragment;
 
 import java.util.ArrayList;
 import java.util.List;
