@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -51,11 +52,12 @@ public class PantallaPrincipal extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firestore = Firestore.getInstance();
         if (mAuth.getCurrentUser() != null) recogerUsuario(mAuth.getCurrentUser().getUid());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(PantallaPrincipal.this);
+        if (!prefs.getBoolean("switchModoOscuro", true)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         //ViewPager2
         PagerAdaptador pagerAdapter = new PagerAdaptador(getSupportFragmentManager());
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(PantallaPrincipal.this);
         if (prefs.getString("listaCalculadoras", "Macros").equals("Rm")) viewPager.setCurrentItem(1);
         //Inicializar vista
         frameLayoutPantallaPrincipal = findViewById(R.id.frameLayoutPantallaPrincipal);
