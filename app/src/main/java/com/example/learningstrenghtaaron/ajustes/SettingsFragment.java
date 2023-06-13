@@ -1,8 +1,12 @@
 package com.example.learningstrenghtaaron.ajustes;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
@@ -11,16 +15,23 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
 import com.example.learningstrenghtaaron.R;
+import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     private SwitchPreference switchModoOscuro, switchSonido;
     private ListPreference listaTemas, listaLetra, listaCalculadoras;
     private EditTextPreference etCambiarCorreo, etCambiarContrasenia;
     private Preference dialogEliminarCuenta;
+    private Firestore firestore;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        firestore = Firestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         inicializarComponentes();
         listenersAplicacion();
         listenersCuenta();
@@ -131,6 +142,24 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
                 System.out.println("Nueva contraseña: " + newValue);
+                return true;
+            }
+        });
+        dialogEliminarCuenta.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                // Mostrar confirmacion
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Eliminar cuenta definitivamente");
+                builder.setMessage("¿Estas seguro de que deseas eliminar tu cuenta y todos tus datos definitivamente?");
+                builder.setPositiveButton("Si, soy un flaco", (dialogInterface, i) -> {
+                    firestore.borrarUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    mAuth.getCurrentUser().delete();
+                });
+                builder.setNegativeButton("No, estoy mas fuerte que el vinagre", (dialogInterface, i) ->
+                        Toast.makeText(getContext(), "Asi me gusta", Toast.LENGTH_SHORT).show());
+                builder.show();
+
                 return true;
             }
         });
