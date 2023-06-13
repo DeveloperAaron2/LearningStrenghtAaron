@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarEditarRms"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/edit_rms_menu"
@@ -52,11 +52,12 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_height="wrap_content"
+        android:id="@+id/btnAddRmEditarRms"
         android:layout_width="wrap_content"
-        android:src="@android:drawable/ic_input_add"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:contentDescription="@string/boton_que_inserta_un_nuevo_rm" />
+        android:contentDescription="@string/boton_que_inserta_un_nuevo_rm"
+        android:src="@android:drawable/ic_input_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
