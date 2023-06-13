@@ -44,10 +44,19 @@
             android:key="etCambiarCorreo"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Cambiar correo" />
+            android:title="Cambiar correo"
+            app:dialogTitle="Introduce tu nuevo correo:" />
         <EditTextPreference
             android:defaultValue="Default value"
             android:key="etCambiarContrasenia"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Cambiar contraseña"
+            app:dialogTitle="Introduce tu nueva contraseña:"
+            app:negativeButtonText="¿Has olvidado tu contraseña?"
+            app:positiveButtonText="Cambiar contraseña" />
+        <Preference
+            android:key="CambiarContrasenia"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Cambiar contraseña" />

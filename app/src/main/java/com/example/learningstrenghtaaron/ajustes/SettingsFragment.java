@@ -2,7 +2,11 @@ package com.example.learningstrenghtaaron.ajustes;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.wifi.hotspot2.pps.Credential;
 import android.os.Bundle;
+import android.text.InputType;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,14 +20,19 @@ import androidx.preference.SwitchPreference;
 
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
+import com.example.learningstrenghtaaron.login.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     private SwitchPreference switchModoOscuro, switchSonido;
     private ListPreference listaTemas, listaLetra, listaCalculadoras;
     private EditTextPreference etCambiarCorreo, etCambiarContrasenia;
-    private Preference dialogEliminarCuenta;
+    private Preference dialogEliminarCuenta, cambiarPass;
     private Firestore firestore;
     private FirebaseAuth mAuth;
 
@@ -45,6 +54,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         listaCalculadoras = findPreference("listaCalculadoras");
         etCambiarCorreo = findPreference("etCambiarCorreo");
         etCambiarContrasenia = findPreference("etCambiarContrasenia");
+        cambiarPass = findPreference("CambiarContrasenia");
         dialogEliminarCuenta = findPreference("dialogEliminarCuenta");
     }
 
@@ -135,6 +145,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
                 System.out.println("Nuevo correo: " + newValue);
+
+                mAuth.getCurrentUser().updateEmail((String) newValue);
+                mAuth.getCurrentUser().sendEmailVerification();
+                firestore.actualizarUsuario(firestore.getUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                mAuth.signOut();
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.putExtra("Mensaje", "Por favor, verifica el correo antes de iniciar sesion.");
+                startActivity(intent);
                 return true;
             }
         });
@@ -142,9 +160,41 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
                 System.out.println("Nueva contraseña: " + newValue);
+
+                mAuth.getCurrentUser().updatePassword((String) newValue);
+                firestore.actualizarUsuario(firestore.getUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                Toast.makeText(getContext(), "Contraseña actualizada correctamente.", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
+
+        cambiarPass.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Introduce tu contraseña actual:");
+                final EditText input = new EditText(getContext());
+                input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                builder.setView(input);
+                builder.setPositiveButton("Aceptar", (dialog, which) -> {
+                    String pass = input.getText().toString().trim();
+                    AuthCredential credential = EmailAuthProvider.getCredential(mAuth.getCurrentUser().getEmail(), pass);
+                    mAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener(task -> {
+                        if (!task.isSuccessful())
+                            Toast.makeText(getContext(), "Contraseña erronea", Toast.LENGTH_SHORT).show();
+                        else
+                            cambiarPassEmail();
+                    });
+                });
+                builder.setNegativeButton("No me acuerdo de la contraseña", (dialog, which) -> {
+                    mAuth.sendPasswordResetEmail(mAuth.getCurrentUser().getEmail());
+                    Toast.makeText(getContext(), "Te hemos enviado un correo para reestablecer tu contraseña", Toast.LENGTH_SHORT).show();
+                });
+                builder.show();
+                return true;
+            }
+        });
+
         dialogEliminarCuenta.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
@@ -159,10 +209,23 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 builder.setNegativeButton("No, estoy mas fuerte que el vinagre", (dialogInterface, i) ->
                         Toast.makeText(getContext(), "Asi me gusta", Toast.LENGTH_SHORT).show());
                 builder.show();
-
                 return true;
             }
         });
+    }
+
+    private void cambiarPassEmail() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Introduce tu nueva contraseña:");
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+            String pass = input.getText().toString().trim();
+            mAuth.getCurrentUser().updatePassword(pass);
+        });
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+        builder.show();
     }
 
 }

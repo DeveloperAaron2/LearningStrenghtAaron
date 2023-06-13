@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.R;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, LoginActivity.class)));
         btnRegister.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, RegisterActivity.class)));
 
+        if (getIntent().getStringExtra("Mensaje") != null)
+            Toast.makeText(this, getIntent().getStringExtra("Mensaje"), Toast.LENGTH_SHORT).show();
     }
 
     @Override
