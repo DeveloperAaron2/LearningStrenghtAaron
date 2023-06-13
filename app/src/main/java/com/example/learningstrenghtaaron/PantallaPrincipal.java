@@ -3,6 +3,7 @@ package com.example.learningstrenghtaaron;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -53,6 +55,8 @@ public class PantallaPrincipal extends AppCompatActivity {
         PagerAdaptador pagerAdapter = new PagerAdaptador(getSupportFragmentManager());
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(PantallaPrincipal.this);
+        if (prefs.getString("listaCalculadoras", "Macros").equals("Rm")) viewPager.setCurrentItem(1);
         //Inicializar vista
         frameLayoutPantallaPrincipal = findViewById(R.id.frameLayoutPantallaPrincipal);
         replaceFragment(new RutinasFragment());
