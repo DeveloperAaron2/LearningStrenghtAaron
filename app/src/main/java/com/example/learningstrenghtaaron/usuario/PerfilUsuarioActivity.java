@@ -1,8 +1,13 @@
 package com.example.learningstrenghtaaron.usuario;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.learningstrenghtaaron.R;
@@ -11,18 +16,23 @@ import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 public class PerfilUsuarioActivity extends AppCompatActivity {
+    private ShapeableImageView fotoPerfil;
     private TextInputEditText txtUsuario, txtDeporte, txtFechaNac, txtPeso, txtAltura;
     private FloatingActionButton btnAtras, btnAceptar;
     private MaterialButton btnCambiarFoto;
     private Usuario usuario;
     private Firestore firestore;
+    private int RCode = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,8 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     }
 
     private void inicializarComponentes() {
+        //Image
+        fotoPerfil = findViewById(R.id.fotoPerfilUsuario);
         //Txt
         txtUsuario = findViewById(R.id.txtNombreUsuarioPerfilUsuario);
         txtDeporte = findViewById(R.id.txtDeportePerfilUsuario);
@@ -58,10 +70,15 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         btnCambiarFoto.setOnClickListener(view -> cambiarfoto());
         //Errores campos obligatorios
         txtUsuario.setOnFocusChangeListener((view, b) -> {
-            if (!b && txtUsuario.getText().toString().trim().isBlank())txtUsuario.setError("Tienes que escribir un nombre de usuario"); else txtUsuario.setError(null);
+            if (!b && txtUsuario.getText().toString().trim().isBlank())
+                txtUsuario.setError("Tienes que escribir un nombre de usuario");
+            else txtUsuario.setError(null);
         });
         txtFechaNac.setOnFocusChangeListener((view, b) -> {
-            if (b) showDatePickerDialog(); else if(txtFechaNac.getText().toString().trim().isBlank())txtFechaNac.setError("Tienes que seleccionar tu fecha de nacimiento");else txtFechaNac.setError(null);
+            if (b) showDatePickerDialog();
+            else if (txtFechaNac.getText().toString().trim().isBlank())
+                txtFechaNac.setError("Tienes que seleccionar tu fecha de nacimiento");
+            else txtFechaNac.setError(null);
         });
     }
 
@@ -104,6 +121,32 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
     private void cambiarfoto() {
         //TODO: cambiar foto
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent, RCode);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bitmap btp_img = null;
+        InputStream in_stream;
+        if (resultCode == Activity.RESULT_OK && requestCode == RCode)
+            try {
+                if (btp_img != null) {
+                    btp_img.recycle();
+                }
+                in_stream = getContentResolver().openInputStream(
+                        data.getData());
+                btp_img = BitmapFactory.decodeStream(in_stream);
+                in_stream.close();
+                fotoPerfil.setImageBitmap(btp_img);
+                btnCambiarFoto.setText("Modificar");
+            }  catch (IOException e) {
+                e.printStackTrace();
+            }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showDatePickerDialog() {
