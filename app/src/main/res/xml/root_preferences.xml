@@ -4,33 +4,32 @@
     <PreferenceCategory app:title="Aplicacion">
 
         <SwitchPreference
-            android:defaultValue="false"
             android:key="switchModoOscuro"
-            android:title="Modo Oscuro" />
-
+            android:title="Modo Oscuro"
+            android:defaultValue="false"/>
         <ListPreference
-            android:entries="@array/cambiar_tema"
             android:key="listaTemas"
             android:title="Cambiar Tema"
             app:defaultValue="reply"
+            android:entries="@array/cambiar_tema"
             app:entryValues="@array/cambiar_tema"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/tamanio_letra"
             android:key="listaLetra"
             android:title="Cambiar tamaño de letra"
+            android:defaultValue="14"
+            android:entries="@array/tamanio_letra"
             app:entryValues="@array/tamanio_letra"
             app:useSimpleSummaryProvider="true" />
         <SwitchPreference
-            android:defaultValue="false"
             android:key="switchSonidos"
-            android:title="Sonidos" />
+            android:title="Sonidos"
+            android:defaultValue="true" />
         <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/calculadoras"
             android:key="listaCalculadoras"
             android:title="Calculadora por defecto"
+            android:defaultValue="Macros"
+            android:entries="@array/calculadoras"
             app:dialogIcon="@drawable/baseline_calculate_24"
             app:entryValues="@array/calculadoras"
             app:icon="@drawable/baseline_calculate_24"
@@ -40,33 +39,23 @@
 
     <PreferenceCategory app:title="Cuenta">
         <EditTextPreference
-            android:defaultValue="Default value"
             android:key="etCambiarCorreo"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
             android:title="Cambiar correo"
-            app:dialogTitle="Introduce tu nuevo correo:" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="etCambiarContrasenia"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Cambiar contraseña"
-            app:dialogTitle="Introduce tu nueva contraseña:"
-            app:negativeButtonText="¿Has olvidado tu contraseña?"
-            app:positiveButtonText="Cambiar contraseña" />
+            app:dialogTitle="Introduce tu nuevo correo:"/>
         <Preference
             android:key="CambiarContrasenia"
+            android:title="Cambiar contraseña"
             android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Cambiar contraseña" />
+            android:singleLine="true" />
         <Preference
+            android:key="preferenceEliminarCuenta"
+            android:title="Eliminar Cuenta"
             android:dialogMessage="¿Estas seguro de que deseas eliminar tu cuenta definitivamente?"
             android:dialogTitle="Eliminar cuenta definitivamente"
-            android:key="preferenceEliminarCuenta"
             android:negativeButtonText="No, estoy mas fuerte que el vinagre"
-            android:positiveButtonText="Si, soy un flaco"
-            android:title="Eliminar Cuenta" />
+            android:positiveButtonText="Si, soy un flaco" />
     </PreferenceCategory>
 
 </PreferenceScreen>

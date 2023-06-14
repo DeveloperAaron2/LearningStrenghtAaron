@@ -1,7 +1,11 @@
 package com.example.learningstrenghtaaron.rutinas;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.learningstrenghtaaron.adaptadores.AdapterRutinas;
+import com.example.learningstrenghtaaron.ajustes.SettingsFragment;
 import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.RecyclerItemClickListener;
@@ -42,6 +47,9 @@ public class RutinasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rutinas, container, false);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SettingsFragment.mPrefsName, MODE_PRIVATE);
+        if (sharedPreferences.getBoolean("switchModoOscuro", false)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         //Relacionado Con RecyclerView
         recyclerViewRutinas = (RecyclerView) view.findViewById(R.id.RecyclerRutinas);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2); // 2 items por columna

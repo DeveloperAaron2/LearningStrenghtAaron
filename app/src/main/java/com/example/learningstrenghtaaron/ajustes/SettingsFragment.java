@@ -1,8 +1,11 @@
 package com.example.learningstrenghtaaron.ajustes;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.hotspot2.pps.Credential;
 import android.os.Bundle;
 import android.text.InputType;
@@ -31,14 +34,19 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SettingsFragment extends PreferenceFragmentCompat {
     private SwitchPreference switchModoOscuro, switchSonido;
     private ListPreference listaTemas, listaLetra, listaCalculadoras;
-    private EditTextPreference etCambiarCorreo, etCambiarContrasenia;
+    private EditTextPreference etCambiarCorreo;
     private Preference dialogEliminarCuenta, cambiarPass;
     private Firestore firestore;
     private FirebaseAuth mAuth;
+    public static final String mPrefsName = "mPrefs";
+    private SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        sharedPreferences = getContext().getSharedPreferences(mPrefsName, MODE_PRIVATE);
+        editor = getContext().getSharedPreferences(mPrefsName, MODE_PRIVATE).edit();
         firestore = Firestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         inicializarComponentes();
@@ -53,24 +61,27 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         listaLetra = findPreference("listaLetra");
         listaCalculadoras = findPreference("listaCalculadoras");
         etCambiarCorreo = findPreference("etCambiarCorreo");
-        etCambiarContrasenia = findPreference("etCambiarContrasenia");
         cambiarPass = findPreference("CambiarContrasenia");
-        dialogEliminarCuenta = findPreference("dialogEliminarCuenta");
+        dialogEliminarCuenta = findPreference("preferenceEliminarCuenta");
+        etCambiarCorreo.setDefaultValue(firestore.getUsuario().getCorreo());
     }
 
-    private void listenersAplicacion(){
+    private void listenersAplicacion() {
         switchModoOscuro.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
                 if (switchModoOscuro.isChecked()) {
                     System.out.println("Activando modo oscuro");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor.putBoolean("switchModoOscuro", true);
                     //recreate();
                 } else {
                     System.out.println("Desactivando modo oscuro");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor.putBoolean("switchModoOscuro", false);
                     //recreate();
                 }
+                editor.apply();
                 return true;
             }
         });
@@ -130,17 +141,20 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 switch (listaCalculadoras.findIndexOfValue((String) newValue)) {
                     case 0:
                         System.out.println("Calculadora Macros");
+                        editor.putString("listaCalculadoras", "Macros");
                         break;
                     case 1:
                         System.out.println("Calculadora Rm");
+                        editor.putString("listaCalculadoras", "Rm");
                         break;
                 }
+                editor.apply();
                 return true;
             }
         });
     }
 
-    private void listenersCuenta(){
+    private void listenersCuenta() {
         etCambiarCorreo.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
@@ -153,17 +167,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.putExtra("Mensaje", "Por favor, verifica el correo antes de iniciar sesion.");
                 startActivity(intent);
-                return true;
-            }
-        });
-        etCambiarContrasenia.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                System.out.println("Nueva contraseña: " + newValue);
-
-                mAuth.getCurrentUser().updatePassword((String) newValue);
-                firestore.actualizarUsuario(firestore.getUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid()));
-                Toast.makeText(getContext(), "Contraseña actualizada correctamente.", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -180,9 +183,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     String pass = input.getText().toString().trim();
                     AuthCredential credential = EmailAuthProvider.getCredential(mAuth.getCurrentUser().getEmail(), pass);
                     mAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener(task -> {
-                        if (!task.isSuccessful())
+                        if (!task.isSuccessful()) {
                             Toast.makeText(getContext(), "Contraseña erronea", Toast.LENGTH_SHORT).show();
-                        else
+                            cambiarPass.performClick();
+                        } else
                             cambiarPassEmail();
                     });
                 });
@@ -222,7 +226,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         builder.setView(input);
         builder.setPositiveButton("Aceptar", (dialog, which) -> {
             String pass = input.getText().toString().trim();
-            mAuth.getCurrentUser().updatePassword(pass);
+            if (pass.isBlank()) {
+                cambiarPassEmail();
+            } else {
+                mAuth.getCurrentUser().updatePassword(pass);
+            }
         });
         builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
         builder.show();

@@ -1,8 +1,12 @@
 package com.example.learningstrenghtaaron.usuario;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +18,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.learningstrenghtaaron.ajustes.SettingsActivity;
+import com.example.learningstrenghtaaron.ajustes.SettingsFragment;
 import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.example.learningstrenghtaaron.R;
@@ -48,7 +53,9 @@ public class PerfilUsuarioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil_usuario, container, false);
         firestore = Firestore.getInstance();
-
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SettingsFragment.mPrefsName, MODE_PRIVATE);
+        if (sharedPreferences.getBoolean("switchModoOscuro", false)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         inicializarComponentes(view);
 
         ponerDatos();

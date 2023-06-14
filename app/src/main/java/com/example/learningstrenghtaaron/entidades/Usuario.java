@@ -41,8 +41,8 @@ public class Usuario implements Serializable {
             this.deporte = (String) datosUsuario.getOrDefault("Deporte", "");
 /*            this.peso = Long.parseLong(String.valueOf(datosUsuario.getOrDefault("Peso", 0)));
             this.altura = Long.parseLong(String.valueOf(datosUsuario.getOrDefault("Altura", 0)));*/
-            this.peso = Long.parseLong((String) datosUsuario.getOrDefault("Peso", "0"));
-            this.altura = Long.parseLong((String) datosUsuario.getOrDefault("Altura", "0"));
+            this.peso = (Long) datosUsuario.getOrDefault("Peso", 0);
+            this.altura = (Long) datosUsuario.getOrDefault("Altura", 0);
             this.mapaRms = (Map<String, String>) datosUsuario.getOrDefault("MapaRms", new HashMap<String, String>());
         }
     }

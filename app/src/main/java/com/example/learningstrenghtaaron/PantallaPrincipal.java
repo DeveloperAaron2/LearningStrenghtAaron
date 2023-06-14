@@ -22,6 +22,8 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.learningstrenghtaaron.ajustes.SettingsActivity;
+import com.example.learningstrenghtaaron.ajustes.SettingsFragment;
 import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.calculadoras.macros.CalculadoraMacrosFragment;
 import com.example.learningstrenghtaaron.calculadoras.rm.CalculadoraRmFragment;
@@ -36,6 +38,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Map;
 
 public class PantallaPrincipal extends AppCompatActivity {
     private FrameLayout frameLayoutPantallaPrincipal;
@@ -52,13 +56,12 @@ public class PantallaPrincipal extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firestore = Firestore.getInstance();
         if (mAuth.getCurrentUser() != null) recogerUsuario(mAuth.getCurrentUser().getUid());
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(PantallaPrincipal.this);
-        if (!prefs.getBoolean("switchModoOscuro", true)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        SharedPreferences sharedPreferences = getSharedPreferences(SettingsFragment.mPrefsName, MODE_PRIVATE);
         //ViewPager2
         PagerAdaptador pagerAdapter = new PagerAdaptador(getSupportFragmentManager());
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
-        if (prefs.getString("listaCalculadoras", "Macros").equals("Rm")) viewPager.setCurrentItem(1);
+        if (sharedPreferences.getString("listaCalculadoras", "Macros").equals("Rm")) viewPager.setCurrentItem(1);
         //Inicializar vista
         frameLayoutPantallaPrincipal = findViewById(R.id.frameLayoutPantallaPrincipal);
         replaceFragment(new RutinasFragment());
