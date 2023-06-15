@@ -4,27 +4,51 @@
     android:id="@+id/iconoR"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="20px"
+    android:paddingTop="50px"
+    android:paddingRight="20px">
 
     <ImageView
         android:id="@+id/iconoRutina"
         android:layout_width="match_parent"
         android:layout_height="94dp"
-        app:srcCompat="@drawable/iconofuerza" />
+        android:layout_marginBottom="20px"
+        app:srcCompat="@drawable/hipertrofiaicono" />
 
     <TextView
         android:id="@+id/nombreRutina"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="20px"/>
 
     <TextView
         android:id="@+id/TipoRutina"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="20px"
+        />
 
     <TextView
         android:id="@+id/CreadorRutina"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnMenuFragmentRutinas"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:contentDescription="@string/boton_menu"
+        android:src="@drawable/baseline_more_vert_24"
+        app:elevation="0dp"
+        app:fabCustomSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </LinearLayout>

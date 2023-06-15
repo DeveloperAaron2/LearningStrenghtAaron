@@ -17,10 +17,12 @@ import android.view.ViewGroup;
 
 import com.example.learningstrenghtaaron.adaptadores.AdapterRutinas;
 import com.example.learningstrenghtaaron.ajustes.SettingsFragment;
+import com.example.learningstrenghtaaron.anhadir.anhadir_semanas_fragment;
 import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.RecyclerItemClickListener;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -32,6 +34,7 @@ public class RutinasFragment extends Fragment {
     private FirebaseFirestore firestore;
 
     private ArrayList<Rutina> rutinas;
+    private FloatingActionButton btnAnhadirRutina;
 
     public RutinasFragment() {
         // Required empty public constructor
@@ -50,6 +53,7 @@ public class RutinasFragment extends Fragment {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences(SettingsFragment.mPrefsName, MODE_PRIVATE);
         if (sharedPreferences.getBoolean("switchModoOscuro", false)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        btnAnhadirRutina = view.findViewById(R.id.btnAñadirRutinaFragmentRutinas);
         //Relacionado Con RecyclerView
         recyclerViewRutinas = (RecyclerView) view.findViewById(R.id.RecyclerRutinas);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2); // 2 items por columna
@@ -75,6 +79,20 @@ public class RutinasFragment extends Fragment {
 
         return view;
     }
+
+    private void AñadirRutina() {
+        btnAnhadirRutina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment nuevoFragment = new anhadir_semanas_fragment();
+                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                fm.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
+                fm.addToBackStack(null);
+                fm.commit();
+            }
+        });
+    }
+
     private void abrirFragment(int posicion) {
         Fragment nuevoFragment = new SemanasFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
         Bundle bundle = new Bundle();

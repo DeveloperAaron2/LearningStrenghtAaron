@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20px"
+    android:orientation="vertical"
+    android:background="@drawable/fondorojo">
+
+    <TextView
+        android:id="@+id/textViewDiaAnhadir"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:lineSpacingExtra="12sp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"/>
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutSeriesRepsIntensidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200px"
+        android:orientation="vertical"
+        android:layout_margin="20px">
+
+        <EditText
+            android:id="@+id/editTextNombreEjercicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nombre Ejercicio"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:background="@color/white"
+            android:layout_marginBottom="40px"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextSeriesReps"
+                android:layout_width="276dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="Series x Reps ---> Intensidad"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                tools:ignore="TouchTargetSizeCheck"
+                />
+
+            <EditText
+
+                android:id="@+id/IntensidadText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/app_name"
+                android:inputType="number"
+                tools:ignore="TouchTargetSizeCheck"
+                android:background="@color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_marginTop="150px"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/Submit_Ejercicio"
+            android:layout_width="118dp"
+            android:layout_height="59dp"
+            android:minHeight="48dp"
+            android:text="Terminar" />
+
+    </LinearLayout>
+
+</LinearLayout>
