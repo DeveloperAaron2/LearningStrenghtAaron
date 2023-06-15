@@ -1,13 +1,16 @@
 package com.example.learningstrenghtaaron.usuario;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,13 +33,15 @@ public class EditarRmsActivity extends AppCompatActivity {
     private RecyclerView recyclerViewRms;
     private AdapterRms adapterRms;
     private Firestore firestore;
-    private Map<String, String> mapaRms;
+    private static Map<String, String> mapaRms;
     private Usuario usuario;
+    private static EditarRmsActivity editarRmsActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_rms);
+        editarRmsActivity = this;
         firestore = Firestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //Inicializamos la toolbar
@@ -44,12 +49,12 @@ public class EditarRmsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(item -> {
             usuario.setMapaRms(mapaRms);
-            firestore.insertarUsuario(usuario);
+            firestore.actualizarUsuario(usuario);
             return true;
         });
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
         //Inicializamos el recyclerView
-        recyclerViewRms = (RecyclerView) findViewById(R.id.rvEditarRms);
+        recyclerViewRms = findViewById(R.id.rvEditarRms);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerViewRms.setLayoutManager(layoutManager);
         //Inicializamos el adaptador
@@ -66,7 +71,6 @@ public class EditarRmsActivity extends AppCompatActivity {
             public void onItemClick(View v, int posicion) {
                 System.out.println("Click item: " + posicion);
             }
-
             @Override
             public void onLongItemClick(View v, int posicion) {
                 System.out.println("LongClick item: " + posicion);
@@ -94,15 +98,44 @@ public class EditarRmsActivity extends AppCompatActivity {
                         else if (etCantidad.getText().toString().isBlank()) etCantidad.setError("Nose");
                         else if (etSufijo.getText().toString().isBlank()) etSufijo.setError("Nose");
                         else mapaRms.put(etEjercicio.getText().toString().trim(), etCantidad.getText().toString().trim() + " " + etSufijo.getText().toString().trim());
-                        adapterRms.notifyItemInserted(mapaRms.size());
+                        refreshAdapter();
+                        Toast.makeText(EditarRmsActivity.this, "Nuevo Rm insertado", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 });
             }
         });
     }
+
+    public static void guardarRm(String ejercicio, String s) {
+        if (mapaRms.containsKey(ejercicio)) {
+            mapaRms.remove(ejercicio);
+            mapaRms.put(ejercicio, s);
+        } else {
+            mapaRms.put(ejercicio, s);
+        }
+        editarRmsActivity.refreshAdapter();
+    }
+    public static void eliminarRm(String ejercicio) {
+        mapaRms.remove(ejercicio);
+        editarRmsActivity.refreshAdapter();
+    }
+
+    private void refreshAdapter() {
+        adapterRms = new AdapterRms(mapaRms);
+        adapterRms.notifyDataSetChanged();
+        recyclerViewRms.setAdapter(adapterRms);
+    }
+
     @Override
     public boolean onSupportNavigateUp(){
         onBackPressed();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_rms_menu,menu);
         return true;
     }
 }

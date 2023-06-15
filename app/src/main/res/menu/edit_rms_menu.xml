@@ -5,6 +5,7 @@
     <item android:title="Editar"
         android:icon="@drawable/outline_check_24"
         android:id="@+id/CommitEditarRms"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:visible="true"/>
 
 </menu>

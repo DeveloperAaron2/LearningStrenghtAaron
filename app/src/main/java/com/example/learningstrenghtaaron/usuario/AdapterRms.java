@@ -3,6 +3,7 @@ package com.example.learningstrenghtaaron.usuario;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.learningstrenghtaaron.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Map;
 
@@ -19,12 +21,13 @@ public class AdapterRms extends RecyclerView.Adapter<AdapterRms.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtEj, txtSuf;
         private final EditText eTRm;
-
+        private final FloatingActionButton btnEliminar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtEj = itemView.findViewById(R.id.txtDescripcionRmsview);
             eTRm = itemView.findViewById(R.id.editTextNumeroRmsview);
             txtSuf = itemView.findViewById(R.id.txtSufijoRmsview);
+            btnEliminar = itemView.findViewById(R.id.btnEliminarRmsview);
         }
 
         public TextView getTxtEj() {
@@ -37,6 +40,10 @@ public class AdapterRms extends RecyclerView.Adapter<AdapterRms.ViewHolder> {
 
         public TextView getTxtSuf() {
             return txtSuf;
+        }
+
+        public FloatingActionButton getBtnEliminar() {
+            return btnEliminar;
         }
     }
 
@@ -60,6 +67,12 @@ public class AdapterRms extends RecyclerView.Adapter<AdapterRms.ViewHolder> {
         holder.getTxtEj().setText(ejercicio);
         holder.geteTRm().setText(rm);
         holder.getTxtSuf().setText(sufijo);
+        holder.geteTRm().setSelectAllOnFocus(true);
+        holder.geteTRm().setOnFocusChangeListener((view, b) -> {
+            String nuevoRm = holder.geteTRm().getText().toString().trim();
+            if (!b && !rm.equals(nuevoRm)) EditarRmsActivity.guardarRm(ejercicio, nuevoRm + " " + sufijo);
+        });
+        holder.getBtnEliminar().setOnClickListener(view -> EditarRmsActivity.eliminarRm(ejercicio));
     }
 
     @Override

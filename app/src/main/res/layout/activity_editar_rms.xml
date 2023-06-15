@@ -16,11 +16,12 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarEditarRms"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
             app:menu="@menu/edit_rms_menu"
             app:navigationIcon="?attr/actionModeCloseDrawable"
             app:title="Editar Rms"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"></androidx.appcompat.widget.Toolbar>
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
