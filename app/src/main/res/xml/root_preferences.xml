@@ -8,31 +8,12 @@
             android:title="Modo Oscuro"
             android:defaultValue="false"/>
         <ListPreference
-            android:key="listaTemas"
-            android:title="Cambiar Tema"
-            app:defaultValue="reply"
-            android:entries="@array/cambiar_tema"
-            app:entryValues="@array/cambiar_tema"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            android:key="listaLetra"
-            android:title="Cambiar tamaño de letra"
-            android:defaultValue="14"
-            android:entries="@array/tamanio_letra"
-            app:entryValues="@array/tamanio_letra"
-            app:useSimpleSummaryProvider="true" />
-        <SwitchPreference
-            android:key="switchSonidos"
-            android:title="Sonidos"
-            android:defaultValue="true" />
-        <ListPreference
             android:key="listaCalculadoras"
             android:title="Calculadora por defecto"
             android:defaultValue="Macros"
             android:entries="@array/calculadoras"
             app:dialogIcon="@drawable/baseline_calculate_24"
             app:entryValues="@array/calculadoras"
-            app:icon="@drawable/baseline_calculate_24"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>

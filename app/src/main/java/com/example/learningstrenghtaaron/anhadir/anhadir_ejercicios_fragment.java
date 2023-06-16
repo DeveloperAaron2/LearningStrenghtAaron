@@ -1,5 +1,4 @@
 package com.example.learningstrenghtaaron.anhadir;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.learningstrenghtaaron.adaptadores.AdapterAnhadirEjercicios;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
+import com.example.learningstrenghtaaron.adaptadores.AdapterAnhadirEjercicios;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -52,10 +52,10 @@ public class anhadir_ejercicios_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.anhadir_ejercicios, container, false);
-        recyclerViewAnhadirEjercicios = v.findViewById(R.id.recyclerviewAnhadirEjercicios);
-        btnanhadirEjercicio = v.findViewById(R.id.btnAnhadirEjercicio);
+        recyclerViewAnhadirEjercicios = (RecyclerView) v.findViewById(R.id.recyclerviewAnhadirEjercicios);
+        btnanhadirEjercicio = (FloatingActionButton) v.findViewById(R.id.btnAnhadirEjercicio);
         recyclerViewAnhadirEjercicios.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        Terminar = v.findViewById(R.id.buttonTerminarEjercicios);
+        Terminar = (Button) v.findViewById(R.id.buttonTerminarEjercicios);
         Bundle bundle = getArguments();
         nombreDia = bundle.getString("nombreDia").split(" ")[1];
         nombreSemana = bundle.getString("nombreSemana").split(" ")[1];
@@ -170,4 +170,3 @@ public class anhadir_ejercicios_fragment extends Fragment {
 
 
 }
-

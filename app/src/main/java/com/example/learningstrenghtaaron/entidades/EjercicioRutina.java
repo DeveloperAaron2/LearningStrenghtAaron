@@ -1,8 +1,9 @@
 package com.example.learningstrenghtaaron.entidades;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class EjercicioRutina {
+public class EjercicioRutina implements Serializable {
 
     private String NombreEjercicio;
     private String NombreRutina;

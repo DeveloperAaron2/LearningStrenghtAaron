@@ -32,8 +32,8 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
-    private SwitchPreference switchModoOscuro, switchSonido;
-    private ListPreference listaTemas, listaLetra, listaCalculadoras;
+    private SwitchPreference switchModoOscuro;
+    private ListPreference listaCalculadoras;
     private EditTextPreference etCambiarCorreo;
     private Preference dialogEliminarCuenta, cambiarPass;
     private Firestore firestore;
@@ -56,9 +56,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private void inicializarComponentes() {
         switchModoOscuro = findPreference("switchModoOscuro");
-        switchSonido = findPreference("switchSonidos");
-        listaTemas = findPreference("listaTemas");
-        listaLetra = findPreference("listaLetra");
         listaCalculadoras = findPreference("listaCalculadoras");
         etCambiarCorreo = findPreference("etCambiarCorreo");
         cambiarPass = findPreference("CambiarContrasenia");
@@ -82,56 +79,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     //recreate();
                 }
                 editor.apply();
-                return true;
-            }
-        });
-        //Activa o desactiva los sonidos al entrar a rutinas, etc
-        switchSonido.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(@NonNull Preference preference) {
-                if (switchSonido.isChecked()) {
-                    System.out.println("Activando sonidos");
-                } else {
-                    System.out.println("Desactivando sonidos");
-                }
-                return true;
-            }
-        });
-        listaTemas.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                switch ((String) newValue) {
-                    case "MaterialComponents":
-                        System.out.println("Tema MaterialComponents");
-                        //setTheme();
-                        break;
-                    case "Material3":
-                        System.out.println("Tema Material3");
-                        break;
-                    case "Verde":
-                        System.out.println("Tema Verde");
-                        break;
-                    case "LearningStrenght":
-                        System.out.println("Tema LearningStrenght");
-                        break;
-                }
-                return true;
-            }
-        });
-        listaLetra.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                switch (listaLetra.findIndexOfValue((String) newValue)) {
-                    case 0:
-                        System.out.println("Tamaño de letra pequeña");
-                        break;
-                    case 1:
-                        System.out.println("Tamaño de letra mediana");
-                        break;
-                    case 2:
-                        System.out.println("Tamaño de letra grande");
-                        break;
-                }
                 return true;
             }
         });
@@ -183,11 +130,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     String pass = input.getText().toString().trim();
                     AuthCredential credential = EmailAuthProvider.getCredential(mAuth.getCurrentUser().getEmail(), pass);
                     mAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener(task -> {
-                        if (!task.isSuccessful()) {
+                        if (task.isSuccessful()) {
+                            cambiarPassEmail();
+                        } else {
                             Toast.makeText(getContext(), "Contraseña erronea", Toast.LENGTH_SHORT).show();
                             cambiarPass.performClick();
-                        } else
-                            cambiarPassEmail();
+                        }
                     });
                 });
                 builder.setNegativeButton("No me acuerdo de la contraseña", (dialog, which) -> {
