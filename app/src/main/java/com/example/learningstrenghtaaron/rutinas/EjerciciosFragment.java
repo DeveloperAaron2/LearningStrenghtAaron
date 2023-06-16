@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.adaptadores.AdapterEjercicios;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.entidades.Rutina;
+import com.example.learningstrenghtaaron.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;

@@ -1,6 +1,9 @@
 package com.example.learningstrenghtaaron.anhadir;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -10,12 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.learningstrenghtaaron.adaptadores.AdapterAnhadirSemana;
-import com.example.learningstrenghtaaron.anhadir.anhadir_ejercicios_fragment;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

@@ -1,6 +1,5 @@
 package com.example.learningstrenghtaaron.adaptadores;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
-import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -86,7 +83,7 @@ public class AdapterEjercicios extends FirestoreRecyclerAdapter<EjercicioRutina,
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TableLayout tablaEjercicios;
+       private TableLayout tablaEjercicios;
 
 
         public ViewHolder(@NonNull View itemView) {

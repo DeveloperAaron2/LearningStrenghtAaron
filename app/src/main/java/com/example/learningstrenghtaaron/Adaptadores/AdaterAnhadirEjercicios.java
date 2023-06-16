@@ -11,19 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
+import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class AdapterAnhadirEjercicios extends RecyclerView.Adapter<AdapterAnhadirEjercicios.ViewHolder> {
+public class AdaterAnhadirEjercicios extends RecyclerView.Adapter<AdaterAnhadirEjercicios.ViewHolder> {
 
     private ArrayList<EjercicioRutina> elementos;
 
-    public AdapterAnhadirEjercicios() {
+    public AdaterAnhadirEjercicios() {
         this.elementos = new ArrayList<>();
 
     }
-    public AdapterAnhadirEjercicios(ArrayList<EjercicioRutina> elementos) {
+    public AdaterAnhadirEjercicios(ArrayList<EjercicioRutina> elementos) {
         this.elementos = elementos;
 
     }
@@ -36,16 +37,16 @@ public class AdapterAnhadirEjercicios extends RecyclerView.Adapter<AdapterAnhadi
     }
 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        for (Map.Entry<String, Integer> entry : elementos.get(position).getSeriesReps().entrySet()) {
-            View registro = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.tablerow, null, false);
-            TextView nombreEjercicio = (TextView) registro.findViewById(R.id.nombreEjercicioRow);
-            TextView seriesReps = (TextView) registro.findViewById(R.id.seriesRepsRow);
-            TextView intensidad = (TextView) registro.findViewById(R.id.intensidadRow);
-            nombreEjercicio.setText(elementos.get(position).getNombreEjercicio());
-            seriesReps.setText(entry.getKey());
-            intensidad.setText(entry.getValue() + "%");
-            holder.tablaEjercicios.addView(registro);
-        }
+            for (Map.Entry<String, Integer> entry : elementos.get(position).getSeriesReps().entrySet()) {
+                View registro = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.tablerow, null, false);
+                TextView nombreEjercicio = (TextView) registro.findViewById(R.id.nombreEjercicioRow);
+                TextView seriesReps = (TextView) registro.findViewById(R.id.seriesRepsRow);
+                TextView intensidad = (TextView) registro.findViewById(R.id.intensidadRow);
+                nombreEjercicio.setText(elementos.get(position).getNombreEjercicio());
+                seriesReps.setText(entry.getKey());
+                intensidad.setText(entry.getValue() + "%");
+                holder.tablaEjercicios.addView(registro);
+            }
 
     }
 

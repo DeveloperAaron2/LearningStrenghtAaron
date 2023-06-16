@@ -36,8 +36,21 @@
         android:gravity="center_vertical"
         android:text="kg"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnEditarRmsview"
         app:layout_constraintStart_toEndOf="@+id/editTextNumeroRmsview"
         app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnEditarRmsview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnEliminarRmsview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/outline_check_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnEliminarRmsview"

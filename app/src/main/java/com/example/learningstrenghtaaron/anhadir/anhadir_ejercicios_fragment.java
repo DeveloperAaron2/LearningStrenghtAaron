@@ -1,4 +1,5 @@
 package com.example.learningstrenghtaaron.anhadir;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.learningstrenghtaaron.adaptadores.AdapterAnhadirEjercicios;
+import com.example.learningstrenghtaaron.adaptadores.AdaterAnhadirEjercicios;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
-import com.example.learningstrenghtaaron.adaptadores.AdapterAnhadirEjercicios;
-import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class anhadir_ejercicios_fragment extends Fragment {
 
     private FloatingActionButton btnanhadirEjercicio;
     private ArrayList<EjercicioRutina> ejercicioRutinas;
-    private AdapterAnhadirEjercicios adaterAnhadirEjercicios;
+    private AdaterAnhadirEjercicios adaterAnhadirEjercicios;
 
     private anhadir_ejercicios_fragment controller;
     private Button Terminar;
@@ -68,7 +67,7 @@ public class anhadir_ejercicios_fragment extends Fragment {
                 if(elementoEnviado.equals(nombreSemana + " " + nombreDia)){
                     estaYaCreado=true;
                     System.out.println("esto no sale pq está vacío pringao");
-                    adaterAnhadirEjercicios = new AdapterAnhadirEjercicios(elementosEnviados.get(elementoEnviado));
+                    adaterAnhadirEjercicios = new AdaterAnhadirEjercicios(elementosEnviados.get(elementoEnviado));
                     for (EjercicioRutina ejercicioRutina : elementosEnviados.get(elementoEnviado)) {
                         System.out.println(ejercicioRutina);
                     }
@@ -77,7 +76,7 @@ public class anhadir_ejercicios_fragment extends Fragment {
             }
         }
         if(!estaYaCreado)
-            adaterAnhadirEjercicios = new AdapterAnhadirEjercicios();
+            adaterAnhadirEjercicios = new AdaterAnhadirEjercicios();
         ejercicioRutinas= adaterAnhadirEjercicios.getElementos();
         recyclerViewAnhadirEjercicios.setAdapter(adaterAnhadirEjercicios);
         adaterAnhadirEjercicios.notifyDataSetChanged();

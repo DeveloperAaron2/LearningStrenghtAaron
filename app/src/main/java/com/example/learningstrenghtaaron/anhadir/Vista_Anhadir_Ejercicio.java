@@ -12,11 +12,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.learningstrenghtaaron.anhadir.anhadir_ejercicios_fragment;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
-import com.example.learningstrenghtaaron.anhadir.anhadir_ejercicios_fragment;
-import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,15 +69,15 @@ public class Vista_Anhadir_Ejercicio extends Fragment {
                             (int)numeroSemana,
                             seriesRespIntensidad);
 
-                    boolean existe = false;
-                    for (EjercicioRutina rutina : ejercicioRutinas) {
-                        if(rutina.getNombreEjercicio().equals(ejercicioRutina.getNombreEjercicio())){
-                            rutina.getSeriesReps().put(editTextSeriesReps.getText().toString(),Integer.parseInt(editTextIntensidad.getText().toString()));
-                            existe=true;
+                        boolean existe = false;
+                        for (EjercicioRutina rutina : ejercicioRutinas) {
+                            if(rutina.getNombreEjercicio().equals(ejercicioRutina.getNombreEjercicio())){
+                                rutina.getSeriesReps().put(editTextSeriesReps.getText().toString(),Integer.parseInt(editTextIntensidad.getText().toString()));
+                                existe=true;
+                            }
                         }
-                    }
-                    if(!existe)
-                        ejercicioRutinas.add(ejercicioRutina);
+                        if(!existe)
+                            ejercicioRutinas.add(ejercicioRutina);
 
                     FragmentManager fragmentManager = getParentFragmentManager(); // O getFragmentManager() si estás en una actividad
                     Bundle bundle2 = new Bundle();

@@ -48,7 +48,7 @@ public class EditarRmsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarEditarRms);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(item -> {
-            usuario.setMapaRms(mapaRms);
+            usuario.setMapaRms(adapterRms.getMapaRms());
             firestore.actualizarUsuario(usuario);
             return true;
         });

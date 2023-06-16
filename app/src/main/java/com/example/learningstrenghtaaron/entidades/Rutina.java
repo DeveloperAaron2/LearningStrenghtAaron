@@ -12,6 +12,8 @@ public class Rutina implements Serializable {
 
     private String acceso;
 
+
+
     public Rutina(){}
     public Rutina(String nombreRutina, String tipoRutina, String creador,String acceso) {
         this.nombreRutina = nombreRutina;

@@ -91,6 +91,9 @@ public class PantallaPrincipal extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment fragment) {
+        Bundle bundle = new Bundle();
+        bundle.putString("Tipo","Rutinas");
+        fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutPantallaPrincipal, fragment);

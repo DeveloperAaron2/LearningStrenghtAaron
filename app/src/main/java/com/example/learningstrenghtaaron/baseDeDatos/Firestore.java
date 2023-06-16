@@ -27,14 +27,25 @@ import java.util.Map;
 
 public class Firestore {
     private Usuario usuario;
-//    private FirebaseAuth auth;
+    private FirebaseAuth auth;
     private FirebaseFirestore firestore;
 
     static private Firestore INSTANCIA;
 
     private Firestore() {
-//        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+    }
+    public FirebaseAuth getAuth() {
+        return auth;
+    }
+
+    public FirebaseFirestore getFirestore() {
+        return firestore;
+    }
+
+    public static Firestore getINSTANCIA() {
+        return INSTANCIA;
     }
 
     static public Firestore getInstance() {
