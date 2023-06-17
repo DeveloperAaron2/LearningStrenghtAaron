@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.anhadir;
+package com.example.learningstrenghtaaron.Anhadir;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
+import com.example.learningstrenghtaaron.Anhadir.anhadir_ejercicios_fragment;
+import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
 
 import java.util.ArrayList;
