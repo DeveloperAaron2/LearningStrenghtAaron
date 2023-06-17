@@ -1,6 +1,7 @@
 package com.example.learningstrenghtaaron.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Rutina implements Serializable {
 

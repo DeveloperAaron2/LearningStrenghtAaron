@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.adaptadores;
+package com.example.learningstrenghtaaron.Adaptadores;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
+import com.example.learningstrenghtaaron.Entidades.Ejercicio;
+import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
-import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 
+import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Map;
 

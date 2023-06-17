@@ -8,36 +8,26 @@
     tools:context=".rutinas.RutinasFragment"
     android:background="@drawable/pantallaprincipal">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecyclerRutinas"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnAñadirRutinaFragmentRutinas"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="518dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAñadirRutinaFragmentRutinas"
+            android:id="@+id/btnAñadirRutina"
             android:layout_width="67dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:clickable="true"
             android:contentDescription="@string/app_name"
-            android:src="@android:drawable/ic_input_add"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:src="@android:drawable/ic_input_add" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </FrameLayout>

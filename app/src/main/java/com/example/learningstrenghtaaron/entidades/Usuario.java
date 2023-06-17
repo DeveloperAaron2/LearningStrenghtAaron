@@ -1,4 +1,10 @@
-package com.example.learningstrenghtaaron.entidades;
+package com.example.learningstrenghtaaron.Entidades;
+
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -31,6 +37,7 @@ public class Usuario implements Serializable {
         this.mapaRms = mapaRms;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public Usuario(Map<String, Object> datosUsuario) {
         if (datosUsuario != null) {
             this.id = (String) datosUsuario.getOrDefault("Id", "");
@@ -41,8 +48,8 @@ public class Usuario implements Serializable {
             this.deporte = (String) datosUsuario.getOrDefault("Deporte", "");
 /*            this.peso = Long.parseLong(String.valueOf(datosUsuario.getOrDefault("Peso", 0)));
             this.altura = Long.parseLong(String.valueOf(datosUsuario.getOrDefault("Altura", 0)));*/
-            this.peso = (Long) datosUsuario.getOrDefault("Peso", 0);
-            this.altura = (Long) datosUsuario.getOrDefault("Altura", 0);
+            this.peso = Long.parseLong((String) datosUsuario.get("Peso"));
+            this.altura = Long.parseLong((String) datosUsuario.get("Altura"));
             this.mapaRms = (Map<String, String>) datosUsuario.getOrDefault("MapaRms", new HashMap<String, String>());
         }
     }

@@ -2,9 +2,11 @@ package com.example.learningstrenghtaaron.baseDeDatos;
 
 import static android.content.ContentValues.TAG;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.learningstrenghtaaron.entidades.Ejercicio;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
@@ -36,6 +38,18 @@ public class Firestore {
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
     }
+    public FirebaseAuth getAuth() {
+        return auth;
+    }
+
+    public FirebaseFirestore getFirestore() {
+        return firestore;
+    }
+
+    public static Firestore getINSTANCIA() {
+        return INSTANCIA;
+    }
+
     public FirebaseAuth getAuth() {
         return auth;
     }
@@ -148,6 +162,7 @@ public class Firestore {
         return usuario;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public Usuario getUsuario(String uid) {
         firestore.collection("Usuario")
                 .document(uid)

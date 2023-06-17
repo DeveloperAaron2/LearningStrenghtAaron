@@ -18,7 +18,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecyclerSemanas"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingLeft="20px"
+            android:paddingTop="50px"
+            android:paddingRight="20px" />
     </LinearLayout>
 
 </FrameLayout>

@@ -2,19 +2,20 @@ package com.example.learningstrenghtaaron.rutinas;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.learningstrenghtaaron.adaptadores.AdapterRutinas;
-import com.example.learningstrenghtaaron.anhadir.anhadir_semanas_fragment;
-import com.example.learningstrenghtaaron.entidades.Rutina;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.learningstrenghtaaron.Adaptadores.AdapterRutinas;
+import com.example.learningstrenghtaaron.Entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
+import com.example.learningstrenghtaaron.Anhadir.anhadir_semanas_fragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,7 +51,7 @@ public class RutinasFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_rutinas, container, false);
         //Relacionado Con RecyclerView
         recyclerViewRutinas = (RecyclerView) view.findViewById(R.id.RecyclerRutinas);
-        btnAñadirRutina = (FloatingActionButton) view.findViewById(R.id.btnAñadirRutinaFragmentRutinas);
+        btnAñadirRutina = (FloatingActionButton) view.findViewById(R.id.btnAñadirRutina);
         CreaRecyclerView(view);
         AñadirRutina();
         mp= MediaPlayer.create(requireContext(), R.raw.kyriakosgrizzly);

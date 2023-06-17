@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
+        android:background="@color/black"
         android:layout_marginBottom="20px"/>
 
     <TextView
@@ -30,6 +31,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
+        android:background="@color/black"
         android:layout_marginBottom="20px"
         />
 
@@ -39,7 +41,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        android:background="@color/black"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnMenuFragmentRutinas"
@@ -48,7 +51,6 @@
         android:contentDescription="@string/boton_menu"
         android:src="@drawable/baseline_more_vert_24"
         app:elevation="0dp"
-        android:backgroundTint="@color/transparent"
         app:fabCustomSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

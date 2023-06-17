@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "338335592458",
+    "project_id": "learningstrenght",
+    "storage_bucket": "learningstrenght.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338335592458:android:bbd25e057f68253f62aff3",
+        "android_client_info": {
+          "package_name": "com.example.firebasels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338335592458-8vagtoi0eq7e377uiq333ooitmguc674.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIGnyu4Vo4xMAmN-MWNmBKDynPpoGAuSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338335592458-8vagtoi0eq7e377uiq333ooitmguc674.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338335592458:android:b5af65a62010440462aff3",
+        "android_client_info": {
+          "package_name": "com.example.learningstrenght"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338335592458-8vagtoi0eq7e377uiq333ooitmguc674.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIGnyu4Vo4xMAmN-MWNmBKDynPpoGAuSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338335592458-8vagtoi0eq7e377uiq333ooitmguc674.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338335592458:android:1d00b105a0b7fc7f62aff3",
+        "android_client_info": {
+          "package_name": "com.example.learningstrenghtaaron"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338335592458-8vagtoi0eq7e377uiq333ooitmguc674.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIGnyu4Vo4xMAmN-MWNmBKDynPpoGAuSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338335592458-8vagtoi0eq7e377uiq333ooitmguc674.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338335592458:android:3d55b70d8c458b0162aff3",
+        "android_client_info": {
+          "package_name": "com.example.learningstrenghtfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338335592458-8vagtoi0eq7e377uiq333ooitmguc674.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIGnyu4Vo4xMAmN-MWNmBKDynPpoGAuSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338335592458-8vagtoi0eq7e377uiq333ooitmguc674.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

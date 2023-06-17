@@ -1,34 +1,48 @@
-package com.example.learningstrenghtaaron.adaptadores;
+package com.example.learningstrenghtaaron.Adaptadores;
 
+import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
-import com.example.learningstrenghtaaron.entidades.Rutina;
+
+import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
+import com.example.learningstrenghtaaron.Entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
-import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
-import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.example.learningstrenghtaaron.rutinas.RutinasFragment;
+import com.example.learningstrenghtaaron.rutinas.SemanasDiasFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.SuccessContinuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 
 public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRutinas.ViewHolder>{
@@ -106,6 +120,7 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
     }
 
     private void TieneLaRutina(Rutina model, View view) {
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DocumentReference docRef = firestore.getFirestore().collection("Rutina").document(model.getNombreRutina());
         Task<DocumentSnapshot> document = docRef.get();

@@ -1,13 +1,13 @@
 package com.example.learningstrenghtaaron.usuario;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatDelegate;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,12 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import com.example.learningstrenghtaaron.ajustes.SettingsActivity;
-import com.example.learningstrenghtaaron.ajustes.SettingsFragment;
-import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
-import com.example.learningstrenghtaaron.entidades.Usuario;
+import com.example.learningstrenghtaaron.BaseDeDatos.Firestore;
+import com.example.learningstrenghtaaron.Entidades.Usuario;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.login.MainActivity;
+import com.example.learningstrenghtaaron.rutinas.RutinasFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
@@ -35,37 +34,44 @@ public class PerfilUsuarioFragment extends Fragment {
     private FloatingActionButton btnMenu;
     private MaterialTextView txtUsuario, txtDeporte, txtCorreo, txtFechaNac, txtPeso, txtAltura, txtRms;
     private Firestore firestore;
-    private Usuario usuario;
 
-    public PerfilUsuarioFragment() {
-    }
-
-    public PerfilUsuarioFragment(Usuario usuario) {
-        this.usuario = usuario;
-    }
+    private FirebaseUser user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil_usuario, container, false);
+        user = FirebaseAuth.getInstance().getCurrentUser();
         firestore = Firestore.getInstance();
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SettingsFragment.mPrefsName, MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("switchModoOscuro", false)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         inicializarComponentes(view);
 
-        ponerDatos();
+        ponerDatos(user);
 
         btnMenu.setOnClickListener(view1 -> showMenu(view1, R.menu.fragment_perfil_usuario_menu));
 
         return view;
     }
 
-    private void ponerDatos() {
+/*    private void ponerDatos(FirebaseUser user) {
+        if (user.getDisplayName().isBlank()) txtUsuario.setText("Pancho");
+        else txtUsuario.setText(user.getDisplayName());
+        txtNombre.setText("RevientaAbuelas69");
+        txtCorreo.setText(user.getEmail());
+        txtFechaNac.setText(user.getMetadata().toString());
+        txtPeso.setText("Curvado");
+        txtAltura.setText("Enano");
+    }*/
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void ponerDatos(FirebaseUser user) {
+        Usuario usuario = firestore.getUsuario(user.getUid());
+
         if (usuario != null) {
             txtUsuario.setText(usuario.getUsuario() == null ? "" : "Usuario: " + usuario.getUsuario());
             txtDeporte.setText(usuario.getDeporte() == null ? "" : "Deporte: " + usuario.getDeporte());
@@ -91,15 +97,22 @@ public class PerfilUsuarioFragment extends Fragment {
                         startActivity(new Intent(getContext(), PerfilUsuarioActivity.class));
                         break;
                     case R.id.EditarRms:
-                        //Toast.makeText(getContext(), "No estas listo para eso", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getContext(), EditarRmsActivity.class));
+                        Toast.makeText(getContext(), "No estas listo para eso", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.MisRutinas:
-                        //
+                        Fragment nuevoFragment = new RutinasFragment();// Reemplaza "NuevoFragment" con el nombre de tu clase de Fragment
+                        Bundle bundle = new Bundle();
+                        bundle.putString("Tipo","MisRutinas");
+                        bundle.putString("IdUsuario", user.getUid());
+                        System.out.println((String) txtUsuario.getText());
+                        nuevoFragment.setArguments(bundle);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
+                        fragmentTransaction.commit();
                         break;
                     case R.id.Ajustes:
-                        //Toast.makeText(getContext(), "Aqui no se puede entrar", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getContext(), SettingsActivity.class));
+                        Toast.makeText(getContext(), "Aqui no se puede entrar", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.LogOut:
                         FirebaseAuth.getInstance().signOut();
