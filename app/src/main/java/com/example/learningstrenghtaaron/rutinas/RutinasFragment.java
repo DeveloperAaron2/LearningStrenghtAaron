@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,6 +56,12 @@ public class RutinasFragment extends Fragment {
         CreaRecyclerView(view);
         AñadirRutina();
         mp= MediaPlayer.create(requireContext(), R.raw.kyriakosgrizzly);
+        requireActivity().getSupportFragmentManager().setFragmentResultListener("FinAnhadir", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                adapterRutinas.notifyDataSetChanged();
+            }
+        });
         return view;
     }
 

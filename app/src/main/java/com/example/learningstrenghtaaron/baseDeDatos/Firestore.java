@@ -67,10 +67,14 @@ public class Firestore {
         });
     }
 
-    public void InsertarRutina(Rutina rutina, ArrayList<EjercicioRutina> ejercicioRutina) {
-        HashMap<String, String> tiporutina = new HashMap<>();
-        tiporutina.put("TipoRutina", rutina.getTipoRutina());
-        firestore.collection("Rutina").document(rutina.getNombreRutina()).set(tiporutina).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public void InsertarRutina(Rutina rutina) {
+        HashMap<String, String> datos = new HashMap<>();
+        datos.put("tipoRutina", rutina.getTipoRutina());
+        datos.put("nombreRutina",rutina.getNombreRutina());
+        datos.put("acceso",rutina.getAcceso());
+        datos.put("creador",rutina.getCreador());
+
+        firestore.collection("Rutina").document(rutina.getNombreRutina()).set(datos).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 System.out.println(task + "añadido correctamente");
@@ -81,6 +85,9 @@ public class Firestore {
                 System.out.println("error al añadir: " + e.toString());
             }
         });
+
+    }
+    public void InsertarEjerciciosRutina(ArrayList<EjercicioRutina> ejercicioRutina){
         for (EjercicioRutina ejercicioRutina1 : ejercicioRutina) {
             HashMap<String,Object> ejercicios = new HashMap<>();
             ejercicios.put("NombreEjercicio",ejercicioRutina1.getNombreEjercicio());
