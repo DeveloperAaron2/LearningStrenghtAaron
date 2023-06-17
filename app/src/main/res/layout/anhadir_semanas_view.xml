@@ -4,10 +4,11 @@
     android:layout_height="50dp"
     android:layout_marginTop="30px"
     android:layout_marginBottom="30px"
-    android:background="@drawable/semana">
+    android:background="@drawable/semana"
+    >
 
     <TextView
-        android:id="@+id/AnhadirNombreSemana"
+        android:id="@+id/NombreSemanaAnhadir"
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

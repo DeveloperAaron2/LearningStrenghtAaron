@@ -81,7 +81,7 @@ public class AdapterAnhadirSemana extends RecyclerView.Adapter<AdapterAnhadirSem
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            nombreSemana = itemView.findViewById(R.id.AnhadirNombreSemana);
+            nombreSemana = itemView.findViewById(R.id.NombreSemanaAnhadir);
             this.spinnerDias = itemView.findViewById(R.id.spinnerDias);
 
         }

@@ -84,7 +84,8 @@ public class Terminar_Anhadir extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getParentFragmentManager();
-                String creador = firestore.getUsuario(firestore.getAuth().getCurrentUser().getUid()).getUsuario();
+                String creador = firestore.getUsuario().getUsuario();
+                System.out.println(creador);
                 bundle.putSerializable("RutinaAnhadida",new Rutina(nombreRutina.getText().toString(),tipoRutinaterminar,creador,publicaPrivada));
                 requireActivity().getSupportFragmentManager().setFragmentResult("Fin",bundle);
                 fragmentManager.popBackStack();

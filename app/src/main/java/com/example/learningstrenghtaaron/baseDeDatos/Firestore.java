@@ -95,7 +95,7 @@ public class Firestore {
             ejercicios.put("NumeroDia",ejercicioRutina1.getNumeroDia());
             ejercicios.put("NumeroSemana",ejercicioRutina1.getNumeroSemana());
             ejercicios.put("SeriesReps",ejercicioRutina1.getSeriesReps());
-            firestore.collection("EjerciciosRutina").add(ejercicios).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            firestore.collection("EjercicioRutina").add(ejercicios).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     System.out.println("ejercicio: " + documentReference.toString() + " añadido con éxito");

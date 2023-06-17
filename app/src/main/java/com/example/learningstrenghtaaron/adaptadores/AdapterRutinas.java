@@ -1,5 +1,6 @@
 package com.example.learningstrenghtaaron.adaptadores;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +58,7 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
      * @param model    the model object containing the data that should be used to populate the view.
      */
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Rutina model) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Rutina model) {
         holder.nombreRutina.setText("Nombre Rutina:  " + model.getNombreRutina());
         holder.tipoRutina.setText("Tipo Rutina:  " + model.getTipoRutina());
         holder.creador.setText("Creador:  " + model.getCreador());

@@ -71,7 +71,7 @@ public class AdapterSemanasDias extends RecyclerView.Adapter<AdapterSemanasDias.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            nombreSemana = itemView.findViewById(R.id.nombreSemana);
+            nombreSemana = itemView.findViewById(R.id.NombreSemana);
 
         }
     }
