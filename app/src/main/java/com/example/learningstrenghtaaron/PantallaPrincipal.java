@@ -4,7 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -53,6 +55,17 @@ public class PantallaPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityPantallaPrincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //Inicializamos la vista acorde al ancho de pantalla
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        float dp = metrics.widthPixels / (metrics.xdpi / 160);
+        if (dp >= 600) {
+            System.out.println("Pantalla tablet");
+        } else {
+            System.out.println("Pantalla movil");
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         mAuth = FirebaseAuth.getInstance();
         firestore = Firestore.getInstance();
         if (mAuth.getCurrentUser() != null) recogerUsuario(mAuth.getCurrentUser().getUid());
@@ -76,7 +89,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                     if (viewPager.getVisibility() == View.GONE) viewPager.setVisibility(View.VISIBLE);
                     break;
                 case R.id.Perfil:
-                    if (mAuth.getCurrentUser().isAnonymous()) {
+                    if (mAuth.getCurrentUser() == null || mAuth.getCurrentUser().isAnonymous()) {
                         startActivity(new Intent(PantallaPrincipal.this, MainActivity.class));
                     } else {
                         replaceFragment(new PerfilUsuarioFragment(firestore.getUsuario()));

@@ -58,9 +58,9 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
      */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Rutina model) {
-        holder.nombreRutina.setText("Nombre Rutina:  " + model.getNombreRutina());
-        holder.tipoRutina.setText("Tipo Rutina:  " + model.getTipoRutina());
-        holder.creador.setText("Creador:  " + model.getCreador());
+        holder.nombreRutina.setText(model.getNombreRutina());
+        holder.tipoRutina.setText(model.getTipoRutina());
+        holder.creador.setText(model.getCreador());
         if(model.getTipoRutina().equals("Fuerza")) {
             holder.icono.setImageResource(R.drawable.rutinafuerzalogo);
         } else if (model.getTipoRutina().equals("Hipertrofia")) {

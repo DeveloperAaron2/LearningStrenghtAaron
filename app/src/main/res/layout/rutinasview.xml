@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/iconoR"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="20px"
-    android:paddingTop="50px"
-    android:paddingRight="20px">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iconoRutina"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="94dp"
-        android:layout_marginBottom="20px"
-        app:srcCompat="@drawable/hipertrofiaicono" />
+        app:layout_constraintEnd_toStartOf="@+id/btnMenuFragmentRutinas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nombreRutina"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:layout_marginBottom="20px"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iconoRutina" />
 
     <TextView
         android:id="@+id/TipoRutina"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
+        android:layout_marginEnd="8dp"
         android:textColor="#FFFFFF"
-        android:layout_marginBottom="20px"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iconoRutina" />
 
     <TextView
         android:id="@+id/CreadorRutina"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TipoRutina" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnMenuFragmentRutinas"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/transparent"
         android:contentDescription="@string/boton_menu"
         android:src="@drawable/baseline_more_vert_24"
         app:elevation="0dp"
-        android:backgroundTint="@color/transparent"
-        app:fabCustomSize="40dp"
+        app:fabCustomSize="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
