@@ -1,4 +1,4 @@
-package com.example.learningstrenghtaaron.anhadir;
+package com.example.learningstrenghtaaron.Anhadir;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.learningstrenghtaaron.adaptadores.AdaterAnhadirEjercicios;
-import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
+import com.example.learningstrenghtaaron.Adaptadores.AdaterAnhadirEjercicios;
+import com.example.learningstrenghtaaron.Entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
