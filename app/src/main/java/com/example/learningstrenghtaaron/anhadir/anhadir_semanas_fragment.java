@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.learningstrenghtaaron.adaptadores.AdapterAnhadirSemana;
+import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
 import com.example.learningstrenghtaaron.R;
+import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -32,7 +35,13 @@ public class anhadir_semanas_fragment extends Fragment {
 
     private FloatingActionButton btnAnhadirSemana;
 
+    private Button btnabrirTerminar;
+
     private HashMap<String,ArrayList<EjercicioRutina>> todosLosEjercicios;
+    private ArrayList semanasAnhadidas;
+
+    private Firestore firestore;
+
 
     public anhadir_semanas_fragment() {
         // Required empty public constructor
@@ -54,10 +63,11 @@ public class anhadir_semanas_fragment extends Fragment {
         adapterAnhadirSemana = new AdapterAnhadirSemana(this);
         recyclerViewAnhadirSemanas.setAdapter(adapterAnhadirSemana);
         adapterAnhadirSemana.notifyDataSetChanged();
-
+        firestore = Firestore.getInstance();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callbackmethod);
         itemTouchHelper.attachToRecyclerView(recyclerViewAnhadirSemanas);
         btnAnhadirSemana = (FloatingActionButton) v.findViewById(R.id.btnAnhadirSemana);
+        btnabrirTerminar = (Button) v.findViewById(R.id.buttonAbrirTerminar);
         todosLosEjercicios = new HashMap<>();
         btnAnhadirSemana.setOnClickListener(v1 -> {
             ArrayList<String> semanas = adapterAnhadirSemana.getElementos();
@@ -65,14 +75,44 @@ public class anhadir_semanas_fragment extends Fragment {
             adapterAnhadirSemana.setElementos(semanas);
             adapterAnhadirSemana.notifyDataSetChanged();
         });
+        btnabrirTerminar.setOnClickListener(v12 -> {
+           Bundle bundleAntesDeTerminar= new Bundle();
+           bundleAntesDeTerminar.putSerializable("SemanasAnhadidasFinal",semanasAnhadidas);
+           bundleAntesDeTerminar.putSerializable("HasMapFinal",todosLosEjercicios);
+           Fragment Terminar = new Terminar_Anhadir();
+           Terminar.setArguments(bundleAntesDeTerminar);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fm = fragmentManager.beginTransaction();
+            fm.replace(R.id.frameLayoutPantallaPrincipal, Terminar);
+            fm.addToBackStack(null);
+            fm.commit();
+        });
         requireActivity().getSupportFragmentManager().setFragmentResultListener("TodosAñadidos", this, (requestKey, result) -> {
 
-            ArrayList semanasAnhadidas = (ArrayList) result.getSerializable("Semanas");
-            System.out.println(semanasAnhadidas.size());
+            semanasAnhadidas = (ArrayList) result.getSerializable("Semanas");
             adapterAnhadirSemana.setElementos(semanasAnhadidas);
             todosLosEjercicios = (HashMap<String, ArrayList<EjercicioRutina>>) result.getSerializable("HasMapLleno");
             adapterAnhadirSemana.notifyDataSetChanged();
         });
+        requireActivity().getSupportFragmentManager().setFragmentResultListener("Fin", this, (requestKey, result) -> {
+            semanasAnhadidas = (ArrayList) result.getSerializable("Semanas");
+            adapterAnhadirSemana.setElementos(semanasAnhadidas);
+            Rutina rutina = (Rutina) result.getSerializable("RutinaAnhadida");
+            todosLosEjercicios = (HashMap<String, ArrayList<EjercicioRutina>>) result.getSerializable("HasMapFinal");
+            adapterAnhadirSemana.notifyDataSetChanged();
+            for(ArrayList<EjercicioRutina> ejercicioRutinas : todosLosEjercicios.values()){
+                for (EjercicioRutina ejercicioRutina : ejercicioRutinas) {
+                    ejercicioRutina.setNombreRutina(rutina.getNombreRutina());
+                }
+                firestore.InsertarEjerciciosRutina(ejercicioRutinas);
+            }
+            firestore.InsertarRutina(rutina);
+            firestore.InsertarUsuarioEnRutina(rutina.getNombreRutina());
+            requireActivity().getSupportFragmentManager().setFragmentResult("FinAnhadir",null);
+            FragmentManager fm = getParentFragmentManager();
+            fm.popBackStack();
+        });
+
         return v;
     }
     public void CambiarFragment(int position,String nombreSemana){

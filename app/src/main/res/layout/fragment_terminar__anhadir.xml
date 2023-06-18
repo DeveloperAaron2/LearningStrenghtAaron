@@ -2,11 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/switchTipoRutina"
+    android:id="@+id/FrameLayoutTerminar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondorojo"
-    tools:context=".Anhadir.Terminar_Anhadir">
+    tools:context=".anhadir.Terminar_Anhadir">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/iconoTerminar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="258dp"
             android:src="@drawable/hipertrofiaicono" />
 
         <TextView

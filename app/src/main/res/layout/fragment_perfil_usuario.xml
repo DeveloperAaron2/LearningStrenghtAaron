@@ -5,9 +5,11 @@
     android:id="@+id/linearLayoutFragmentPerfilUsuario"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondorojo"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".usuario.PerfilUsuarioFragment"
-    android:orientation="vertical">
+    tools:context=".usuario.PerfilUsuarioFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,21 +24,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/fotoFragmentPerfilUsuario"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:contentDescription="@string/foto_de_perfil_del_usuario"
-                    android:padding="4dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/roundedImageViewrounded"
-                    app:srcCompat="@drawable/cbumperro"
-                    app:strokeColor="@color/black"
-                    app:strokeWidth="0dp" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/fotoFragmentPerfilUsuario"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:contentDescription="@string/foto_de_perfil_del_usuario"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedImageViewrounded"
+            app:srcCompat="@drawable/cbumperro"
+            app:strokeColor="@color/white"
+            app:strokeWidth="0dp" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnMenuFragmentPerfilUsuario"
@@ -60,13 +62,14 @@
                 android:background="?android:attr/listDivider" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tilNombreUsuarioFragmentPerfilUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/nombre_de_usuario"
-                android:textSize="20sp"
-                app:startIconDrawable="@drawable/baseline_alternate_email_24" />
+        android:id="@+id/tilNombreUsuarioFragmentPerfilUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/nombre_de_usuario"
+        android:textSize="20sp"
+        app:startIconDrawable="@drawable/baseline_alternate_email_24"
+        android:textColor="#FFFF"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tilFechaNacFragmentPerfilusuario"
@@ -75,6 +78,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="@string/fecha_de_nacimiento"
                 android:textSize="20sp"
+                android:textColor="#FFFF"
                 app:startIconDrawable="@drawable/baseline_calendar_today_24" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -84,6 +88,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="@string/email"
                 android:textSize="20sp"
+                android:textColor="#FFFF"
                 app:startIconDrawable="@drawable/baseline_mail_outline_24" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -93,15 +98,9 @@
                 android:layout_marginBottom="8dp"
                 android:text="Deporte"
                 android:textSize="20sp"
+                android:textColor="#FFFF"
                 app:startIconDrawable="@drawable/baseline_person_outline_24" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtRmsFragmentPerfilUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Rms:\n"
-                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,7 +116,8 @@
                     android:layout_weight="1"
                     android:text="@string/altura"
                     android:textSize="20sp"
-                    app:suffixText=" cm" />
+                    app:suffixText=" cm"
+                    android:textColor="#FFFF" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tilAlturaFragmentPerfilusuario"
@@ -127,10 +127,21 @@
                     android:layout_weight="1"
                     android:text="@string/peso"
                     android:textSize="20sp"
-                    app:suffixText=" kg" />
+                    app:suffixText=" kg"
+                    android:textColor="#FFFF" />
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtRmsFragmentPerfilUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Rms:\n"
+        android:textSize="20sp"
+        android:textColor="#FFFF"/>
 
 </LinearLayout>

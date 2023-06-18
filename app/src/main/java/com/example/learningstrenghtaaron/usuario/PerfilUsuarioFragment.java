@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.entidades.Usuario;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.login.MainActivity;
+import com.example.learningstrenghtaaron.rutinas.RutinasFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
@@ -95,7 +98,14 @@ public class PerfilUsuarioFragment extends Fragment {
                         startActivity(new Intent(getContext(), EditarRmsActivity.class));
                         break;
                     case R.id.MisRutinas:
-                        //
+                        Bundle bundle = new Bundle();
+                        bundle.putString("Tipo","MisRutinas");
+                        Fragment fragment = new RutinasFragment();
+                        fragment.setArguments(bundle);
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frameLayoutPantallaPrincipal, fragment);
+                        fragmentTransaction.commit();
                         break;
                     case R.id.Ajustes:
                         //Toast.makeText(getContext(), "Aqui no se puede entrar", Toast.LENGTH_SHORT).show();

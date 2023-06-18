@@ -1,5 +1,6 @@
 package com.example.learningstrenghtaaron.adaptadores;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,11 +44,16 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
     private Firestore firestore;
     private RutinasFragment controller;
 
-    public AdapterRutinas(@NonNull FirestoreRecyclerOptions<Rutina> options, RutinasFragment controller) {
+    private String tipo;
+
+    private boolean esCreador;
+
+    public AdapterRutinas(@NonNull FirestoreRecyclerOptions<Rutina> options, RutinasFragment controller,String tipo) {
         super(options);
         rutinas = new ArrayList<>();
         firestore = Firestore.getInstance();
         this.controller=controller;
+        this.tipo = tipo;
 
     }
 
@@ -56,11 +62,19 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
      * @param position
      * @param model    the model object containing the data that should be used to populate the view.
      */
+    @SuppressLint("SuspiciousIndentation")
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Rutina model) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Rutina model) {
         holder.nombreRutina.setText(model.getNombreRutina());
         holder.tipoRutina.setText(model.getTipoRutina());
-        holder.creador.setText(model.getCreador());
+        holder.creador.setText("Creador:  " + model.getCreador());
+        if(firestore.getUsuario()!=null){
+            System.out.println(firestore.getUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid()).getUsuario());
+            if(firestore.getUsuario().getUsuario().equals(model.getCreador()))
+            esCreador=true;
+        }
+        else
+            esCreador=false;
         if(model.getTipoRutina().equals("Fuerza")) {
             holder.icono.setImageResource(R.drawable.rutinafuerzalogo);
         } else if (model.getTipoRutina().equals("Hipertrofia")) {
@@ -86,15 +100,28 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
     public void showMenu(View view, int fragment_rutinas_menu, Rutina model) {
         PopupMenu popup = new PopupMenu(view.getContext(), view);
         popup.getMenuInflater().inflate(fragment_rutinas_menu, popup.getMenu());
+        if(tipo.equals("MisRutinas")){
+            popup.getMenu().getItem(0).setVisible(false);
+        }
+        else{
+            popup.getMenu().getItem(2).setVisible(false);
+        }
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.Agregar_Rutina:
-                            TieneLaRutina(model,view);
+                            TieneLaRutina(model,view,"Agregar");
                         break;
                     case R.id.BorrarRutina:
-
+                        TieneLaRutina(model,view,"Borrar");
+                        break;
+                    case R.id.EliminarRutina:
+                        System.out.println(firestore.getUsuario().getUsuario());
+                        if(firestore.getUsuario().getUsuario().equals(model.getCreador()))
+                            firestore.BorrarRutina(model.getNombreRutina());
+                        else
+                            Toast.makeText(view.getContext(), "No puedes borrar una rutina si no eres su creador", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -105,7 +132,7 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
         popup.show();
     }
 
-    private void TieneLaRutina(Rutina model, View view) {
+    private void TieneLaRutina(Rutina model, View view,String tipo) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DocumentReference docRef = firestore.getFirestore().collection("Rutina").document(model.getNombreRutina());
         Task<DocumentSnapshot> document = docRef.get();
@@ -113,12 +140,26 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
             document.addOnSuccessListener(documentSnapshot -> {
                 ArrayList<Object> objetos = (ArrayList<Object>) documentSnapshot.get("Usuarios");
                 if(user.isAnonymous()){
-                    Toast.makeText(view.getContext(), "No puedes guardar rutinas si no estás registrado", Toast.LENGTH_SHORT).show();
+                    if(tipo.equals("Agregar"))
+                        Toast.makeText(view.getContext(), "No puedes guardar rutinas si no estás registrado", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(view.getContext(), "No puedes desagregar rutinas si no estás registrado", Toast.LENGTH_SHORT).show();
+                }
+                else if (objetos==null && tipo.equals("Agregar")){
+                    objetos = new ArrayList<>();
+                    objetos.add(user.getUid());
                 }
                 else if (objetos.contains(user.getUid())) {
+                    if(tipo.equals("Agregar"))
                     Toast.makeText(view.getContext(), "Ya tienes agregada esta rutina", Toast.LENGTH_SHORT).show();
-                } else
+                    else{
+                        objetos.remove(user.getUid());
+                        Toast.makeText(view.getContext(), "Rutina borrada de MisRutinas", Toast.LENGTH_SHORT).show();
+                    }
+                } else{
                     objetos.add(user.getUid());
+                    Toast.makeText(view.getContext(), "Rutina agregada a MisRutinas", Toast.LENGTH_SHORT).show();
+                }
                 HashMap<String, Object> datos = new HashMap<>();
                 datos.put("Usuarios", objetos);
                 docRef.update(datos);

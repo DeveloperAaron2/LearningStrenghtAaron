@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.Switch;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
 
@@ -25,6 +27,7 @@ public class Terminar_Anhadir extends Fragment {
     String tipoRutinaterminar;
     String publicaPrivada;
     private ImageView iconoTerminar;
+    private Firestore firestore;
     public Terminar_Anhadir() {
         // Required empty public constructor
     }
@@ -47,7 +50,9 @@ public class Terminar_Anhadir extends Fragment {
         terminaranhadir = v.findViewById(R.id.buttonTerminarAnhadir);
         iconoTerminar = v.findViewById(R.id.iconoTerminar);
         tipoRutinaterminar= "Hipertrofia";
-        Bundle bundle = new Bundle();
+        publicaPrivada="pública";
+        firestore = Firestore.getInstance();
+        Bundle bundle = getArguments();
         tipoRutina.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -68,16 +73,22 @@ public class Terminar_Anhadir extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     publicaPrivada = "privada";
+                    publica_privada.setText("privada");
                 } else if (!isChecked){
-                    publicaPrivada="publica";
+                    publicaPrivada="pública";
+                    publica_privada.setText("pública");
                 }
             }
         });
         terminaranhadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putSerializable("RutinaAnhadida",new Rutina());
+                FragmentManager fragmentManager = getParentFragmentManager();
+                String creador = firestore.getUsuario().getUsuario();
+                System.out.println(creador);
+                bundle.putSerializable("RutinaAnhadida",new Rutina(nombreRutina.getText().toString(),tipoRutinaterminar,creador,publicaPrivada));
                 requireActivity().getSupportFragmentManager().setFragmentResult("Fin",bundle);
+                fragmentManager.popBackStack();
             }
         });
         return v;
