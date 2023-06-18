@@ -129,19 +129,15 @@
                     android:textSize="20sp"
                     app:suffixText=" kg"
                     android:textColor="#FFFF" />
-
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtRmsFragmentPerfilUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Rms:\n"
+                    android:textSize="20sp"
+                    android:textColor="#FFFF"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
     </LinearLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtRmsFragmentPerfilUsuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Rms:\n"
-        android:textSize="20sp"
-        android:textColor="#FFFF"/>
-
-</LinearLayout>
