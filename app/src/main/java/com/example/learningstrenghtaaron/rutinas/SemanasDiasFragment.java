@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.adaptadores.AdapterSemanasDias;
 import com.example.learningstrenghtaaron.entidades.Rutina;
 import com.example.learningstrenghtaaron.R;
@@ -30,6 +32,7 @@ public class SemanasDiasFragment extends Fragment {
     private Rutina rutina;
     private AdapterSemanasDias adapterSemanas;
     private long NumeroSemana;
+    private FrameLayout layoutSecundario;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,20 +67,14 @@ public class SemanasDiasFragment extends Fragment {
 
     private void CreaFragmentDias(ViewGroup container,String semana, Rutina rutina) {
         RecogeNumeroDias(rutina,semana);
-
-        recyclerViewSemanas.addOnItemTouchListener(new RecyclerItemClickListener(container.getContext(), recyclerViewSemanas, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int posicion) {
-                abrirFragmentEjercicios(semana,posicion);
-            }
-
-
-
-            @Override
-            public void onLongItemClick(View v, int posicion) {
-
-            }
-        }));
+            recyclerViewSemanas.addOnItemTouchListener(new RecyclerItemClickListener(container.getContext(), recyclerViewSemanas, new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int posicion) {
+                    abrirFragmentEjercicios(semana,posicion);
+                }
+                @Override
+                public void onLongItemClick(View v, int posicion) {}
+            }));
     }
 
 
@@ -90,11 +87,8 @@ public class SemanasDiasFragment extends Fragment {
             public void onItemClick(View v, int posicion) {
                 abrirFragment(posicion);
             }
-
             @Override
-            public void onLongItemClick(View v, int posicion) {
-
-            }
+            public void onLongItemClick(View v, int posicion) {}
         }));
     }
     public void RecogeNumeroSemanas(Rutina rutina){
@@ -168,7 +162,17 @@ public class SemanasDiasFragment extends Fragment {
         bundle.putString("Dia",adapterSemanas.getElementos().get(posicion));
         nuevoFragment.setArguments(bundle);
         FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-        fm.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
+
+        /* Aqui tengo que hacer la vista de tablet que se abre a la derecha */
+        if (!PantallaPrincipal.pantallaAncha){
+            fm.replace(R.id.frameLayoutPantallaPrincipal, nuevoFragment);
+        }else {
+            layoutSecundario = PantallaPrincipal.getLayoutSecundario();
+            if(layoutSecundario.getVisibility() == View.GONE) layoutSecundario.setVisibility(View.VISIBLE);
+            fm.replace(R.id.frameLayoutSencundarioPantallaPrincipal, nuevoFragment);
+        }
+
+
         fm.addToBackStack(null);
         fm.commit();
     }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PantallaPrincipal">
+    tools:context=".PantallaPrincipal"
+    android:fitsSystemWindows="false">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"

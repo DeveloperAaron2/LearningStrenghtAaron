@@ -45,10 +45,12 @@ import java.util.Map;
 
 public class PantallaPrincipal extends AppCompatActivity {
     private FrameLayout frameLayoutPantallaPrincipal;
+    private static FrameLayout layoutSecundario;
     public static ViewPager viewPager;
     private FirebaseAuth mAuth;
     private ActivityPantallaPrincipalBinding binding;
     private Firestore firestore;
+    public static Boolean pantallaAncha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +63,13 @@ public class PantallaPrincipal extends AppCompatActivity {
         float dp = metrics.widthPixels / (metrics.xdpi / 160);
         if (dp >= 600) {
             System.out.println("Pantalla tablet");
+            pantallaAncha = true;
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         } else {
             System.out.println("Pantalla movil");
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            pantallaAncha = false;
         }
-
         mAuth = FirebaseAuth.getInstance();
         firestore = Firestore.getInstance();
         if (mAuth.getCurrentUser() != null) recogerUsuario(mAuth.getCurrentUser().getUid());
@@ -77,6 +81,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         if (sharedPreferences.getString("listaCalculadoras", "Macros").equals("Rm")) viewPager.setCurrentItem(1);
         //Inicializar vista
         frameLayoutPantallaPrincipal = findViewById(R.id.frameLayoutPantallaPrincipal);
+        layoutSecundario = findViewById(R.id.frameLayoutSencundarioPantallaPrincipal);
         replaceFragment(new RutinasFragment());
         //Botones de navegación
         binding.bottomNavigationViewPantallaPrincipal.setOnItemSelectedListener(item -> {
@@ -86,12 +91,14 @@ public class PantallaPrincipal extends AppCompatActivity {
                     break;
                 case R.id.Calculadoras:
                     if(frameLayoutPantallaPrincipal.getVisibility() == View.VISIBLE) frameLayoutPantallaPrincipal.setVisibility(View.GONE);
+                    if (pantallaAncha && layoutSecundario.getVisibility() == View.VISIBLE) layoutSecundario.setVisibility(View.GONE);
                     if (viewPager.getVisibility() == View.GONE) viewPager.setVisibility(View.VISIBLE);
                     break;
                 case R.id.Perfil:
                     if (mAuth.getCurrentUser() == null || mAuth.getCurrentUser().isAnonymous()) {
                         startActivity(new Intent(PantallaPrincipal.this, MainActivity.class));
                     } else {
+                        if (pantallaAncha && layoutSecundario.getVisibility() == View.VISIBLE) layoutSecundario.setVisibility(View.GONE);
                         replaceFragment(new PerfilUsuarioFragment(firestore.getUsuario()));
                     }
                     break;
@@ -173,5 +180,9 @@ public class PantallaPrincipal extends AppCompatActivity {
         public int getCount() {
             return 2;
         }
+    }
+
+    public static FrameLayout getLayoutSecundario() {
+        return layoutSecundario;
     }
 }

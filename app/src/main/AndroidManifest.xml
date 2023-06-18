@@ -20,7 +20,7 @@
             android:exported="false"
             android:theme="@style/Theme.Material3.DayNight"/>
         <!-- Calculadoras -->
-        <!-- Calculadora calorias -->
+        <!-- Calculadora macros -->
         <activity
             android:name=".calculadoras.macros.CalculadoraMacrosActivity"
             android:exported="false" />
@@ -59,7 +59,8 @@
         <!-- Pantalla principal -->
         <activity
             android:name=".PantallaPrincipal"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,7 +1,9 @@
 package com.example.learningstrenghtaaron.rutinas;
 
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.adaptadores.AdapterRutinas;
 import com.example.learningstrenghtaaron.anhadir.anhadir_semanas_fragment;
 import com.example.learningstrenghtaaron.entidades.Rutina;
@@ -71,7 +74,12 @@ public class RutinasFragment extends Fragment {
     }
 
     private void CreaRecyclerView(View view) {
-        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2); // 2 items por columna
+        GridLayoutManager layoutManager;
+        if (PantallaPrincipal.pantallaAncha) {
+            layoutManager = new GridLayoutManager(view.getContext(), 3); // 4 items por columna
+        } else {
+            layoutManager = new GridLayoutManager(view.getContext(), 2); // 2 items por columna
+        }
         recyclerViewRutinas.setLayoutManager(layoutManager);
         firestore = FirebaseFirestore.getInstance();
         Bundle bundle = getArguments();
