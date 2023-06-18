@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/iconoR"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="20px"
+    android:paddingLeft="5px"
     android:paddingTop="50px"
-    android:paddingRight="20px">
+    android:paddingRight="5px">
 
-    <ImageView
-        android:id="@+id/iconoRutina"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="94dp"
-        android:layout_marginBottom="20px"
-        app:srcCompat="@drawable/hipertrofiaicono" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iconoRutina"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/hipertrofiaicono" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnMenuFragmentRutinas"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/transparent"
+            android:contentDescription="@string/boton_menu"
+            android:src="@drawable/baseline_more_vert_24"
+            app:elevation="0dp"
+            app:fabCustomSize="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/nombreRutina"
@@ -41,15 +62,4 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnMenuFragmentRutinas"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:contentDescription="@string/boton_menu"
-        android:src="@drawable/baseline_more_vert_24"
-        app:elevation="0dp"
-        android:backgroundTint="@color/transparent"
-        app:fabCustomSize="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </LinearLayout>

@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.learningstrenghtaaron.entidades.Ejercicio;
 import com.example.learningstrenghtaaron.entidades.EjercicioRutina;
@@ -17,7 +18,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +59,35 @@ public class Firestore {
             INSTANCIA = new Firestore();
         return INSTANCIA;
     }
-
+    public void InsertarUsuarioEnRutina(String nombreRutina){
+        DocumentReference docRef = firestore.collection("Rutina").document(nombreRutina);
+        if(docRef!=null){
+            ArrayList<String> objetos = new ArrayList<>();
+            objetos.add(auth.getCurrentUser().getUid());
+            HashMap<String, Object> datos = new HashMap<>();
+            datos.put("Usuarios", objetos);
+            docRef.update(datos);
+        }
+    }
+    public void BorrarRutina(String nombreRutina){
+        DocumentReference docRefRutina = firestore.collection("Rutina").document(nombreRutina);
+        docRefRutina.delete();
+        System.out.println(nombreRutina);
+        firestore.collection("EjercicioRutina")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.getString("NombreRutina").equals(nombreRutina))
+                                    firestore.collection("EjercicioRutina").document(document.getString("NombreRutina")).delete();
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+    }});
+    }
     public void InsertarEjercicio(Ejercicio ejercicio) {
         Map<String, Object> map = new HashMap<>();
         map.put("grupoMuscular", ejercicio.getGrupoMuscular());
@@ -204,4 +238,5 @@ public class Firestore {
     }*/
 
 }
+
 

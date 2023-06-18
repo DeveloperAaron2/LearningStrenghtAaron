@@ -107,6 +107,7 @@ public class anhadir_semanas_fragment extends Fragment {
                 firestore.InsertarEjerciciosRutina(ejercicioRutinas);
             }
             firestore.InsertarRutina(rutina);
+            firestore.InsertarUsuarioEnRutina(rutina.getNombreRutina());
             requireActivity().getSupportFragmentManager().setFragmentResult("FinAnhadir",null);
             FragmentManager fm = getParentFragmentManager();
             fm.popBackStack();

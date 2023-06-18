@@ -5,5 +5,8 @@
         android:title="Agregar Rutina" />
     <item
         android:id="@+id/BorrarRutina"
-        android:title="Borrar Rutina" />
+        android:title="Eliminar Rutina de Mis Rutinas" />
+    <item
+        android:id="@+id/EliminarRutina"
+        android:title="Eliminar Rutina Totalmente" />
 </menu>
