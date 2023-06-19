@@ -75,15 +75,17 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/transparent"
                 android:text="Inicia sesión"
-                android:textColor="#288419"
+                android:textColor="#ff0000"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView6" />
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btnCrearCuentaRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#C62828"
             android:text="Crear cuenta" />
 
         <com.google.android.gms.common.SignInButton

@@ -68,10 +68,11 @@ public class AdapterRutinas extends FirestoreRecyclerAdapter<Rutina, AdapterRuti
         holder.nombreRutina.setText(model.getNombreRutina());
         holder.tipoRutina.setText(model.getTipoRutina());
         holder.creador.setText("Creador:  " + model.getCreador());
+        if(tipo.equals("MisRutinas")){
         if(firestore.getUsuario()!=null){
-            System.out.println(firestore.getUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid()).getUsuario());
             if(firestore.getUsuario().getUsuario().equals(model.getCreador()))
             esCreador=true;
+        }
         }
         else
             esCreador=false;

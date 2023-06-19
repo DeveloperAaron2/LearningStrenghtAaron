@@ -56,14 +56,14 @@
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/transparent"
             android:text="¿Olvidaste tu contraseña?"
-            android:textColor="#288419" />
+            android:textColor="#C62828" />
 
         <Button
             android:id="@+id/btnIngresarLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar sesión"
-            android:backgroundTint="#288419"/>
+            android:backgroundTint="#C62828"
+            android:text="Iniciar sesión" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGoogleLogin"

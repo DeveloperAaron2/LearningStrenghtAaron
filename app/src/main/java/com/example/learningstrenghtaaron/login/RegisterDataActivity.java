@@ -122,8 +122,8 @@ public class RegisterDataActivity extends AppCompatActivity implements AdapterVi
         Map<String, Object> mapaRms = new HashMap<>();
         mapDatosUsuario.put("Usuario", txtUsuario.getText().toString().trim());
         mapDatosUsuario.put("FechaNac", txtFecha.getText().toString().trim());
-        mapDatosUsuario.put("Peso", txtPeso.getText() != null ? txtPeso.getText().toString().trim() : "");
-        mapDatosUsuario.put("Altura", txtAltura.getText() != null ? txtAltura.getText().toString().trim() : "");
+        mapDatosUsuario.put("Peso", txtPeso.getText() != null ? Long.parseLong(txtPeso.getText().toString().trim()) : 0);
+        mapDatosUsuario.put("Altura", txtAltura.getText() != null ? Long.parseLong(txtAltura.getText().toString().trim()) : 0);
         if (!spinnerDeporte.getSelectedItem().toString().equals("Selecciona tu deporte")) {
             mapDatosUsuario.put("Deporte", spinnerDeporte.getSelectedItem().toString());
             if (txtRm1.getText() != null || txtRm2.getText() != null || txtRm3.getText() != null) {
