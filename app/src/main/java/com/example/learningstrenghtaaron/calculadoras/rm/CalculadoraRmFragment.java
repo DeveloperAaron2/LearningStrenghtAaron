@@ -2,6 +2,7 @@ package com.example.learningstrenghtaaron.calculadoras.rm;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import com.example.learningstrenghtaaron.calculadoras.CalculadorasFragment;
 import com.example.learningstrenghtaaron.calculadoras.macros.CalculadoraMacrosActivity;
 import com.example.learningstrenghtaaron.calculadoras.macros.CalculadoraMacrosFragment;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -122,19 +124,13 @@ public class CalculadoraRmFragment extends Fragment {
         brzycki.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), FormulasActivity.class);
-                intent.putExtra("Formula", R.drawable.brzycki);
-                intent.putExtra("DatosUsuario", new String[]{speso, srepes});
-                startActivity(intent);
+                mostrarDialog(R.drawable.brzycki);
             }
         });
         epley.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), FormulasActivity.class);
-                intent.putExtra("Formula", R.drawable.epley);
-                intent.putExtra("DatosUsuario", new String[]{speso, srepes});
-                startActivity(intent);
+                mostrarDialog(R.drawable.epley);
             }
         });
     }
@@ -156,6 +152,15 @@ public class CalculadoraRmFragment extends Fragment {
         calcular = view.findViewById(R.id.btnCalcularCalculadoraRm);
         brzycki = view.findViewById(R.id.txtBrzyckiCalculadoraRm);
         epley = view.findViewById(R.id.txtEpleyCalculadoraRm);
+    }
+
+    private void mostrarDialog(int item){
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.activity_calculadora_rm_formulas);
+        ShapeableImageView formula = dialog.findViewById(R.id.imagenFormulas);
+        formula.setImageResource(item);
+        dialog.show();
     }
 
     private void hideKeyboard(View view) {

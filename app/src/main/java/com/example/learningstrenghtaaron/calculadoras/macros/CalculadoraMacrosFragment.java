@@ -2,6 +2,7 @@ package com.example.learningstrenghtaaron.calculadoras.macros;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.ajustes.SettingsFragment;
 import com.example.learningstrenghtaaron.calculadoras.CalculadorasFragment;
 import com.example.learningstrenghtaaron.calculadoras.rm.CalculadoraRmFragment;
+import com.example.learningstrenghtaaron.usuario.EditarRmsActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -79,7 +81,11 @@ public class CalculadoraMacrosFragment extends Fragment {
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), InfoActivity.class));
+                //startActivity(new Intent(getContext(), InfoActivity.class));
+                Dialog dialog = new Dialog(getContext());
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.activity_calculadora_macros_info);
+                dialog.show();
             }
         });
 
