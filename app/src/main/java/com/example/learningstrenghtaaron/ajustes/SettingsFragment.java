@@ -2,6 +2,7 @@ package com.example.learningstrenghtaaron.ajustes;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -119,6 +120,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
 
         cambiarPass.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @SuppressLint("RestrictedApi")
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -157,6 +159,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 builder.setPositiveButton("Si, soy un flaco", (dialogInterface, i) -> {
                     firestore.borrarUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     mAuth.getCurrentUser().delete();
+                    Intent intent = new Intent(getContext(),MainActivity.class);
+                    startActivity(intent);
                 });
                 builder.setNegativeButton("No, estoy mas fuerte que el vinagre", (dialogInterface, i) ->
                         Toast.makeText(getContext(), "Asi me gusta", Toast.LENGTH_SHORT).show());

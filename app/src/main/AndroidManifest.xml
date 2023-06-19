@@ -60,7 +60,7 @@
         <activity
             android:name=".PantallaPrincipal"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
