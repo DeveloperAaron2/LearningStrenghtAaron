@@ -60,7 +60,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         etCambiarCorreo = findPreference("etCambiarCorreo");
         cambiarPass = findPreference("CambiarContrasenia");
         dialogEliminarCuenta = findPreference("preferenceEliminarCuenta");
-        etCambiarCorreo.setDefaultValue(firestore.getUsuario().getCorreo());
+        etCambiarCorreo.setText(firestore.getUsuario().getCorreo());
     }
 
     private void listenersAplicacion() {

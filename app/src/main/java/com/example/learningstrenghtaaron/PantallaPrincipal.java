@@ -99,7 +99,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                         startActivity(new Intent(PantallaPrincipal.this, MainActivity.class));
                     } else {
                         if (pantallaAncha && layoutSecundario.getVisibility() == View.VISIBLE) layoutSecundario.setVisibility(View.GONE);
-                        replaceFragment(new PerfilUsuarioFragment(firestore.getUsuario()));
+                        replaceFragment(new PerfilUsuarioFragment());
                     }
                     break;
             }
@@ -107,6 +107,11 @@ public class PantallaPrincipal extends AppCompatActivity {
         });
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finishAffinity();
+        }
+        if (getIntent().getBooleanExtra("EDITAR", false)) {
+            binding.bottomNavigationViewPantallaPrincipal.setSelectedItemId(R.id.Perfil);
+            Usuario u = (Usuario) getIntent().getSerializableExtra("Usuario");
+            replaceFragment(new PerfilUsuarioFragment(u));
         }
     }
 

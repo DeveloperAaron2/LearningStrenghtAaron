@@ -1,10 +1,8 @@
 package com.example.learningstrenghtaaron.usuario;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.RecyclerItemClickListener;
 import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
@@ -35,13 +34,11 @@ public class EditarRmsActivity extends AppCompatActivity {
     private Firestore firestore;
     private static Map<String, String> mapaRms;
     private Usuario usuario;
-    private static EditarRmsActivity editarRmsActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_rms);
-        editarRmsActivity = this;
         firestore = Firestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //Inicializamos la toolbar
@@ -50,6 +47,10 @@ public class EditarRmsActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(item -> {
             usuario.setMapaRms(adapterRms.getMapaRms());
             firestore.actualizarUsuario(usuario);
+            Intent intent = new Intent(this, PantallaPrincipal.class);
+            intent.putExtra("EDITAR", true);
+            intent.putExtra("Usuario", usuario);
+            startActivity(intent);
             return true;
         });
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
@@ -98,33 +99,15 @@ public class EditarRmsActivity extends AppCompatActivity {
                         else if (etCantidad.getText().toString().isBlank()) etCantidad.setError("Nose");
                         else if (etSufijo.getText().toString().isBlank()) etSufijo.setError("Nose");
                         else mapaRms.put(etEjercicio.getText().toString().trim(), etCantidad.getText().toString().trim() + " " + etSufijo.getText().toString().trim());
-                        refreshAdapter();
+                        adapterRms = new AdapterRms(mapaRms);
+                        adapterRms.notifyDataSetChanged();
+                        recyclerViewRms.setAdapter(adapterRms);
                         Toast.makeText(EditarRmsActivity.this, "Nuevo Rm insertado", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
             }
         });
-    }
-
-    public static void guardarRm(String ejercicio, String s) {
-        if (mapaRms.containsKey(ejercicio)) {
-            mapaRms.remove(ejercicio);
-            mapaRms.put(ejercicio, s);
-        } else {
-            mapaRms.put(ejercicio, s);
-        }
-        editarRmsActivity.refreshAdapter();
-    }
-    public static void eliminarRm(String ejercicio) {
-        mapaRms.remove(ejercicio);
-        editarRmsActivity.refreshAdapter();
-    }
-
-    private void refreshAdapter() {
-        adapterRms = new AdapterRms(mapaRms);
-        adapterRms.notifyDataSetChanged();
-        recyclerViewRms.setAdapter(adapterRms);
     }
 
     @Override

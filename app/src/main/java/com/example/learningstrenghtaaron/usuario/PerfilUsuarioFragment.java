@@ -60,9 +60,8 @@ public class PerfilUsuarioFragment extends Fragment {
         if (sharedPreferences.getBoolean("switchModoOscuro", false)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         inicializarComponentes(view);
-
+        if (usuario == null) usuario = firestore.getUsuario();
         ponerDatos();
-
         btnMenu.setOnClickListener(view1 -> showMenu(view1, R.menu.fragment_perfil_usuario_menu));
 
         return view;
@@ -74,8 +73,8 @@ public class PerfilUsuarioFragment extends Fragment {
             txtDeporte.setText(usuario.getDeporte() == null ? "" : "Deporte: " + usuario.getDeporte());
             txtCorreo.setText(usuario.getCorreo() == null ? "" : "Correo: " + usuario.getCorreo());
             txtFechaNac.setText(usuario.getFechaNac() == null ? "" : "Fecha de nacimiento: " + usuario.getFechaNac());
-            txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : "Peso: " + usuario.getPeso()));
-            txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : "Altura: " + usuario.getAltura()));
+            txtPeso.setText(String.format("%s", usuario.getPeso() == 0 ? "" : "Peso: " + usuario.getPeso() + " kg"));
+            txtAltura.setText(String.format("%s", usuario.getAltura() == 0 ? "" : "Altura: " + usuario.getAltura() + " cm"));
             if (usuario.getMapaRms() != null && !usuario.getMapaRms().isEmpty()) {
                 usuario.getMapaRms().forEach((k, v) -> txtRms.setText(String.format("%s %s: %s\n", txtRms.getText(), k, v)));
             }

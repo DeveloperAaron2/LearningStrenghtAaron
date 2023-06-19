@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.learningstrenghtaaron.PantallaPrincipal;
 import com.example.learningstrenghtaaron.R;
 import com.example.learningstrenghtaaron.baseDeDatos.Firestore;
 import com.example.learningstrenghtaaron.entidades.Usuario;
@@ -66,7 +67,13 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     private void listeners() {
         //Listeners botones
         btnAtras.setOnClickListener(view -> finish());
-        btnAceptar.setOnClickListener(view -> modificarDatosUsuario());
+        btnAceptar.setOnClickListener(view -> {
+            modificarDatosUsuario();
+            Intent intent = new Intent(this, PantallaPrincipal.class);
+            intent.putExtra("EDITAR", true);
+            intent.putExtra("Usuario", usuario);
+            startActivity(intent);
+        });
         btnCambiarFoto.setOnClickListener(view -> cambiarfoto());
         //Errores campos obligatorios
         txtUsuario.setOnFocusChangeListener((view, b) -> {

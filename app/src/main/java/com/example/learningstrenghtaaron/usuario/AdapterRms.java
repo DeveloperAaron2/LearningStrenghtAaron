@@ -78,9 +78,20 @@ public class AdapterRms extends RecyclerView.Adapter<AdapterRms.ViewHolder> {
             i++;
         }
         holder.geteTRm().setSelectAllOnFocus(true);
-        holder.getBtnEditar().setOnClickListener(view -> mapaRms.put(holder.getTxtEj().getText().toString().trim(), holder.geteTRm().getText().toString().trim()
-                + " " + holder.getTxtSuf().getText().toString().trim()));
-        holder.getBtnEliminar().setOnClickListener(view -> mapaRms.remove(holder.getTxtEj().getText().toString()));
+        holder.getBtnEditar().setOnClickListener(view -> {
+            mapaRms.put(holder.getTxtEj().getText().toString().trim(), holder.geteTRm().getText().toString().trim()
+                    + " " + holder.getTxtSuf().getText().toString().trim());
+            notifyItemInserted(position);
+        });
+        holder.getBtnEliminar().setOnClickListener(view -> {
+            System.out.println("Holder: " + holder.getTxtEj().getText().toString());
+            System.out.println("Remove: " + mapaRms.remove(holder.getTxtEj().getText().toString()));
+            System.out.println("Get: " + mapaRms.get(holder.getTxtEj().getText().toString()));
+            for(Map.Entry<String, String> entry : mapaRms.entrySet()){
+                System.out.println("mapaRms: ejercicio -> " + entry.getKey() + " | rm -> " + entry.getValue());
+                }
+            notifyItemRemoved(position);
+        });
     }
 
     @Override
